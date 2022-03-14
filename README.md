@@ -1,5 +1,5 @@
 ![Threestrings](https://user-images.githubusercontent.com/83373495/158119387-a339bf51-5d58-49a0-908c-9b5dd676465d.png)
-ThreeStrings Music Bot
+
 
 Hello! And welcome to The New and Improved Threestrings REPO!
 
