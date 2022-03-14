@@ -1,8 +1,10 @@
 ThreeStrings Music Bot
+
 Hello! And welcome to The New and Improved Threestrings REPO!
 
 ThreeStrings is a discord bot than plays music into a voice channel using user inputed commands
 He was created using JDA Wrapper, LavaPlayer, and Duncte1234 Bot Commons!
+![Threestrings](https://user-images.githubusercontent.com/83373495/158119387-a339bf51-5d58-49a0-908c-9b5dd676465d.png)
 
 List of things he can do:	
 !ping: Shows bots current MS
