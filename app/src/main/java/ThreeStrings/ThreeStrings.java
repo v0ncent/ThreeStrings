@@ -3,6 +3,8 @@
 //COPYRIGHT Vincent Banks
 package ThreeStrings;
 import javax.security.auth.login.LoginException;
+
+import ThreeStrings.Database.SQLiteDataSource;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.JDABuilder;       //importing necessary JDA Classes
 import net.dv8tion.jda.api.OnlineStatus;
@@ -14,6 +16,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import java.sql.SQLException;
 public class ThreeStrings {
     public static void main(String[] args) throws LoginException, SQLException {  //LoginException allows for bot to log into account
+        SQLiteDataSource.getConnection(); //access SQL class
         JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
         ThreeStrings.setStatus(OnlineStatus.ONLINE); //set online status to online

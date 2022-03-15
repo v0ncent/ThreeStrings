@@ -2,6 +2,7 @@
 //Listener class
 //COPYRIGHT Vincent Banks
 package ThreeStrings;
+import ThreeStrings.Database.SQLiteDataSource;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.User;
@@ -11,6 +12,11 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Listener  extends ListenerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class); //implement the Logger class to get rid of error messages
     private final CommandManager manager; //implement our command manager class
@@ -27,7 +33,7 @@ public class Listener  extends ListenerAdapter {
         if (user.isBot() || event.isWebhookMessage() ){ //if user is a bot or webhook message we simply just return
             return;
         }
-        String prefix = Config.get("PREFIX"); //setting prefix to what it is in the config
+        String prefix = getPrefix(event.getGuild().getIdLong()); //setting prefix to what it is in the database
         String raw = event.getMessage().getContentRaw();
         if (raw.equalsIgnoreCase(prefix + "shutdown") && user.getId().equals(Config.get("OWNER_ID"))){ //using boolean we can create a !shutodwn command that only the owner can use with owner id in config
             LOGGER.info("Heading in for the night! Thanks for listening!"); //sends message to user that bot is shutting down
@@ -39,5 +45,28 @@ public class Listener  extends ListenerAdapter {
             manager.handle(event);
         }
     }
-
+    //getPrefix Method
+    private String getPrefix(long guildiD){
+        try(final PreparedStatement preparedStatement = SQLiteDataSource
+                .getConnection()
+                // language = SQLite
+                .prepareStatement("SELECT prefix FROM guild_settings WHERE guild_id = ?")) {
+            preparedStatement.setString(1,String.valueOf(guildiD));
+            try (final ResultSet resultSet = preparedStatement.executeQuery()){
+                if(resultSet.next()){
+                    return resultSet.getString("prefix");
+                }
+            }
+            try (final PreparedStatement insertStatement = SQLiteDataSource
+                    .getConnection()
+                    //language=SQLite
+                    .prepareStatement("INSERT INTO guild_settings(guild_id) VALUES (?)")){
+                insertStatement.setString(1,String.valueOf(guildiD));
+                insertStatement.execute();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return Config.get("PREFIX");
+    }
 }
