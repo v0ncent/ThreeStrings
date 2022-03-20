@@ -2,21 +2,26 @@
 //Main Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings;
-import javax.security.auth.login.LoginException;
-
-import ThreeStrings.Database.SQLiteDataSource;
+import ThreeStrings.Database.DataBase;
+import ThreeStrings.Database.MYSQLConnection;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import net.dv8tion.jda.api.JDABuilder;       //importing necessary JDA Classes
+import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import java.sql.SQLException;
+import javax.security.auth.login.LoginException;
 public class ThreeStrings {
-    public static void main(String[] args) throws LoginException, SQLException {  //LoginException allows for bot to log into account
-        SQLiteDataSource.getConnection(); //access SQL class
+    public static void main(String[] args) throws LoginException {  //LoginException allows for bot to log into account
+       //Run method to check and or create table
+        try {
+            DataBase.createRoomsTable();
+            DataBase.post();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
         ThreeStrings.setStatus(OnlineStatus.ONLINE); //set online status to online
