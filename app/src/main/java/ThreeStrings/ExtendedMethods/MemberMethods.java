@@ -2,8 +2,10 @@
 //MemberMethods Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.ExtendedMethods;
+import ThreeStrings.Database.MONGODB;
 public class MemberMethods {
-    public static String getRoom(long member_id){
-        return"room";
+    MONGODB mongo = new MONGODB();
+    public String getRoom(long id){
+        return "room";
     }
-}
+    }

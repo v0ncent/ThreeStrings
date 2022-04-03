@@ -8,6 +8,9 @@ import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+
+import java.util.Objects;
+
 public class ProfileCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
@@ -34,7 +37,7 @@ public class ProfileCommand implements ICommand {
             embed.setColor(name.getColor());
             embed.addField("**Nickname**", name.getNickname(),true);
             embed.addField("**Game Ranking**", "Ranking goes here", true);
-            embed.addField("**Room**",member.getRoom(name.getIdLong()), true);
+            embed.addField("**Room**", member.getRoom(name.getIdLong()), true);
             embed.setFooter("Quite the reputation around here I see!");
             channel.sendMessageEmbeds(embed.build()).queue();
         }
