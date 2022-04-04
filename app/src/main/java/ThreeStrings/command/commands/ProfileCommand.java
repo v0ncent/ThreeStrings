@@ -8,9 +8,6 @@ import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
-
-import java.util.Objects;
-
 public class ProfileCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {

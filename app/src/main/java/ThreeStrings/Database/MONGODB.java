@@ -2,14 +2,12 @@
 //MONGODB Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Database;
-
 import ThreeStrings.Config;
-import com.mongodb.client.*;
-import com.mongodb.client.model.Filters;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
-import java.util.ArrayList;
-
 public class MONGODB {
     //create mongoclient var to gain connection to mongo database
    private final MongoClient client = MongoClients.create(Config.get("MONGO"));
@@ -20,7 +18,6 @@ public class MONGODB {
         collection.insertOne(items);
     }
     public boolean checkIfExists(Document items){ //check if a document is already present method
-        collection.find(items);
-        return true;
+        return collection.find(items).cursor().hasNext(); //if cursor finds document it returns true
     }
 }

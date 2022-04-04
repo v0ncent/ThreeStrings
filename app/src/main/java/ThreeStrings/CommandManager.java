@@ -3,7 +3,6 @@
 //Copyright Vincent Banks
 package ThreeStrings;
 import ThreeStrings.Music.*;
-import ThreeStrings.Rooms.CreateRoomCommand;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import ThreeStrings.command.commands.*;
@@ -38,7 +37,6 @@ public class CommandManager {
         addCommand(new CapybaraCommand());
         addCommand(new ProfileCommand());
         //room commands
-        addCommand(new CreateRoomCommand());
     }
     private void addCommand(ICommand cmd){    //create a addCommand method
         boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName())); //create boolean method if a command is already found

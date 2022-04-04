@@ -2,16 +2,17 @@
 //Listener class
 //COPYRIGHT Vincent Banks
 package ThreeStrings;
+import ThreeStrings.Database.MONGODB;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 public class Listener  extends ListenerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class); //implement the Logger class to get rid of error messages
     private final CommandManager manager; //implement our command manager class
@@ -39,5 +40,15 @@ public class Listener  extends ListenerAdapter {
         if (raw.startsWith(prefix)){  //when a command is executed this if statements tells the command manager class to handle it
             manager.handle(event);
         }
+        MONGODB mongo = new MONGODB();
+        long discordId = event.getAuthor().getIdLong();
+        Document defaultRoom = new Document("id",discordId).append("room", "default room").append("cash","100");
+        if(!mongo.checkIfExists(defaultRoom)){//if document is not already in database
+            try{
+                mongo.insert(defaultRoom);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
-}
+    }
