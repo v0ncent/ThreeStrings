@@ -42,10 +42,15 @@ public class Listener  extends ListenerAdapter {
         }
         MONGODB mongo = new MONGODB();
         long discordId = event.getAuthor().getIdLong();
-        Document defaultRoom = new Document("id",discordId).append("room", "default room").append("cash","100");
-        if(!mongo.checkIfExists(defaultRoom)){//if document is not already in database
+        String defaultRoom = "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
+                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
+                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
+                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
+                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>";
+        Document defaultDoc = new Document("id",discordId).append("room", defaultRoom).append("cash","100");
+        if(!mongo.checkIfExists(defaultDoc)){//if document is not already in database
             try{
-                mongo.insert(defaultRoom);
+                mongo.insert(defaultDoc);
             }catch (Exception e){
                 e.printStackTrace();
             }

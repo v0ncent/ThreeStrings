@@ -22,7 +22,7 @@ public class ProfileCommand implements ICommand {
             embed.setColor(name.getColor());
             embed.addField("**Nickname**",name.getNickname(),true);
             embed.addField("**Game Ranking**", "Ranking goes here", true);
-            embed.addField("**Room**", member.getRoom(name.getIdLong()), true);
+            embed.addField("**Room**", member.getRoom(name.getIdLong()), false);
             embed.setFooter("Quite the reputation around here I see!");
             channel.sendMessageEmbeds(embed.build()).queue();
         } // if no mention
@@ -34,12 +34,13 @@ public class ProfileCommand implements ICommand {
             embed.setColor(name.getColor());
             embed.addField("**Nickname**", name.getNickname(),true);
             embed.addField("**Game Ranking**", "Ranking goes here", true);
-            embed.addField("**Room**", member.getRoom(name.getIdLong()), true);
+            embed.addField("**Room**", member.getRoom(name.getIdLong()), false);
             embed.setFooter("Quite the reputation around here I see!");
             channel.sendMessageEmbeds(embed.build()).queue();
-        }
+        } //this will run if user is not in database or is a bot
         catch (IllegalArgumentException e){
-            channel.sendMessage("Sorry tavern staff dont get any stats.").queue();
+            e.printStackTrace();
+            channel.sendMessage("Sorry something went wrong. Either the user you mentioned is a bot,\nor you are not yet registered in the database.").queue();
         }
     }
     @Override
