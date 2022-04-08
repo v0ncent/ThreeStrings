@@ -24,7 +24,8 @@ public class MemberMethods {
                         .toArray(String[]::new);
                 boolean matchFound = matcher.find();
                 if(matchFound){
-                    return Arrays.toString(matches).replaceAll("[\\[]","").replaceAll(",","").replaceAll("\\]","");
+                    String roomFormatted = Arrays.toString(matches).replaceAll("[\\[]","").replaceAll(",","").replaceAll("\\]","");
+                    return roomFormatted;
                 }
             }
         }catch (Exception e){

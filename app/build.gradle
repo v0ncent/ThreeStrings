@@ -21,6 +21,9 @@ repositories {
         name 'jfrog-duncte123'
         url 'https://duncte123.jfrog.io/artifactory/maven'
     }
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 dependencies {
     implementation group: 'net.dv8tion', name: 'JDA', version: '4.3.0_334'
@@ -29,8 +32,9 @@ dependencies {
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.6'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
-    implementation 'com.sedmelluq:lavaplayer:1.3.78'
+    //implementation 'com.sedmelluq:lavaplayer:1.3.78'
     implementation 'org.mongodb:mongodb-driver-legacy:4.1.1'
     implementation 'org.mongodb:mongodb-driver-sync:4.5.1'
+    implementation 'com.github.walkyst:lavaplayer-fork:1.3.97'
 }
 compileJava.options.encoding = 'UTF-8'
