@@ -2,8 +2,6 @@
 //Main Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings;
-import ThreeStrings.Database.MONGODB;
-import ThreeStrings.ExtendedMethods.MemberMethods;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -12,8 +10,6 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import org.bson.Document;
-
 import javax.security.auth.login.LoginException;
 public class ThreeStrings {
     public static void main(String[] args) throws LoginException {  //LoginException allows for bot to log into account

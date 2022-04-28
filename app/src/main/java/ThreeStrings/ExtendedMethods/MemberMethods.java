@@ -4,7 +4,6 @@
 package ThreeStrings.ExtendedMethods;
 import ThreeStrings.Database.MONGODB;
 import org.bson.Document;
-
 import java.util.Arrays;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -15,8 +14,8 @@ public class MemberMethods {
         Document userDoc = new Document("id", id);
         try {
             if(mongodb.checkIfExists(userDoc)){
-                Pattern pattern = Pattern.compile("<:woodtile:940727196157374506>", Pattern.CASE_INSENSITIVE);
-                Matcher matcher = pattern.matcher(mongodb.collection.find(userDoc).cursor().next().toString());
+                Matcher matcher = Pattern.compile("<:woodtile:940727196157374506>")
+                        .matcher(mongodb.collection.find(userDoc).cursor().next().toString());
                 String[] matches = Pattern.compile("<:woodtile:940727196157374506>")
                         .matcher(mongodb.collection.find(userDoc).cursor().next().toString())
                         .results()
@@ -24,9 +23,10 @@ public class MemberMethods {
                         .toArray(String[]::new);
                 boolean matchFound = matcher.find();
                 if(matchFound){
-                    String roomFormatted = Arrays.toString(matches).replaceAll("[\\[]","").replaceAll(",","").replaceAll("\\]","");
-                    return roomFormatted;
+                    return Arrays.toString(matches).replaceAll("[\\[]","").replaceAll(",","").replaceAll("\\]","");
                 }
+            } else {
+                return "!createroom to create to get a spot in the tavern!";
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -34,4 +34,5 @@ public class MemberMethods {
         }
         return null;
     }
+    //
 }
