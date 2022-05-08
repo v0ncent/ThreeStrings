@@ -6,25 +6,26 @@ import ThreeStrings.Database.MONGODB;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import org.bson.Document;
+
+import java.util.Arrays;
+
 public class CreateRoomCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        int roomNum = 0;
         MONGODB mongo = new MONGODB(); //get mongo class
         long discordId = ctx.getAuthor().getIdLong(); //pull user's discord id as long value
-        @SuppressWarnings("SpellCheckingInspection")
-        String defaultRoom = "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
-                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
-                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
-                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>" +
-                "<:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506><:woodtile:940727196157374506>"; //create default room
-        Document defaultDoc = new Document("id", discordId).append("room", defaultRoom).append("cash", "100"); // create default document to check if user has already been registered
+        String[][] defaultRoom = {{"0","0","0","0","0","n"},
+                {"0","0","0","0","0","n"},
+                {"0","0","0","0","0","n"},
+                {"0","0","0","0","0","n"},
+                {"0","0","0","0","0","n"}}; //create default room
+        Document defaultDoc = new Document("id", discordId).append("room", Arrays.deepToString(defaultRoom)
+                .replaceAll("\\[","").replaceAll(",","").replaceAll("\\]","")).append("cash", "100"); // create default document to check if user has already been registered
         if (!mongo.checkIfExists(defaultDoc)) { // if document doest exist in database
             try {
                 mongo.insert(defaultDoc);
-                roomNum++;
                 ctx.getChannel().sendMessage("Alright I have a spot open for ya!\n" +
-                        "I have registered " + ctx.getAuthor().getName() + " to room number " + roomNum).queue();
+                        "I have registered " + ctx.getAuthor().getName() + " into the tavern!").queue();
             } catch (Exception e) {
                 ctx.getChannel().sendMessage("I uhh dont feel to good...\n" + e).queue();
                 e.printStackTrace();

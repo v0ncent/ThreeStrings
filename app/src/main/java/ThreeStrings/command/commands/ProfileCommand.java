@@ -40,8 +40,7 @@ public class ProfileCommand implements ICommand {
         } //this will run if user is not in database or is a bot
         catch (IllegalArgumentException e){
             e.printStackTrace();
-            channel.sendMessage("Sorry something went wrong. Either the user you mentioned is a bot,\nor you are not yet registered in the database.\n" +
-                    "To register please use !CreateRoom").queue();
+            channel.sendMessage("The Tavern staff can afford better housing so nothing here my friend.").queue();
         }
     }
     @Override
