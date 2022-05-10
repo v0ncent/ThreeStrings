@@ -4,6 +4,7 @@
 package ThreeStrings;
 import ThreeStrings.Music.*;
 import ThreeStrings.Rooms.CreateRoomCommand;
+import ThreeStrings.Rooms.RoomCommand;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import ThreeStrings.command.commands.*;
@@ -39,6 +40,7 @@ public class CommandManager {
         addCommand(new ProfileCommand());
         //room commands
         addCommand(new CreateRoomCommand());
+        addCommand(new RoomCommand());
     }
     private void addCommand(ICommand cmd){    //create a addCommand method
         boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName())); //create boolean method if a command is already found

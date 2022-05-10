@@ -8,15 +8,12 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
-
 @SuppressWarnings("DuplicatedCode")
 public class RoomMethods {
     final ArrayList<org.bson.Document> userRoom;
-
     public RoomMethods(ArrayList<Document> room) {
         this.userRoom = room;
     }
-
     public String formatRoomAsString() {
         //grab emoji codes from config
         final String plainTile = Config.get("WOOD_TILE"); //0
@@ -47,13 +44,16 @@ public class RoomMethods {
                 roomArray[i] = pillowTile4;
             } else if (roomArray[i].equals("n")) {
                 roomArray[i] = "\n";
+            } else if (roomArray[i].equals(" ")){
+                roomArray[i] = "";
             }
         }
         //return roomArray and cut off unwanted characters
         return Arrays.toString(roomArray)
                 .replaceAll("\\[", "")
                 .replaceAll(",", "")
-                .replaceAll("\\]", "");
+                .replaceAll("\\]", "")
+                .replaceAll(" ","");
     }
     public String[] formatRoomAsArray() {
         String room = this.userRoom.toString();
