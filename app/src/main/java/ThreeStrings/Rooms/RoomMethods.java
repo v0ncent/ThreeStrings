@@ -14,13 +14,13 @@ public class RoomMethods {
     public RoomMethods(ArrayList<Document> room) {
         this.userRoom = room;
     }
+    public final String plainTile = Config.get("WOOD_TILE"); //0
+    public final String pillowTile1 = Config.get("WOOD_TILE_PURPLE"); //1
+    public final String pillowTile2 = Config.get("WOOD_TILE_PURPLE2"); //2
+    public final String pillowTile3 = Config.get("WOOD_TILE_PURPLE3"); //3
+    public final String pillowTile4 = Config.get("WOOD_TILE_PURPLE4"); //4  n is NewLine
     public String formatRoomAsString() {
         //grab emoji codes from config
-        final String plainTile = Config.get("WOOD_TILE"); //0
-        final String pillowTile1 = Config.get("WOOD_TILE_PURPLE"); //1
-        final String pillowTile2 = Config.get("WOOD_TILE_PURPLE2"); //2
-        final String pillowTile3 = Config.get("WOOD_TILE_PURPLE3"); //3
-        final String pillowTile4 = Config.get("WOOD_TILE_PURPLE4"); //4  n is NewLine
         String room = this.userRoom.toString();
         //format room to just content of field
         String formattedRoom = room.replaceAll("Document", "")
