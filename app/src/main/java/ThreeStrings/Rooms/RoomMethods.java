@@ -4,6 +4,11 @@ COPYRIGHT Vincent Banks
  */
 package ThreeStrings.Rooms;
 import ThreeStrings.Config;
+import ThreeStrings.command.CommandContext;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Invite;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.Event;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,12 +19,13 @@ public class RoomMethods {
     public RoomMethods(ArrayList<Document> room) {
         this.userRoom = room;
     }
-    public final String plainTile = Config.get("WOOD_TILE"); //0
-    public final String pillowTile1 = Config.get("WOOD_TILE_PURPLE"); //1
-    public final String pillowTile2 = Config.get("WOOD_TILE_PURPLE2"); //2
-    public final String pillowTile3 = Config.get("WOOD_TILE_PURPLE3"); //3
-    public final String pillowTile4 = Config.get("WOOD_TILE_PURPLE4"); //4  n is NewLine
-    public String formatRoomAsString() {
+    Tiles tiles = new Tiles();
+     final String plainTile = tiles.plainTile;
+     final String pillowTile1 = tiles.pillowTile1;
+     final String pillowTile2 = tiles.pillowTile2;
+     final String pillowTile3 = tiles.pillowTile3;
+     final String pillowTile4 = tiles.pillowTile4;
+     public String formatRoomAsString() {
         //grab emoji codes from config
         String room = this.userRoom.toString();
         //format room to just content of field
@@ -63,8 +69,10 @@ public class RoomMethods {
                 .replaceAll("room=", "")
                 .replaceAll("\\}", "")
                 .replaceAll("\\[", "")
-                .replaceAll("\\]", "");
-        return formattedRoom.split(" "); //return array of room codes
-        }
+                .replaceAll("\\]", "")
+                .replaceAll("n","")
+                .replaceAll(" ","");
+        return formattedRoom.split("");
+    }
     }
 
