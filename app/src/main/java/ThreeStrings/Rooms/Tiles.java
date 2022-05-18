@@ -12,13 +12,15 @@ THIS CLASS DEFINES ALL TILE STRING VARIABLES THAT ARE CONSTANTS
 AND NECESSARY METHODS FOR EDITING TILES
 * */
 public class Tiles {
-    final Decoration plain = new Decoration("oak","0","0","0","0");
-    final Decoration purplePillow = new Decoration("purplepillow","1n","1e","1s","1w");
-    //
+    //constant decoration objects
+    final Decoration plain = new Decoration("oak","0");
+    final Decoration purplePillow = new Decoration("purple pillow","1");
+    //array of decorations
     final Decoration[] decorations  = {
             plain,
             purplePillow
     };
+    //get decoration method
     public Decoration getDecoration(String tile){
         Decoration decorationContext;
         for (Decoration decoration : decorations) {
@@ -29,22 +31,21 @@ public class Tiles {
         }
         return null;
     }
+    //get direction method
     public String getDirection(Decoration decoration, String direction){
         switch (direction) {
             case "n":
                 return decoration.directions[0];
             case "e":
-                System.out.println(decoration.directions[1]);
                 return decoration.directions[1];
             case "s":
-                System.out.println(decoration.directions[2]);
                 return decoration.directions[2];
             case "w":
-                System.out.println(decoration.directions[3]);
                 return decoration.directions[3];
         }
         return null;
     }
+    //get tile position method
     public static int getTilePosition(String message){
         int tileSpot;
         switch (message) {

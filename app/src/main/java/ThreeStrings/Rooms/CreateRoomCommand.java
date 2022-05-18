@@ -20,7 +20,8 @@ public class CreateRoomCommand implements ICommand {
                 {"0","0","0","0","0","n"},
                 {"0","0","0","0","0","n"}}; //create default room
         Document defaultDoc = new Document("id", discordId).append("room", Arrays.deepToString(defaultRoom)
-                .replaceAll("\\[","").replaceAll(",","").replaceAll("\\]","")).append("cash", "100"); // create default document to check if user has already been registered
+                .replaceAll("\\[","").replaceAll(",","").replaceAll("\\]",""))
+                .append("cash", "100").append("inventory","").append("goldstars",""); // create default document to check if user has already been registered
         if (!mongo.checkIfExists(defaultDoc)) { // if document doest exist in database
             try {
                 mongo.insert(defaultDoc);

@@ -2,6 +2,7 @@
 //EditRoomCommand Class
 //COPYRIGHT Vincent banks
 package ThreeStrings.Rooms;
+import ThreeStrings.Database.MONGODB;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
@@ -9,8 +10,8 @@ import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.bson.Document;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 public class EditRoomCommand implements ICommand {
@@ -19,7 +20,7 @@ public class EditRoomCommand implements ICommand {
         this.waiter = waiter;
     }
     //
-    public static boolean checkIfValidRoom(String userMessage){
+    public static boolean checkIfValidRoom(String userMessage){ //static method to check if user picked valid room tile
         String[] validTiles = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25"};
         for (String validTile : validTiles) {
             if (validTile.equals(userMessage)) {
@@ -29,7 +30,7 @@ public class EditRoomCommand implements ICommand {
         return false;
     }
     //TODO: this needs to be changed once inventory is actually implemented
-    public static boolean checkIfValidInventory(String userMessage){
+    public static boolean checkIfValidInventory(String userMessage){ // static method for checking if user picked a valid inventory slot
         Tiles tiles = new Tiles();
         Decoration[] validSlots = tiles.decorations;
         for (Decoration validSlot : validSlots) {
@@ -39,7 +40,7 @@ public class EditRoomCommand implements ICommand {
         }
         return false;
     }
-    public static boolean checkIfValidDirection(String userMessage){
+    public static boolean checkIfValidDirection(String userMessage){ //static method for checking if user picked valid direction
         String[] validDirections = {"n","e","s","w"};
         for (String validDirection : validDirections) {
             if (validDirection.equals(userMessage)) {
@@ -48,7 +49,7 @@ public class EditRoomCommand implements ICommand {
         }
         return false;
     }
-    //
+    //create needed variables for editing room
     int tileSpot;
     String tile;
     String direction;
@@ -63,11 +64,13 @@ public class EditRoomCommand implements ICommand {
         final String roomAsString = memberTool.getRoomAsString(memberId); //get room as string
         final TextChannel channel = ctx.getChannel(); // create a text channel variable
         final Tiles tiles = new Tiles(); // instantiate tiles object
+        final MONGODB mongo = new MONGODB();
         //
         if(!roomAsString
                 .equals("Looks like you haven't registered for a room in the tavern yet.\n" +
-                "To register please use !createroom !")){
-            EmbedBuilder embed = new EmbedBuilder();
+                "To register please use !createroom !")){ //if user is registered in db
+            EmbedBuilder embed = new EmbedBuilder(); //create embed object
+            //set embed info
             embed.setTitle("What would you like to change about your room?");
             embed.addField("Give a tile # and a tile to swap it with!",roomAsString,true);
             embed.addField("Your inventory", tiles.plain.getName()
@@ -80,6 +83,7 @@ public class EditRoomCommand implements ICommand {
                     e -> checkIfValidRoom(e.getMessage().getContentRaw())
                             && e.getChannel().equals(ctx.getChannel())
                             && e.getAuthor().getId().equals(ctx.getAuthor().getId()), e -> {
+                //
                 String tile = e.getMessage().getContentRaw();
                 tileSpot = Tiles.getTilePosition(tile);
                 if(tileSpot == 999) {
@@ -90,6 +94,7 @@ public class EditRoomCommand implements ICommand {
                     parameterOneMet = true;
                     channel.sendMessage("Now pick a tile from your inventory to replace it.").queue();
                 }
+                //
                     }, 30L, TimeUnit.SECONDS,
                     () -> channel.sendMessage("").queue());
             //get tile name
@@ -98,23 +103,32 @@ public class EditRoomCommand implements ICommand {
                     e -> checkIfValidInventory(e.getMessage().getContentRaw())
                             && e.getChannel().equals(ctx.getChannel())
                             && e.getAuthor().getId().equals(ctx.getAuthor().getId()) && parameterOneMet, e -> {
+                //
                         tile = e.getMessage().getContentRaw().toLowerCase(Locale.ROOT);
                         parameterTwoMet = true;
                         decoration = tiles.getDecoration(tile);
                         channel.sendMessage("You have picked " + decoration.getName()
                                 + "Now pick a direction to have it facing. (ex: n,e,s,w").queue();
+                        //
                     }, 30L, TimeUnit.SECONDS,
                     () -> channel.sendMessage("").queue()); //add
-            //get tile direction
+            //get tile direction and update roomArray
             waiter.waitForEvent(GuildMessageReceivedEvent.class,
                     e -> checkIfValidDirection(e.getMessage().getContentRaw())
                             && e.getChannel().equals(ctx.getChannel())
                             && e.getAuthor().getId().equals(ctx.getAuthor().getId()) && parameterOneMet && parameterTwoMet, e -> {
+                        //
                         direction = e.getMessage().getContentRaw().toLowerCase();
-                        System.out.println(direction);
                         roomArray[tileSpot] = tiles.getDirection(decoration,direction);
-                        channel.sendMessage("take a look at your new room!").queue();
-                        channel.sendMessage(tiles.formatRoomArrayAsString(roomArray)).queue();
+                        Document sampleDoc = new Document("id",memberId);
+                        try{
+                            channel.sendMessage("take a look at your new room!").queue();
+                            channel.sendMessage(tiles.formatRoomArrayAsString(roomArray)).queue();
+                        }catch (Exception error){
+                            error.printStackTrace();
+                            channel.sendMessage("I dont feel so good" + error).queue();
+                        }
+                        //
                     }, 30L, TimeUnit.SECONDS,
                     () -> channel.sendMessage("Tsk,took too long I do not have all day.").queue()); //add
 
