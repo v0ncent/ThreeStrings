@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -26,7 +25,6 @@ public class PlayCommand implements ICommand {
         }
         final Member self = ctx.getSelfMember(); //implement variable to get bot
         final GuildVoiceState selfVoiceState = self.getVoiceState(); //gets bot voice state
-
         if (!selfVoiceState.inVoiceChannel()) { //if bot is not in vc
            channel.sendMessage("I need to be on stage so I can play.").queue();
             return;
@@ -46,16 +44,12 @@ public class PlayCommand implements ICommand {
             link = "ytsearch:" + link;
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
-
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
-
             PlayerManager.getInstance().LoadAndPlayOnce(channel, link); //sends bot to channel and plays song on instance
         }else { //else is a playlist
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
-
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
-
             PlayerManager.getInstance().LoadAndPlay(channel, link); //sends bot to channel and plays the playlist
         }
     }

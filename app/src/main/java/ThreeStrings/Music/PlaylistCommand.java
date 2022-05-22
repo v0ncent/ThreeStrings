@@ -44,9 +44,7 @@ public class PlaylistCommand implements ICommand {
             link = "ytsearch:" + link;
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
-
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
-
             PlayerManager.getInstance().LoadAndPlay(channel, link); //sends bot to channel and plays song on instance
         }
     }

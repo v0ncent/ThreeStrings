@@ -3,10 +3,8 @@
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Rooms;
 import ThreeStrings.Config;
-
 import java.util.Arrays;
 import java.util.Objects;
-
 /*
 THIS CLASS DEFINES ALL TILE STRING VARIABLES THAT ARE CONSTANTS
 AND NECESSARY METHODS FOR EDITING TILES
@@ -127,7 +125,6 @@ public class Tiles {
         }
         return 9999;
     }
-
     //will be deleted once db can update field
     public String formatRoomArrayAsString(String[] roomArray){
         for (int i = 0; i < roomArray.length; i++) {

@@ -1,6 +1,6 @@
 //Vincent Banks
 //AudioPlayerSendHandler class
-//COPYRIGHT Vincnet Banks
+//COPYRIGHT Vincent Banks
 package ThreeStrings.lavaplayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;

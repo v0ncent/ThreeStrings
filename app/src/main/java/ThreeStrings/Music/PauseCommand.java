@@ -7,7 +7,6 @@ import ThreeStrings.command.ICommand;
 import ThreeStrings.lavaplayer.GuildMusicManager;
 import ThreeStrings.lavaplayer.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;

@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 public class PlayerManager {
     private static PlayerManager INSTANCE;
     public final Map<Long, GuildMusicManager> musicManagers;

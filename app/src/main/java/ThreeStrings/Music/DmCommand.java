@@ -35,7 +35,6 @@ public class DmCommand implements ICommand {
         if (!memberVoiceState.inVoiceChannel()) { //if member is not in vc
             channel.sendMessage("What do you mean? You're not even in the tavern!").queue();
             return;
-
         }
         if (!memberVoiceState.getChannel().equals(selfVoiceState.getChannel())){ //if member is not in same voice channel as bot
             channel.sendMessage("You've got to be by the stage so you can hear me play!").queue();

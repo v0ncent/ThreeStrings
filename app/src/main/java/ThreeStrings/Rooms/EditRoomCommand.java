@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bson.Document;
-
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 public class EditRoomCommand implements ICommand {

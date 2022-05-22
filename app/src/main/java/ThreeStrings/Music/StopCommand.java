@@ -2,7 +2,6 @@
 //StopCommand Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Music;
-
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import ThreeStrings.lavaplayer.GuildMusicManager;

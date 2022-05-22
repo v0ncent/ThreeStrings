@@ -12,9 +12,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
-
 import java.util.concurrent.TimeUnit;
-
 @SuppressWarnings("ConstantConditions")
 public class NowPlayingCommand implements ICommand {
     @Override
@@ -47,20 +45,17 @@ public class NowPlayingCommand implements ICommand {
         final AudioTrackInfo info = track.getInfo(); //create variable for getting track info
         channel.sendMessageFormat("Currently playing `%s` by `%s`(Link: <%s>)", info.title, info.author, info.uri).queue(); //sends message from received info
         channel.sendMessage("Time left: " + formatTime(timeLeft)).queue();
-
     }
     private String formatTime(long timeInMillis) { //create formatTime method
         final long hours = timeInMillis / TimeUnit.HOURS.toMillis(1);
         final long minutes = timeInMillis / TimeUnit.MINUTES.toMillis(1);
         final long seconds = timeInMillis % TimeUnit.MINUTES.toMillis(1)/ TimeUnit.SECONDS.toMillis(1);
-
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
     @Override
     public String getName() {
         return "nowplaying";
     }
-
     @Override
     public String getHelp() {
         return "Shows what Im currently playing.";

@@ -6,9 +6,7 @@ import ThreeStrings.Database.MONGODB;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import org.bson.Document;
-
 import java.util.Arrays;
-
 public class CreateRoomCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
