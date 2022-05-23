@@ -5,7 +5,7 @@ plugins {
     id "com.microsoft.azure.azurewebapp" version "1.2.0"
 }
 
-mainClassName = 'ThreeStrings.ThreeStrings'
+mainClassName = 'ThreeStrings.Main'
 version '1.0'
 sourceCompatibility = JavaVersion.VERSION_11
 
