@@ -1,5 +1,5 @@
 //Vincent Banks
-//Main Class
+//Runner Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
@@ -11,8 +11,8 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import javax.security.auth.login.LoginException;
-public class ThreeStrings {
-    public static void main(String[] args) throws LoginException {  //LoginException allows for bot to log into account
+public class Runner {
+    public static void run() throws LoginException {
         JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
         ThreeStrings.setStatus(OnlineStatus.ONLINE); //set online status to online
