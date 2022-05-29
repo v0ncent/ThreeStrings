@@ -8,15 +8,19 @@ import ThreeStrings.command.ICommand;
 import org.bson.Document;
 import java.util.Arrays;
 public class CreateRoomCommand implements ICommand {
+    MONGODB mongo;
+    String[][]defaultRoom;
+    public CreateRoomCommand(){
+        mongo = new MONGODB(); //when class is call we create a new instance of mongo object
+        defaultRoom = new String[][]{{"0", "0", "0", "0", "0", "n"},
+                {"0", "0", "0", "0", "0", "n"},
+                {"0", "0", "0", "0", "0", "n"},
+                {"0", "0", "0", "0", "0", "n"},
+                {"0", "0", "0", "0", "0", "n"}}; //create default room
+    }
     @Override
     public void handle(CommandContext ctx) {
-        MONGODB mongo = new MONGODB(); //get mongo class
         long discordId = ctx.getAuthor().getIdLong(); //pull user's discord id as long value
-        String[][] defaultRoom = {{"0","0","0","0","0","n"},
-                {"0","0","0","0","0","n"},
-                {"0","0","0","0","0","n"},
-                {"0","0","0","0","0","n"},
-                {"0","0","0","0","0","n"}}; //create default room
         Document defaultDoc = new Document("id", discordId).append("room", Arrays.deepToString(defaultRoom)
                 .replaceAll("\\[","").replaceAll(",","").replaceAll("\\]",""))
                 .append("cash", "100").append("inventory","").append("goldstars",""); // create default document to check if user has already been registered

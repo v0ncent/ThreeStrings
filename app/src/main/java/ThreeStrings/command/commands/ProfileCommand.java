@@ -20,7 +20,11 @@ public class ProfileCommand implements ICommand {
             embed.setThumbnail(name.getUser().getAvatarUrl());
             embed.setTitle("Profile for " + name.getUser().getName());
             embed.setColor(name.getColor());
-            embed.addField("**Nickname**",name.getNickname(),true);
+            if(name.getNickname() == null){ // if user does not have a nickname
+                embed.addField("**Nickname**", name.getEffectiveName(),true);
+            } else {
+                embed.addField("**Nickname**", name.getNickname(),true);
+            }
             embed.addField("**Game Ranking**", "Ranking goes here", true);
             embed.addField("**Room**", member.getRoomAsString(name.getIdLong()), false);
             embed.setFooter("Quite the reputation around here I see!");
@@ -32,7 +36,11 @@ public class ProfileCommand implements ICommand {
             embed.setThumbnail(ctx.getMessage().getAuthor().getAvatarUrl());
             embed.setTitle("Profile for " + ctx.getMessage().getAuthor().getName());
             embed.setColor(name.getColor());
-            embed.addField("**Nickname**", name.getNickname(),true);
+            if(name.getNickname() == null){ // if user does not have a nickname
+                embed.addField("**Nickname**", ctx.getAuthor().getName(),true);
+            } else {
+                embed.addField("**Nickname**", name.getNickname(),true);
+            }
             embed.addField("**Game Ranking**", "Ranking goes here", true);
             embed.addField("**Room**", member.getRoomAsString(name.getIdLong()), false);
             embed.setFooter("Quite the reputation around here I see!");
