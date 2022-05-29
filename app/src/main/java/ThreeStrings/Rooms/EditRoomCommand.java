@@ -15,8 +15,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 public class EditRoomCommand implements ICommand {
     EventWaiter waiter;
-    public EditRoomCommand(EventWaiter waiter){ //create constructor to get event waiter
+    MONGODB mongo;
+    public EditRoomCommand(EventWaiter waiter){ //create constructor to get event waiter and mongo object
         this.waiter = waiter;
+        this.mongo = new MONGODB();
     }
     //
     public static boolean checkIfValidRoom(String userMessage){ //static method to check if user picked valid room tile
@@ -63,7 +65,6 @@ public class EditRoomCommand implements ICommand {
         final String roomAsString = memberTool.getRoomAsString(memberId); //get room as string
         final TextChannel channel = ctx.getChannel(); // create a text channel variable
         final Tiles tiles = new Tiles(); // instantiate tiles object
-        final MONGODB mongo = new MONGODB();
         //
         if(!roomAsString
                 .equals("Looks like you haven't registered for a room in the tavern yet.\n" +

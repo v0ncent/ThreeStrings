@@ -14,7 +14,6 @@ public class RoomMethods {
     public RoomMethods(ArrayList<Document> room) {
         this.userRoom = room;
     }
-    Tiles tiles = new Tiles();
     //plain 1
     //purple 2 2n 2e 2s 2w
      public String formatRoomAsString() {
