@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
