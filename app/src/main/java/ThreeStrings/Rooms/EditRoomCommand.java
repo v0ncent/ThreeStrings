@@ -93,6 +93,10 @@ public class EditRoomCommand implements ICommand {
                 if(tileSpot == 9999) {
                     channel.sendMessage("@everyone I have no idea how you were able to get this message it shouldn't be possible!" +
                             "\nBut since you got it wow good for you this is the easter egg! 1 gold star.").queue();
+                    Document sampleDoc = new Document("id",memberId);
+                    Bson updates = Updates.combine(
+                            Updates.set("goldstar",1)
+                    );
                 }else {
                     channel.sendMessage("You have picked tile " + tile + " to be changed.").queue();
                     parameterOneMet = true;

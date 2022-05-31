@@ -23,7 +23,7 @@ public class CreateRoomCommand implements ICommand {
         long discordId = ctx.getAuthor().getIdLong(); //pull user's discord id as long value
         Document defaultDoc = new Document("id", discordId).append("room", Arrays.deepToString(defaultRoom)
                 .replaceAll("\\[","").replaceAll(",","").replaceAll("\\]",""))
-                .append("cash", "100").append("inventory","").append("goldstars",""); // create default document to check if user has already been registered
+                .append("cash", 100).append("inventory","").append("goldstars",0); // create default document to check if user has already been registered
         if (!mongo.checkIfExists(defaultDoc)) { // if document doest exist in database
             try {
                 mongo.insert(defaultDoc);
