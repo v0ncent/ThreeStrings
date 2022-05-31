@@ -2,9 +2,6 @@
 //Tile Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Rooms;
-import ThreeStrings.Config;
-import java.util.Arrays;
-import java.util.Objects;
 /*
 THIS CLASS DEFINES ALL DECORATION VARIABLES THAT ARE CONSTANTS
 AND NECESSARY METHODS FOR EDITING TILES
@@ -124,30 +121,5 @@ public class Tiles {
                 return tileSpot;
         }
         return 9999;
-    }
-    //will be deleted once db can update field
-    public String formatRoomArrayAsString(String[] roomArray){
-        for (int i = 0; i < roomArray.length; i++) {
-            if (Objects.equals(roomArray[i], "0")) {
-                roomArray[i] = Config.get("WOOD_TILE");
-            } else if (roomArray[i].equals("1n")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_N");
-            } else if (roomArray[i].equals("1e")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_E");
-            } else if (roomArray[i].equals("1s")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_S");
-            } else if (roomArray[i].equals("1w")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_W");
-            } else if (roomArray[i].equals("n")) {
-                roomArray[i] = "\n";
-            } else if (roomArray[i].equals(" ")){
-                roomArray[i] = "";
-            }
-        }
-        return Arrays.toString(roomArray)
-                .replaceAll("\\[", "")
-                .replaceAll(",", "")
-                .replaceAll("\\]", "")
-                .replaceAll(" ","");
     }
 }

@@ -7,10 +7,14 @@ import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
+import com.mongodb.client.model.Updates;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 public class EditRoomCommand implements ICommand {
@@ -86,7 +90,7 @@ public class EditRoomCommand implements ICommand {
                 //
                 String tile = e.getMessage().getContentRaw();
                 tileSpot = Tiles.getTilePosition(tile);
-                if(tileSpot == 999) {
+                if(tileSpot == 9999) {
                     channel.sendMessage("@everyone I have no idea how you were able to get this message it shouldn't be possible!" +
                             "\nBut since you got it wow good for you this is the easter egg! 1 gold star.").queue();
                 }else {
@@ -108,7 +112,7 @@ public class EditRoomCommand implements ICommand {
                         parameterTwoMet = true;
                         decoration = tiles.getDecoration(tile);
                         channel.sendMessage("You have picked " + decoration.getName()
-                                + "Now pick a direction to have it facing. (ex: n,e,s,w").queue();
+                                + ". Now pick a direction to have it facing. (ex: n,e,s,w").queue();
                         //
                     }, 30L, TimeUnit.SECONDS,
                     () -> channel.sendMessage("").queue()); //add
@@ -121,12 +125,19 @@ public class EditRoomCommand implements ICommand {
                         direction = e.getMessage().getContentRaw().toLowerCase();
                         roomArray[tileSpot] = tiles.getDirection(decoration,direction);
                         Document sampleDoc = new Document("id",memberId);
+                        Bson updates = Updates.combine(
+                                Updates.set("room", Arrays.toString(roomArray)
+                                        .replaceAll(",","")
+                                        .replaceAll("\\[","")
+                                        .replaceAll("\\]",""))
+                        );
                         try{
+                            mongo.updateField(sampleDoc,updates);
                             channel.sendMessage("take a look at your new room!").queue();
-                            channel.sendMessage(tiles.formatRoomArrayAsString(roomArray)).queue();
+                            channel.sendMessage(memberTool.getRoomAsString(memberId)).queue();
                         }catch (Exception error){
                             error.printStackTrace();
-                            channel.sendMessage("I dont feel so good" + error).queue();
+                            channel.sendMessage("I dont feel so good " + error).queue();
                         }
                         //
                     }, 30L, TimeUnit.SECONDS,

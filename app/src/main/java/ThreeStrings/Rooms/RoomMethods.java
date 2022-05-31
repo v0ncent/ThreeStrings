@@ -14,10 +14,7 @@ public class RoomMethods {
     public RoomMethods(ArrayList<Document> room) {
         this.userRoom = room;
     }
-    //plain 1
-    //purple 2 2n 2e 2s 2w
      public String formatRoomAsString() {
-        //grab emoji codes from config
         String room = this.userRoom.toString();
         //format room to just content of field
         String formattedRoom = room.replaceAll("Document", "")
@@ -34,11 +31,11 @@ public class RoomMethods {
             } else if (roomArray[i].equals("1n")) {
                 roomArray[i] = Config.get("WOOD_TILE_PURPLE_N");
             } else if (roomArray[i].equals("1e")) {
-                roomArray[i] = Config.get("WOOD_TILE_E");
+                roomArray[i] = Config.get("WOOD_TILE_PURPLE_E");
             } else if (roomArray[i].equals("1s")) {
-                roomArray[i] = Config.get("WOOD_TILE_S");
+                roomArray[i] = Config.get("WOOD_TILE_PURPLE_S ");
             } else if (roomArray[i].equals("1w")) {
-                roomArray[i] = Config.get("WOOD_TILE_W");
+                roomArray[i] = Config.get("WOOD_TILE_PURPLE_W");
             } else if (roomArray[i].equals("n")) {
                 roomArray[i] = "\n";
             } else if (roomArray[i].equals(" ")){
@@ -60,9 +57,8 @@ public class RoomMethods {
                 .replaceAll("room=", "")
                 .replaceAll("\\}", "")
                 .replaceAll("\\[", "")
-                .replaceAll("\\]", "")
-                .replaceAll(" ","");
-        return formattedRoom.split("");
+                .replaceAll("\\]", "");
+        return formattedRoom.split(" ");
     }
     }
 
