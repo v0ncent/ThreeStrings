@@ -2,16 +2,16 @@
 //CreateRoomCommand Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Rooms;
-import ThreeStrings.Database.MONGODB;
+import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import org.bson.Document;
 import java.util.Arrays;
 public class CreateRoomCommand implements ICommand {
-    MONGODB mongo;
+    MemberMongo mongo;
     String[][]defaultRoom;
     public CreateRoomCommand(){
-        mongo = new MONGODB(); //when class is call we create a new instance of mongo object
+        mongo = new MemberMongo(); //when class is call we create a new instance of mongo object
         defaultRoom = new String[][]{{"0", "0", "0", "0", "0", "n"},
                 {"0", "0", "0", "0", "0", "n"},
                 {"0", "0", "0", "0", "0", "n"},

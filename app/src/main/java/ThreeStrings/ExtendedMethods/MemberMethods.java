@@ -2,13 +2,13 @@
 //MemberMethods Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.ExtendedMethods;
-import ThreeStrings.Database.MONGODB;
+import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.Rooms.RoomMethods;
 import org.bson.Document;
 import java.util.ArrayList;
 @SuppressWarnings("SpellCheckingInspection")
 public class MemberMethods {
-    final MONGODB mongodb = new MONGODB(); //create new instance of mongo object
+    final MemberMongo mongodb = new MemberMongo(); //create new instance of mongo object
     public String getRoomAsString(long id) { //getRoomAsString method
         Document sampleDoc = new Document("id",id); //create sample document to check if user is registered in db
         if (mongodb.checkIfExists(sampleDoc)){

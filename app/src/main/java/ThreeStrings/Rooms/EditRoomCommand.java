@@ -2,7 +2,7 @@
 //EditRoomCommand Class
 //COPYRIGHT Vincent banks
 package ThreeStrings.Rooms;
-import ThreeStrings.Database.MONGODB;
+import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
@@ -18,10 +18,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 public class EditRoomCommand implements ICommand {
     EventWaiter waiter;
-    MONGODB mongo;
+    MemberMongo mongo;
     public EditRoomCommand(EventWaiter waiter){ //create constructor to get event waiter and mongo object
         this.waiter = waiter;
-        this.mongo = new MONGODB();
+        this.mongo = new MemberMongo();
     }
     //
     public static boolean checkIfValidRoom(String userMessage){ //static method to check if user picked valid room tile
@@ -96,6 +96,7 @@ public class EditRoomCommand implements ICommand {
                     Bson updates = Updates.combine(
                             Updates.set("goldstar",1)
                     );
+                    mongo.updateField(sampleDoc,updates);
                 }else {
                     channel.sendMessage("You have picked tile " + tile + " to be changed.").queue();
                     parameterOneMet = true;
