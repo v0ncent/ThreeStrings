@@ -2,6 +2,7 @@
 //EditRoomCommand Class
 //COPYRIGHT Vincent banks
 package ThreeStrings.Rooms;
+import ThreeStrings.Config;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.Rooms.Tiles.Decoration;
@@ -93,7 +94,7 @@ public class EditRoomCommand implements ICommand {
                 tileSpot = Tiles.getTilePosition(tile);
                 if(tileSpot == 9999) {
                     channel.sendMessage("@everyone I have no idea how you were able to get this message it shouldn't be possible!" +
-                            "\nBut since you got it wow good for you this is the easter egg! 1 gold star.\n").queue();
+                            "\nBut since you got it wow good for you this is the easter egg! 1 gold star."+ Config.get("GOLD_STAR") + "\n").queue();
                     try {
                         memberTool.eggFound(memberId);
                     } catch (Exception error){

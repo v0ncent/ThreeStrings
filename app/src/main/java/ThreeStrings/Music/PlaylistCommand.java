@@ -2,6 +2,7 @@
 //PlaylistCommand Class
 //Copyright Vincent Banks
 package ThreeStrings.Music;
+import ThreeStrings.Config;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
@@ -57,7 +58,7 @@ public class PlaylistCommand implements ICommand {
             PlayerManager.getInstance().LoadAndPlayOnce(channel, link); //sends bot to channel and plays song on instance
             channel.sendMessage("@everyone Thats gotta suck!\n" +
                     ctx.getMessage().getAuthor().getAsMention() + " just got rick rolled!\n" +
-                    "At least its not all bad you got a gold star!\n").queue();
+                    "At least its not all bad you got a gold star!" + Config.get("GOLD_STAR") +"\n").queue();
             try {
                 MemberMethods memberTool = new MemberMethods();
                 memberTool.eggFound(ctx.getAuthor().getIdLong());

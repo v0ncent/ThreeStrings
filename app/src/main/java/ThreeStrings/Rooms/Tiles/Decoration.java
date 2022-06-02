@@ -19,4 +19,7 @@ public class Decoration {
     public String getName(){
         return name;
     }
+    public int getCost(){
+        return cost;
+    }
 }
