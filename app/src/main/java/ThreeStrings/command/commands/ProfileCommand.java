@@ -26,6 +26,8 @@ public class ProfileCommand implements ICommand {
                 embed.addField("**Nickname**", name.getNickname(),true);
             }
             embed.addField("**Game Ranking**", "Ranking goes here", true);
+            embed.addField("**Cash**",member.getCash(name.getIdLong(),true).toString(),true);
+            embed.addField("**GoldStars**",member.getGoldStars(name.getIdLong()).toString(),true);
             embed.addField("**Room**", member.getRoomAsString(name.getIdLong()), false);
             embed.setFooter("Quite the reputation around here I see!");
             channel.sendMessageEmbeds(embed.build()).queue();
@@ -42,6 +44,8 @@ public class ProfileCommand implements ICommand {
                 embed.addField("**Nickname**", name.getNickname(),true);
             }
             embed.addField("**Game Ranking**", "Ranking goes here", true);
+            embed.addField("**Cash**",member.getCash(name.getIdLong(),true).toString(),true);
+            embed.addField("**GoldStars**",member.getGoldStars(name.getIdLong()).toString(),true);
             embed.addField("**Room**", member.getRoomAsString(name.getIdLong()), false);
             embed.setFooter("Quite the reputation around here I see!");
             channel.sendMessageEmbeds(embed.build()).queue();

@@ -4,6 +4,8 @@
 package ThreeStrings.Rooms;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
+import ThreeStrings.Rooms.Tiles.Decoration;
+import ThreeStrings.Rooms.Tiles.Tiles;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
@@ -91,12 +93,13 @@ public class EditRoomCommand implements ICommand {
                 tileSpot = Tiles.getTilePosition(tile);
                 if(tileSpot == 9999) {
                     channel.sendMessage("@everyone I have no idea how you were able to get this message it shouldn't be possible!" +
-                            "\nBut since you got it wow good for you this is the easter egg! 1 gold star.").queue();
-                    Document sampleDoc = new Document("id",memberId);
-                    Bson updates = Updates.combine(
-                            Updates.set("goldstar",1)
-                    );
-                    mongo.updateField(sampleDoc,updates);
+                            "\nBut since you got it wow good for you this is the easter egg! 1 gold star.\n").queue();
+                    try {
+                        memberTool.eggFound(memberId);
+                    } catch (Exception error){
+                        error.printStackTrace();
+                        channel.sendMessage("I tried to give you a star but seems there was an error! " + error).queue();
+                    }
                 }else {
                     channel.sendMessage("You have picked tile " + tile + " to be changed.").queue();
                     parameterOneMet = true;

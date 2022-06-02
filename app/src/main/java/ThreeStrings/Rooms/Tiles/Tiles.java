@@ -1,17 +1,18 @@
 //Vincent Banks
 //Tile Class
 //COPYRIGHT Vincent Banks
-package ThreeStrings.Rooms;
+package ThreeStrings.Rooms.Tiles;
+
 /*
 THIS CLASS DEFINES ALL DECORATION VARIABLES THAT ARE CONSTANTS
 AND NECESSARY METHODS FOR EDITING TILES
 * */
 public class Tiles {
     //constant decoration objects
-    final Decoration plain = new Decoration("oak","0");
-    final Decoration purplePillow = new Decoration("purple pillow","1");
+    public final Decoration plain = new Decoration("oak","0",50);
+    public final Decoration purplePillow = new Decoration("purple pillow","1",100);
     //array of decorations
-    final Decoration[] decorations  = {
+    public final Decoration[] decorations  = {
             plain,
             purplePillow
     };

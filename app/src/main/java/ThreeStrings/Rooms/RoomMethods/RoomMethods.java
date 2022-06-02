@@ -2,7 +2,7 @@
 RoomMethods Class
 COPYRIGHT Vincent Banks
  */
-package ThreeStrings.Rooms;
+package ThreeStrings.Rooms.RoomMethods;
 import ThreeStrings.Config;
 import org.bson.Document;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class RoomMethods {
             } else if (roomArray[i].equals("1e")) {
                 roomArray[i] = Config.get("WOOD_TILE_PURPLE_E");
             } else if (roomArray[i].equals("1s")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_S ");
+                roomArray[i] = Config.get("WOOD_TILE_PURPLE_S");
             } else if (roomArray[i].equals("1w")) {
                 roomArray[i] = Config.get("WOOD_TILE_PURPLE_W");
             } else if (roomArray[i].equals("n")) {

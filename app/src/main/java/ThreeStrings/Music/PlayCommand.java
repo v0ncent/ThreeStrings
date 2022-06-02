@@ -2,17 +2,26 @@
 //Play Command Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Music;
+import ThreeStrings.Database.MemberMongo;
+import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import ThreeStrings.lavaplayer.PlayerManager;
+import com.mongodb.client.model.Updates;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.requests.restaction.MemberAction;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Random;
+
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class PlayCommand implements ICommand {
     @SuppressWarnings("ConstantConditions")
@@ -38,6 +47,26 @@ public class PlayCommand implements ICommand {
         if (!memberVoiceState.getChannel().equals(selfVoiceState.getChannel())){ //if member is not in same voice channel as bot
             channel.sendMessage("You've got to be by the stage so you can hear me play!").queue();
             return;
+        }
+        Random r = new Random();
+        int rngEgg = r.nextInt(101-1) + 1;
+        int test = 57;
+        if(test == 57){
+            String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
+            final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
+            audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
+            PlayerManager.getInstance().LoadAndPlayOnce(channel, link); //sends bot to channel and plays song on instance
+            channel.sendMessage("@everyone Thats gotta suck!\n" +
+                    ctx.getMessage().getAuthor().getAsMention() + " just got rick rolled!\n" +
+                    "At least its not all bad you got a gold star!\n").queue();
+            try {
+                MemberMethods memberTool = new MemberMethods();
+                memberTool.eggFound(ctx.getAuthor().getIdLong());
+            } catch (Exception e){
+                e.printStackTrace();
+                channel.sendMessage("I tried to give you a star but seems there was an error! " + e).queue();
+            }
         }
         String link = String.join(" ",ctx.getArgs()); //create link
         if (!isUrl(link)){ //if there is no link lavaplayer will search youtube for link and play only the top result
