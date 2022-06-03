@@ -50,14 +50,14 @@ public class PlayCommand implements ICommand {
             return;
         }
         Random r = new Random();
-        int rngEgg = r.nextInt(101-1) + 1;
+        int rngEgg = r.nextInt(251-1) + 1;
         if(rngEgg == 57){
             String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
             PlayerManager.getInstance().LoadAndPlayOnce(channel, link); //sends bot to channel and plays song on instance
-            channel.sendMessage("@everyone Thats gotta suck!\n" +
+            channel.sendMessage("Thats gotta suck!\n" +
                     ctx.getMessage().getAuthor().getAsMention() + " just got rick rolled!\n" +
                     "At least its not all bad you got a gold star!" + Config.get("GOLD_STAR") +"\n").queue();
             try {

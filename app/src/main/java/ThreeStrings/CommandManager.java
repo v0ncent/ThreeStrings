@@ -45,7 +45,7 @@ public class CommandManager {
         addCommand(new RoomCommand());
         addCommand(new EditRoomCommand(waiter));
         //shop commands
-        addCommand(new ShopCommand());
+        addCommand(new ShopCommand(waiter));
     }
     private void addCommand(ICommand cmd){    //create a addCommand method
         boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName())); //create boolean method if a command is already found

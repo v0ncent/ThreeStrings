@@ -22,10 +22,15 @@ public class Shop {
         }
         shopList.add(decoration);
     }
-    public String getShopList(){
+    public String getShopListAsString(){
+        int index = 0;
         List<String> itemNames = new ArrayList<>();
         for (Decoration decoration : this.shopList) {
-            itemNames.add(decoration.getName() + " " + decoration.getCost() + "$");
+            index++;
+            itemNames
+                    .add(index + ". " + decoration.getName()
+                            + " **" + decoration.getCost() + "$**"
+                    + " " + decoration.getThumbNail());
             itemNames.add("\n");
         }
         return itemNames
@@ -34,5 +39,10 @@ public class Shop {
                 .replaceAll("\\[","")
                 .replaceAll(",","");
     }
-
+    public Decoration buy(int index){
+        return shopList.get(index);
+    }
+    public boolean checkIfValid(String userRequest){
+        return shopList.get(Integer.parseInt(userRequest) - 1) != null;
+    }
 }
