@@ -19,4 +19,9 @@ public class CapybaraCommand implements ICommand {
     public String getHelp() {
         return "What? What is this?"; //when help command is executed on command bot replies
     }
+
+    @Override
+    public String getType() {
+        return "misc";
+    }
 }

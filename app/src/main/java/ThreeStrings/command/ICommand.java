@@ -7,6 +7,7 @@ public interface ICommand {
     void handle(CommandContext ctx); //create a method called handle that implements our command context class and names it ctx
     String getName(); //define a string as getName(); to get names of the commands
     String getHelp();
+    String getType();
     default List<String> getAlisases(){ //create a list with String variables called getAliases();  //set it to default because not every command needs a variable
         return List.of();
     }

@@ -52,5 +52,10 @@ public class CreateRoomCommand implements ICommand {
         public String getHelp () {
             return "Creates a tavern room for you to customize";
         }
+
+    @Override
+    public String getType() {
+        return "rooms";
     }
+}
 

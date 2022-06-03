@@ -163,4 +163,9 @@ public class EditRoomCommand implements ICommand {
     public String getHelp() {
         return "the command to edit your tavern room.\n For more info on usage please use !roomhelp !";
     }
+
+    @Override
+    public String getType() {
+        return "rooms";
+    }
 }

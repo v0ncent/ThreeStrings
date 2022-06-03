@@ -53,4 +53,9 @@ public class PauseCommand implements ICommand {
     public String getHelp() {
         return "Pauses the current song I am playing.";
     }
+
+    @Override
+    public String getType() {
+        return "music";
+    }
 }

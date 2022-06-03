@@ -57,4 +57,9 @@ public class ShuffleCommand implements ICommand {
     public String getHelp() {
         return "Shuffles the queue if there is one.";
     }
+
+    @Override
+    public String getType() {
+        return "music";
+    }
 }

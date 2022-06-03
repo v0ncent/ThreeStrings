@@ -61,4 +61,8 @@ public class QueueCommand implements ICommand {
     public String getHelp() {
         return "Shows what is playing next.";
     }
+    @Override
+    public String getType() {
+        return "music";
+    }
 }

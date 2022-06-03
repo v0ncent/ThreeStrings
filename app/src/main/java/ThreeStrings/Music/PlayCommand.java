@@ -3,26 +3,19 @@
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Music;
 import ThreeStrings.Config;
-import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import ThreeStrings.lavaplayer.PlayerManager;
-import com.mongodb.client.model.Updates;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
-import net.dv8tion.jda.api.requests.restaction.MemberAction;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
-
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 public class PlayCommand implements ICommand {
     @SuppressWarnings("ConstantConditions")
@@ -92,7 +85,13 @@ public class PlayCommand implements ICommand {
                     "Usage: !play (youtube link) or Simply type the song name.\n"+
                     "To play a playlist from youtube use !play (playlist link).";
         }
-        private boolean isUrl(String url){
+
+    @Override
+    public String getType() {
+        return "music";
+    }
+
+    private boolean isUrl(String url){
             try{
                 new URL(url); //atttempts to create new URL
                 return true; //succeeds and returns true

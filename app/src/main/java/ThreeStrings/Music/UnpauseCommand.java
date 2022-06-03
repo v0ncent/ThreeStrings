@@ -51,4 +51,9 @@ public class UnpauseCommand implements ICommand {
     public String getHelp() {
         return "Unpauses the song that is currently paused.";
     }
+
+    @Override
+    public String getType() {
+        return "music";
+    }
 }

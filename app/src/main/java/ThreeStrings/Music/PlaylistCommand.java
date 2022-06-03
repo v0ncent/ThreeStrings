@@ -3,25 +3,19 @@
 //Copyright Vincent Banks
 package ThreeStrings.Music;
 import ThreeStrings.Config;
-import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import ThreeStrings.lavaplayer.PlayerManager;
-import com.mongodb.client.model.Updates;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
-
 @SuppressWarnings({"ConstantConditions", "DuplicatedCode"})
 public class PlaylistCommand implements ICommand {
     @Override
@@ -84,6 +78,12 @@ public class PlaylistCommand implements ICommand {
     public String getHelp() {
         return "Gets me to play a playlist for you based off of your search.\n" + "usage is !playlist (search term).";
     }
+
+    @Override
+    public String getType() {
+        return "music";
+    }
+
     private boolean isUrl(String url){
         try{
             new URL(url); //atttempts to create new URL

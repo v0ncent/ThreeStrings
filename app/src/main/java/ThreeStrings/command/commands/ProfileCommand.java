@@ -73,4 +73,9 @@ public class ProfileCommand implements ICommand {
     public String getHelp() { // help description
         return "Shows you your tavern profile!";
     }
+
+    @Override
+    public String getType() {
+        return "member";
+    }
 }

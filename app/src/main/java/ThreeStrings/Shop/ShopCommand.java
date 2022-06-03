@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public class ShopCommand implements ICommand {
@@ -59,6 +58,12 @@ public class ShopCommand implements ICommand {
     public String getHelp() {
         return "Command to access the item shop!";
     }
+
+    @Override
+    public String getType() {
+        return "shop";
+    }
+
     @Override
     public List<String> getAlisases() {
         return List.of("store");

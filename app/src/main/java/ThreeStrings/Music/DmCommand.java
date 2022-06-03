@@ -112,4 +112,9 @@ public class DmCommand implements ICommand {
     public String getHelp() {
         return "A command for the dungeon Master to play select music playlist for the role playing moment!";
     }
+
+    @Override
+    public String getType() {
+        return "music";
+    }
 }
