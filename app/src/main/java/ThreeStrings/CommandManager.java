@@ -6,6 +6,7 @@ import ThreeStrings.Music.*;
 import ThreeStrings.Rooms.CreateRoomCommand;
 import ThreeStrings.Rooms.EditRoomCommand;
 import ThreeStrings.Rooms.RoomCommand;
+import ThreeStrings.Rooms.RoomHelpCommand;
 import ThreeStrings.Shop.ShopCommand;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
@@ -44,6 +45,7 @@ public class CommandManager {
         addCommand(new CreateRoomCommand());
         addCommand(new RoomCommand());
         addCommand(new EditRoomCommand(waiter));
+        addCommand(new RoomHelpCommand());
         //shop commands
         addCommand(new ShopCommand(waiter));
     }
@@ -81,5 +83,8 @@ public class CommandManager {
         }else{
             event.getChannel().sendMessage("Hey sorry, I can only do so much with the Lute. Use !Help for a list of my many talents!").queue(); //bot tells user that command does not exist
         }
+    }
+    public List<ICommand> getCommandList(){
+        return commands;
     }
 }
