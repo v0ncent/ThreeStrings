@@ -114,7 +114,7 @@ public class HelpCommand implements ICommand {
         String search = args.get(0);  //set search string for if command does not exist
         ICommand command = manager.getCommand(search); //implement Icommand class with variable command, calls for manager and command search
         if (command == null){ //if there is no existing command if statementt runs
-            channel.sendMessage("Sorry I've got nothing for" + search).queue(); //bot sends out no command exists message
+            channel.sendMessage("Sorry I've got nothing for " + search).queue(); //bot sends out no command exists message
             return;
         }
         channel.sendMessage(command.getHelp()).queue(); //!help command is sent out
