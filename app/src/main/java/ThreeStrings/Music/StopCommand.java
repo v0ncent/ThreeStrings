@@ -1,4 +1,4 @@
-//Vincnet Banks
+//Vincent Banks
 //StopCommand Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Music;

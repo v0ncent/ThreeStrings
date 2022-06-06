@@ -1,5 +1,5 @@
 //Vincent Banks
-//Lavaplayer EventScheduler class
+//Lava player EventScheduler class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.lavaplayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;

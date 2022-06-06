@@ -78,7 +78,7 @@ public class CommandManager {
         if (cmd != null) {
             event.getChannel().sendTyping().queue();
             List<String> args = Arrays.asList(split).subList(1, split.length); //take off first index and start at 1
-            CommandContext ctx = new CommandContext(event, args); //creates commandcontex to be later imported when creating commands
+            CommandContext ctx = new CommandContext(event, args); //creates command context to be later imported when creating commands
             cmd.handle(ctx);
         }else{
             event.getChannel().sendMessage("Hey sorry, I can only do so much with the Lute. Use !Help for a list of my many talents!").queue(); //bot tells user that command does not exist

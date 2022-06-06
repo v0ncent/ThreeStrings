@@ -7,12 +7,12 @@ import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 import java.nio.ByteBuffer;
 public class AudioPlayerSendHandler implements AudioSendHandler {
-    private final AudioPlayer audioPlayer; //import audioplayer class
+    private final AudioPlayer audioPlayer; //import audio player class
     private final ByteBuffer buffer; //import byte buffer class (holds bytes to send to discord)
     private final MutableAudioFrame frame; //this is what the audio is actually sent to
     public AudioPlayerSendHandler(AudioPlayer audioPlayer) {
         this.audioPlayer = audioPlayer;
-        this.buffer = ByteBuffer.allocate(1024); //lavaplayer will provide this many bytes every 20 millesonds
+        this.buffer = ByteBuffer.allocate(1024); //lava player will provide this many bytes every 20 milliseconds
         this.frame = new MutableAudioFrame();
         this.frame.setBuffer(buffer);
     }

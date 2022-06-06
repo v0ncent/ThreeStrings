@@ -33,7 +33,7 @@ public class LeaveCommand implements ICommand {
             return;                                                                                                      //copy and paste skip command
         }
         final Guild guild = ctx.getGuild();    //create a Guild variable
-        final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild); //create guildmanager variable
+        final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(guild); //create guild manager variable
         musicManager.scheduler.repeating = false;     //use repeating boolean and set to false
         musicManager.scheduler.queue.clear(); //bot clears queue
         musicManager.audioPlayer.stopTrack(); //bot stops current track

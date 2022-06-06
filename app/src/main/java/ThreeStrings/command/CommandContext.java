@@ -1,5 +1,5 @@
 //Vincent Banks
-//Commandontextt class
+//Command context class
 //Copyright Vincent Banks
 package ThreeStrings.command;
 import me.duncte123.botcommons.commands.ICommandContext;

@@ -2,7 +2,6 @@
 //EditRoomCommand Class
 //COPYRIGHT Vincent banks
 package ThreeStrings.Rooms;
-
 import ThreeStrings.Config;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
@@ -135,7 +134,7 @@ public class EditRoomCommand implements ICommand {
                                 Updates.set("room", Arrays.toString(roomArray)
                                         .replaceAll(",","")
                                         .replaceAll("\\[","")
-                                        .replaceAll("\\]",""))
+                                        .replaceAll("]",""))
                         );
                         try{
                             mongo.updateField(sampleDoc,updates);

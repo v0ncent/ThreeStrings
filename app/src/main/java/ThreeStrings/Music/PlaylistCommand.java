@@ -50,7 +50,7 @@ public class PlaylistCommand implements ICommand {
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
             PlayerManager.getInstance().LoadAndPlayOnce(channel, link); //sends bot to channel and plays song on instance
-            channel.sendMessage("Thats gotta suck!\n" +
+            channel.sendMessage("That's gotta suck!\n" +
                     ctx.getMessage().getAuthor().getAsMention() + " just got rick rolled!\n" +
                     "At least its not all bad you got a gold star!" + Config.get("GOLD_STAR") +"\n").queue();
             try {
@@ -62,7 +62,7 @@ public class PlaylistCommand implements ICommand {
             }
         }
         String link = String.join(" ", ctx.getArgs()); //create link
-        if (!isUrl(link)) { //if there is no link lavaplayer will search youtube for link and play only the top result
+        if (!isUrl(link)) { //if there is no link lavaplayer will search YouTube for link and play only the top result
             link = "ytsearch:" + link;
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
@@ -86,7 +86,7 @@ public class PlaylistCommand implements ICommand {
 
     private boolean isUrl(String url){
         try{
-            new URL(url); //atttempts to create new URL
+            new URL(url); //attempts to create new URL
             return true; //succeeds and returns true
         } catch (FriendlyException | MalformedURLException e){ //if not return false and throw URI syntax exception
             return false;

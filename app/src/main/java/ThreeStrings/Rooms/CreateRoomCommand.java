@@ -25,7 +25,7 @@ public class CreateRoomCommand implements ICommand {
                 .append("room", Arrays.deepToString(defaultRoom)
                 .replaceAll("\\[","")
                         .replaceAll(",","")
-                        .replaceAll("\\]",""))
+                        .replaceAll("]",""))
                 .append("cash", 100)
                 .append("inventory","")
                 .append("goldstars",0)
@@ -45,7 +45,6 @@ public class CreateRoomCommand implements ICommand {
     }
         @Override
         public String getName () {
-            //noinspection SpellCheckingInspection
             return "createroom";
         }
         @Override

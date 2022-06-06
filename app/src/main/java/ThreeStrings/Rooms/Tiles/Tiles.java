@@ -2,9 +2,7 @@
 //Tile Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Rooms.Tiles;
-
 import ThreeStrings.Config;
-
 /*
 THIS CLASS DEFINES ALL DECORATION VARIABLES THAT ARE CONSTANTS
 AND NECESSARY METHODS FOR EDITING TILES

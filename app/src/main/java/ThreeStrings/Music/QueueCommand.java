@@ -24,7 +24,7 @@ public class QueueCommand implements ICommand {
             channel.sendMessage("Hey im on break, there is nothing coming up.").queue();
             return;
         }
-        final int trackCount = Math.min(queue.size(), 20); //takes the smallest number of tracks and sets them as the trackcount variable (max 20)
+        final int trackCount = Math.min(queue.size(), 20); //takes the smallest number of tracks and sets them as the track count variable (max 20)
         final List<AudioTrack> trackList = new ArrayList<>(queue); //convert the queue into an array list
         final MessageAction messageAction = channel.sendMessage(("**Coming up:**\n")); //create messageAction variable that sends this message
         for (int i = 0; i < trackCount; i++) { //use for statement to iterate each track in queue and get info on the track
@@ -40,7 +40,7 @@ public class QueueCommand implements ICommand {
                     .append(formatTime(track.getDuration())) //get current track time
                     .append("`]\n");
         }
-        if (trackList.size() > trackCount) { //if tracklist size is bigger than 20
+        if (trackList.size() > trackCount) { //if track list size is bigger than 20
             messageAction.append("And `")
                     .append(String.valueOf(trackList.size() - trackCount))
                     .append("` more...");

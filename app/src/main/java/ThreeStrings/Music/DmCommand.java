@@ -16,7 +16,7 @@ import java.awt.*;
 import java.util.concurrent.TimeUnit;
 @SuppressWarnings("ConstantConditions")
 public class DmCommand implements ICommand {
-    EventWaiter waiter; //implement eventwaiter class into dmcommand under variable waiter
+    EventWaiter waiter; //implement event waiter class into dm command under variable waiter
     public DmCommand(EventWaiter waiter){ //create waiter constructor
         this.waiter = waiter;
     }
@@ -55,7 +55,7 @@ public class DmCommand implements ICommand {
         dmEmbed.setFooter("For your role playing needs! Just ask Threestrings!");
         ctx.getChannel().sendMessageEmbeds(dmEmbed.build()).queue(); //sends embed to chat
         ctx.getChannel().sendMessage("Excuse me, are you a god or something? Cause I usually only answer to Melil.").queue();
-        //add event waiters when option is picked designated playlist is played, when anotther option is picked it clears queue and stops any current tracks
+        //add event waiters when option is picked designated playlist is played, when another option is picked it clears queue and stops any current tracks
             waiter.waitForEvent(GuildMessageReceivedEvent.class,
                     e -> e.getMessage().getContentRaw().equals("1") && e.getChannel().equals(ctx.getChannel()), e -> {
                         musicManager.scheduler.player.stopTrack();

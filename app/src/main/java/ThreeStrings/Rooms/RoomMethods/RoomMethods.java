@@ -4,11 +4,9 @@ COPYRIGHT Vincent Banks
  */
 package ThreeStrings.Rooms.RoomMethods;
 import ThreeStrings.Config;
-import ThreeStrings.Rooms.Tiles.Tiles;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 @SuppressWarnings("DuplicatedCode")
 public class RoomMethods {
     final ArrayList<org.bson.Document> userRoom;
@@ -17,15 +15,14 @@ public class RoomMethods {
     }
      public String formatRoomAsString() {
         String room = this.userRoom.toString();
-        Tiles tileTool = new Tiles();
         //format room to just content of field
         String formattedRoom = room.replaceAll("Document", "")
                 .replaceAll("\\{", "")
                 .replaceAll("room=", "")
-                .replaceAll("\\}", "")
+                .replaceAll("}", "")
                 .replaceAll("\\[", "")
-                .replaceAll("\\]", "");
-        String[] roomArray = formattedRoom.split(" "); //create string array from characters of room thats split on blank spots
+                .replaceAll("]", "");
+        String[] roomArray = formattedRoom.split(" "); //create string array from characters of room that's split on blank spots
         //iterate through roomArray and create elif chain to format with emojis
         for (int i = 0; i < roomArray.length; i++) {
             switch (roomArray[i]) {
@@ -61,7 +58,7 @@ public class RoomMethods {
         return Arrays.toString(roomArray)
                 .replaceAll("\\[", "")
                 .replaceAll(",", "")
-                .replaceAll("\\]", "")
+                .replaceAll("]", "")
                 .replaceAll(" ","");
     }
     public String[] formatRoomAsArray() {
@@ -70,9 +67,9 @@ public class RoomMethods {
         String formattedRoom = room.replaceAll("Document", "")
                 .replaceAll("\\{", "")
                 .replaceAll("room=", "")
-                .replaceAll("\\}", "")
+                .replaceAll("}", "")
                 .replaceAll("\\[", "")
-                .replaceAll("\\]", "");
+                .replaceAll("]", "");
         return formattedRoom.split(" ");
     }
     }

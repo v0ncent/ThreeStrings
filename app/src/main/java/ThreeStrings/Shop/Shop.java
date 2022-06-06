@@ -35,7 +35,7 @@ public class Shop {
         }
         return itemNames
                 .toString()
-                .replaceAll("\\]","")
+                .replaceAll("]","")
                 .replaceAll("\\[","")
                 .replaceAll(",","");
     }

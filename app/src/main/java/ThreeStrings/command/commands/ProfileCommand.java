@@ -29,7 +29,7 @@ public class ProfileCommand implements ICommand {
             embed.addField("**Game Ranking**", "Ranking goes here", true);
             embed.addField("**Cash**",member.getCash(name.getIdLong(),true).toString(),true);
             if(member.getGoldStars(name.getIdLong()).equals(0)){
-                embed.addField("**GoldStars**","Looks like you havnt found an easter egg yet. Get to huntin!" + "<:goldstar:981776534182449202>",true);
+                embed.addField("**GoldStars**","Looks like you haven't found an easter egg yet. Get to huntin!" + "<:goldstar:981776534182449202>",true);
             } else {
                 embed.addField("**GoldStars**",member.getGoldStars(name.getIdLong()).toString() + "<:goldstar:981776534182449202>",true);
             }
@@ -52,7 +52,7 @@ public class ProfileCommand implements ICommand {
             embed.addField("**Game Ranking**", "Ranking goes here", true);
             embed.addField("**Cash**",member.getCash(name.getIdLong(),true).toString(),true);
             if(member.getGoldStars(name.getIdLong()).equals(0)){
-                embed.addField("**GoldStars**","Looks like you havnt found an easter egg yet. Get to huntin!" + Config.get("GOLD_STAR"),true);
+                embed.addField("**GoldStars**","Looks like you haven't found an easter egg yet. Get to huntin!" + Config.get("GOLD_STAR"),true);
             } else {
                 embed.addField("**GoldStars**",member.getGoldStars(name.getIdLong()).toString() + Config.get("GOLD_STAR"),true);
             }

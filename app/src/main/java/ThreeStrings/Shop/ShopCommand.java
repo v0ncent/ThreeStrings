@@ -40,11 +40,11 @@ public class ShopCommand implements ICommand {
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                 && e.getMessage().getContentRaw().toLowerCase().contains("buy ") // and if the message contains said chars
-                        &&shop.checkIfValid(e.getMessage().getContentRaw().toLowerCase().replaceAll("buy ","")) //and if its  a valid index
+                        &&shop.checkIfValid(e.getMessage().getContentRaw().toLowerCase().replaceAll("buy","")) //and if it's  a valid index
                 , e -> {
             //
             int shopIndex = Integer.parseInt(e.getMessage().getContentRaw()
-                    .toLowerCase().replaceAll("buy ",""));
+                    .toLowerCase().replaceAll("buy",""));
             ctx.getChannel().sendMessage(shop.buy(shopIndex-1).getName()).queue();
             //
                 }, 45L, TimeUnit.SECONDS,

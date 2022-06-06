@@ -9,7 +9,6 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.io.Serializable;
 import java.util.ArrayList;
-@SuppressWarnings("SpellCheckingInspection")
 public class MemberMethods {
     final MemberMongo mongodb = new MemberMongo(); //create new instance of mongo object
     public String getRoomAsString(long id) { //getRoomAsString method
@@ -74,7 +73,7 @@ public class MemberMethods {
     }
     public void eggFound(long id){ //eggFound Method
         Document sampleDoc = new Document("id",id); //sample document for finding user.
-        int userStars = (Integer) getGoldStars(id); //getGoldStars method and cast it to a integer
+        int userStars = (Integer) getGoldStars(id); //getGoldStars method and cast it to an integer
         userStars++; //+1 to stars GOOD JOB
         try {
             Bson updates = Updates.combine( //create bson update with field and updated stars

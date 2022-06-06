@@ -29,7 +29,7 @@ public class Listener  extends ListenerAdapter {
         }
         String prefix = Config.get("PREFIX"); //setting prefix to what it is in the database
         String raw = event.getMessage().getContentRaw();
-        if (raw.equalsIgnoreCase(prefix + "shutdown") && user.getId().equals(Config.get("OWNER_ID"))){ //using boolean we can create a !shutodwn command that only the owner can use with owner id in config
+        if (raw.equalsIgnoreCase(prefix + "shutdown") && user.getId().equals(Config.get("OWNER_ID"))){ //using boolean we can create a !shutdown command that only the owner can use with owner id in config
             LOGGER.info("Heading in for the night! Thanks for listening!"); //sends message to user that bot is shutting down
             event.getJDA().shutdown();  //bot shuts down
             BotCommons.shutdown(event.getJDA());

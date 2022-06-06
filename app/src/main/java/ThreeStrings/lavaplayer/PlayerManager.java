@@ -24,7 +24,7 @@ public class PlayerManager {
     public PlayerManager() {
         this.musicManagers = new HashMap<>(); //creates hashmap for musicManagers
         this.audioPlayerManager = new DefaultAudioPlayerManager(); //sets audioPlayerManager to default
-        AudioSourceManagers.registerRemoteSources(this.audioPlayerManager); //registers sources for defualt
+        AudioSourceManagers.registerRemoteSources(this.audioPlayerManager); //registers sources for default
         AudioSourceManagers.registerLocalSource(this.audioPlayerManager);
     }
     public GuildMusicManager getMusicManager(Guild guild){   //tells JDA what to use when sending audio
@@ -34,7 +34,7 @@ public class PlayerManager {
             return guildMusicManager;
         });
     }
-    public void LoadAndPlay(TextChannel channel, String trackUrl){ //create a load and play method with lavaplayer methods
+    public void LoadAndPlay(TextChannel channel, String trackUrl){ //create a load and play method with lava player methods
         final GuildMusicManager musicManager = this.getMusicManager(channel.getGuild()); //get discord channel
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
@@ -80,7 +80,7 @@ public class PlayerManager {
         });
     }
     // for playing only one track when searching with plain text code is all the same until final playing moment
-    public void LoadAndPlayOnce(TextChannel channel, String trackUrl){ //create a load and play method with lavaplayer methods
+    public void LoadAndPlayOnce(TextChannel channel, String trackUrl){ //create a load and play method with lava player methods
         final GuildMusicManager musicManagerSingle = this.getMusicManager(channel.getGuild()); //get discord channel
         this.audioPlayerManager.loadItemOrdered(musicManagerSingle, trackUrl, new AudioLoadResultHandler() {
             @Override

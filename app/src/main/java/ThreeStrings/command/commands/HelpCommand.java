@@ -1,6 +1,6 @@
 //Vincent Banks
 //HelpCommand Class
-//COPYRIGHT Vincet Banks
+//COPYRIGHT Vincent Banks
 package ThreeStrings.command.commands;
 import ThreeStrings.CommandManager;
 import ThreeStrings.Config;
@@ -8,7 +8,6 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public class HelpCommand implements ICommand {
         List<String> musicComs = new ArrayList<>();
         List<String> roomsComs = new ArrayList<>();
         List<String> shopComs = new ArrayList<>();
-        TextChannel channel = ctx.getChannel(); //implement textchannel class and create a new channel variable that then gets channel
+        TextChannel channel = ctx.getChannel(); //implement text channel class and create a new channel variable that then gets channel
         EmbedBuilder embedBuilder = new EmbedBuilder();
         if(args.isEmpty()){  //if there is no command with !help if statement runs
             for (ICommand iCommand : commandList) {
@@ -60,7 +59,7 @@ public class HelpCommand implements ICommand {
                     .getAvatarUrl());
             embedBuilder.addField("Misc","```"
                     +miscComs.toString()
-                    .replaceAll("\\]","")
+                    .replaceAll("]","")
                     .replaceAll("\\[","")
                     .replaceAll(",","")
                             .replaceAll(" ","")
@@ -68,7 +67,7 @@ public class HelpCommand implements ICommand {
                     ,true);
             embedBuilder.addField("Utility","```"
                     +utilityComs.toString()
-                    .replaceAll("\\]","")
+                    .replaceAll("]","")
                     .replaceAll("\\[","")
                     .replaceAll(",","")
                             .replaceAll(" ","")
@@ -76,7 +75,7 @@ public class HelpCommand implements ICommand {
                     ,true);
             embedBuilder.addField("Member","```"
                     +memberComs.toString()
-                    .replaceAll("\\]","")
+                    .replaceAll("]","")
                     .replaceAll("\\[","")
                     .replaceAll(",","")
                             .replaceAll(" ","")
@@ -84,7 +83,7 @@ public class HelpCommand implements ICommand {
                     ,true);
             embedBuilder.addField("Music","```"
                     +musicComs.toString()
-                    .replaceAll("\\]","")
+                    .replaceAll("]","")
                     .replaceAll("\\[","")
                     .replaceAll(",","")
                             .replaceAll(" ","")
@@ -92,7 +91,7 @@ public class HelpCommand implements ICommand {
                     ,false);
             embedBuilder.addField("Rooms","```"
                     +roomsComs.toString()
-                    .replaceAll("\\]","")
+                    .replaceAll("]","")
                     .replaceAll("\\[","")
                     .replaceAll(",","")
                             .replaceAll(" ","")
@@ -100,7 +99,7 @@ public class HelpCommand implements ICommand {
                     ,true);
             embedBuilder.addField("Shop","```"
                     +shopComs.toString()
-                    .replaceAll("\\]","")
+                    .replaceAll("]","")
                     .replaceAll("\\[","")
                     .replaceAll(",","")
                             .replaceAll(" ","")
@@ -114,7 +113,7 @@ public class HelpCommand implements ICommand {
         }
         String search = args.get(0);  //set search string for if command does not exist
         ICommand command = manager.getCommand(search); //implement Icommand class with variable command, calls for manager and command search
-        if (command == null){ //if there is no existing command if statementt runs
+        if (command == null){ //if there is no existing command if statement runs
             channel.sendMessage("Sorry I've got nothing for " + search).queue(); //bot sends out no command exists message
             return;
         }
@@ -125,7 +124,7 @@ public class HelpCommand implements ICommand {
         return "help"; //set command to help within discord
     }
     @Override
-    public String getHelp() { //when !help help is called this is ran
+    public String getHelp() { //when !help, help is called this is run
         return "Shows the list with what I can do\n" + "Usage: !help (command)";
     }
 
@@ -135,7 +134,7 @@ public class HelpCommand implements ICommand {
     }
 
     @Override
-    public List<String> getAlisases() {  //set secondary help commmand called !bard
+    public List<String> getAlisases() {  //set secondary help command called !bard
         return List.of("bard","cmds","commandlist");
     }
 }

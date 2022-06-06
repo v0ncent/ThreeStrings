@@ -16,7 +16,7 @@ public class JoinCommand implements ICommand {
         final TextChannel channel = ctx.getChannel(); //create a text channel variable to get the text channel
         final Member self = ctx.getSelfMember(); //allows bot to get itself
         final GuildVoiceState checkVoiceState = self.getVoiceState(); //checks if bot is already in voice chat
-        if (checkVoiceState.inVoiceChannel()){ //if bot is in voicechannel this if statement runs
+        if (checkVoiceState.inVoiceChannel()){ //if bot is in voiceschanged this if statement runs
             channel.sendMessage("Im already playing over here for the night.").queue(); //bot tells server that they are already in a voice channel
             return;
         }
@@ -26,7 +26,7 @@ public class JoinCommand implements ICommand {
             channel.sendMessage("What do you mean? You're not even in the tavern!").queue();
             return;
         }
-        final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
+        final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audio manager
         final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
         audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
         }
