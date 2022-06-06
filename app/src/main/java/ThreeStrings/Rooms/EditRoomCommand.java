@@ -2,6 +2,7 @@
 //EditRoomCommand Class
 //COPYRIGHT Vincent banks
 package ThreeStrings.Rooms;
+
 import ThreeStrings.Config;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
@@ -17,7 +18,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 public class EditRoomCommand implements ICommand {
     EventWaiter waiter;
@@ -28,20 +28,18 @@ public class EditRoomCommand implements ICommand {
     }
     //
     public static boolean checkIfValidRoom(String userMessage){ //static method to check if user picked valid room tile
-        String[] validTiles = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25"};
-        for (String validTile : validTiles) {
-            if (validTile.equals(userMessage)) {
-                return true;
-            }
-        }
-        return false;
+        int userIndex = Integer.parseInt(userMessage);
+        return 0 < userIndex
+                && userIndex
+                < 26;
     }
+
     //TODO: this needs to be changed once inventory is actually implemented
     public static boolean checkIfValidInventory(String userMessage){ // static method for checking if user picked a valid inventory slot
         Tiles tiles = new Tiles();
         Decoration[] validSlots = tiles.decorations;
         for (Decoration validSlot : validSlots) {
-            if (validSlot.getName().equals(userMessage)) {
+            if (validSlot.getName().equals(userMessage.toLowerCase())) {
                 return true;
             }
         }
@@ -50,7 +48,7 @@ public class EditRoomCommand implements ICommand {
     public static boolean checkIfValidDirection(String userMessage){ //static method for checking if user picked valid direction
         String[] validDirections = {"n","e","s","w"};
         for (String validDirection : validDirections) {
-            if (validDirection.equals(userMessage)) {
+            if (validDirection.equals(userMessage.toLowerCase())) {
                 return true;
             }
         }
@@ -116,11 +114,11 @@ public class EditRoomCommand implements ICommand {
                             && e.getChannel().equals(ctx.getChannel())
                             && e.getAuthor().getId().equals(ctx.getAuthor().getId()) && parameterOneMet, e -> {
                 //
-                        tile = e.getMessage().getContentRaw().toLowerCase(Locale.ROOT);
+                        tile = e.getMessage().getContentRaw().toLowerCase();
                         parameterTwoMet = true;
                         decoration = tiles.getDecoration(tile);
                         channel.sendMessage("You have picked " + decoration.getName()
-                                + ". Now pick a direction to have it facing. (ex: n,e,s,w").queue();
+                                + ". Now pick a direction to have it facing. (ex: n,e,s,w)").queue();
                         //
                     }, 30L, TimeUnit.SECONDS,
                     () -> channel.sendMessage("").queue()); //add

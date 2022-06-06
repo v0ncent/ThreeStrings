@@ -4,6 +4,7 @@ COPYRIGHT Vincent Banks
  */
 package ThreeStrings.Rooms.RoomMethods;
 import ThreeStrings.Config;
+import ThreeStrings.Rooms.Tiles.Tiles;
 import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public class RoomMethods {
     }
      public String formatRoomAsString() {
         String room = this.userRoom.toString();
+        Tiles tileTool = new Tiles();
         //format room to just content of field
         String formattedRoom = room.replaceAll("Document", "")
                 .replaceAll("\\{", "")
@@ -26,20 +28,33 @@ public class RoomMethods {
         String[] roomArray = formattedRoom.split(" "); //create string array from characters of room thats split on blank spots
         //iterate through roomArray and create elif chain to format with emojis
         for (int i = 0; i < roomArray.length; i++) {
-            if (Objects.equals(roomArray[i], "0")) {
-                roomArray[i] = Config.get("WOOD_TILE");
-            } else if (roomArray[i].equals("1n")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_N");
-            } else if (roomArray[i].equals("1e")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_E");
-            } else if (roomArray[i].equals("1s")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_S");
-            } else if (roomArray[i].equals("1w")) {
-                roomArray[i] = Config.get("WOOD_TILE_PURPLE_W");
-            } else if (roomArray[i].equals("n")) {
-                roomArray[i] = "\n";
-            } else if (roomArray[i].equals(" ")){
-                roomArray[i] = "";
+            switch (roomArray[i]) {
+                case "0" :
+                case "0n":
+                case "0e":
+                case "0s":
+                case "0w":
+                    roomArray[i] = Config.get("WOOD_TILE");
+                    break;
+
+                case "1n":
+                    roomArray[i] = Config.get("WOOD_TILE_PURPLE_N");
+                    break;
+                case "1e":
+                    roomArray[i] = Config.get("WOOD_TILE_PURPLE_E");
+                    break;
+                case "1s":
+                    roomArray[i] = Config.get("WOOD_TILE_PURPLE_S");
+                    break;
+                case "1w":
+                    roomArray[i] = Config.get("WOOD_TILE_PURPLE_W");
+                    break;
+                case "n":
+                    roomArray[i] = "\n";
+                    break;
+                case " ":
+                    roomArray[i] = "";
+                    break;
             }
         }
         //return roomArray and cut off unwanted characters

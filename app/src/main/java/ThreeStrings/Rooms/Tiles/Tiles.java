@@ -13,7 +13,8 @@ public class Tiles {
     //constant decoration objects
     public final Decoration plain =
             new Decoration("oak","0",50, Config.get("WOOD_TILE"));
-    public final Decoration purplePillow = new Decoration("purple pillow","1",100, Config.get("WOOD_TILE_PURPLE_N"));
+    public final Decoration purplePillow =
+            new Decoration("purple pillow","1",100, Config.get("WOOD_TILE_PURPLE_N"));
     //array of decorations
     public final Decoration[] decorations  = {
             plain,

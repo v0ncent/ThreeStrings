@@ -51,7 +51,8 @@ public class HelpCommand implements ICommand {
                 }
             }
             embedBuilder.setTitle("List`O Commands");
-            embedBuilder.setDescription("Hi, I'm Mattrim \"Threestrings\" Mereg. Here's a list of things I can do!");
+            embedBuilder.setDescription("Hi, I'm Mattrim \"Threestrings\" Mereg. Here's a list of things I can do!\n" +
+                    "For more info on a command use !help (command name)");
             embedBuilder.setColor(Color.orange);
             embedBuilder.setThumbnail(ctx
                     .getJDA()

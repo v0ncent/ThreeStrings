@@ -27,4 +27,7 @@ public class Decoration {
     public String getThumbNail(){
         return thumbNail;
     }
+    public String getDirectionsAtIndex(int index){
+        return directions[index];
+    }
 }
