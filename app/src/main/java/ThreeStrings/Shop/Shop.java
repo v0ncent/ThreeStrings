@@ -43,6 +43,10 @@ public class Shop {
         return shopList.get(index);
     }
     public boolean checkIfValid(String userRequest){
-        return shopList.get(Integer.parseInt(userRequest) - 1) != null;
+        try {
+            return shopList.get(Integer.parseInt(userRequest) - 1) != null;
+        } catch (Exception e){
+            return false;
+        }
     }
 }
