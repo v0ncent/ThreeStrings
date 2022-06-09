@@ -9,6 +9,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.io.Serializable;
 import java.util.ArrayList;
+
 public class MemberMethods {
     final MemberMongo mongodb = new MemberMongo(); //create new instance of mongo object
     public String getRoomAsString(long id) { //getRoomAsString method
@@ -82,6 +83,21 @@ public class MemberMethods {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public Document getInventory(long id){
+        Document sampleDoc = new Document("id",id); //create sample document to check if user is registered in db
+        if (mongodb.checkIfExists(sampleDoc)){ //if document exists
+            ArrayList<Document> results = mongodb.collection.find(
+                    new Document("id",id)
+            ).projection( //grab gold stars field
+                    new Document("inventory",1).append("_id",0)
+            ).into(new ArrayList<>()); //pull user specific entry and room into array list
+            return results
+                    .get(0);
+
+        } //if none of above is applicable send this message
+        return null;
+
     }
     //
 }

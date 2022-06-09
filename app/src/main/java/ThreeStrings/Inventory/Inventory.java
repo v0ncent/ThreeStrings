@@ -4,4 +4,8 @@
 package ThreeStrings.Inventory;
 public class Inventory {
 
+    public Inventory(){
+
+    }
+
 }

@@ -7,6 +7,8 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import org.bson.Document;
 import java.util.Arrays;
+import java.util.List;
+
 public class CreateRoomCommand implements ICommand {
     MemberMongo mongo;
     String[][]defaultRoom;
@@ -21,13 +23,14 @@ public class CreateRoomCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         long discordId = ctx.getAuthor().getIdLong(); //pull user's discord id as long value
+        List<String> inventory = List.of("");
         Document defaultDoc = new Document("id", discordId)
                 .append("room", Arrays.deepToString(defaultRoom)
                 .replaceAll("\\[","")
                         .replaceAll(",","")
                         .replaceAll("]",""))
                 .append("cash", 100)
-                .append("inventory","")
+                .append("inventory",inventory)
                 .append("goldstars",0)
                 .append("points",0); // create default document to check if user has already been registered
         if (!mongo.checkIfExists(defaultDoc)) { // if document doest exist in database

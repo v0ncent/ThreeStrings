@@ -4,6 +4,7 @@ ShopCommand Class
 COPYRIGHT Vincent Banks
 */
 package ThreeStrings.Shop;
+import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.Rooms.Tiles.Decoration;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
@@ -44,6 +45,7 @@ public class ShopCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         Random r = new Random();
+        MemberMethods memberTool = new MemberMethods();
         List<String> footers = new ArrayList<>();
         footers.add("Here at the shop we only sells the least worn items we are no longer using!");
         footers.add("I give discounts to those I like!");
@@ -59,6 +61,7 @@ public class ShopCommand implements ICommand {
         embedBuilder.setFooter(footers.get(rngFooter));
         ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
         ctx.getChannel().sendMessage("To purchase an item type buy (listing #).\n Or to sell type sell (inventory slot #).").queue();
+        System.out.println(memberTool.getInventory(ctx.getAuthor().getIdLong()));
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
