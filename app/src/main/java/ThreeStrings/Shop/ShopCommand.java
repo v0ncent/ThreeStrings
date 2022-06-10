@@ -11,7 +11,6 @@ import ThreeStrings.command.ICommand;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +32,19 @@ public class ShopCommand implements ICommand {
     }
     private boolean isValidConfirmation(String userMessage){
         List<String> validConfirmations = List.of("yes","no","y","n");
-        for (String validConfirmation : validConfirmations) {
-            if (userMessage.equals(validConfirmation)) {
-                return true;
-            }
-        }
-        return false;
+        return validConfirmations.stream().anyMatch((it) -> it.equalsIgnoreCase(userMessage));
     }
+    private boolean isCanceled(String message){
+        List<String>aborts = List.of("stop","cancel","abort","nevermind","kill","nomore","s","n","no","escape","esc");
+        return aborts.stream().anyMatch((it)-> it.equalsIgnoreCase(message));
+    }
+    List<String> ifCanceled = List.of(
+            "I didn't want to do business with you anyways.",
+            "I'll be here... just get your order in before festival season!",
+            "Don't wait too long, I've got a coin-raker eying that stock.",
+            "Hey it's fine to be a lackcoin, maybe next tenday?",
+            "Come on, buy something! Halambar's has a new lute wax I need!"
+    );
     boolean parameterOneMet;
     boolean parameterTwoMet;
     Decoration boughtDecoration;
@@ -65,51 +70,65 @@ public class ShopCommand implements ICommand {
         embedBuilder.setColor(Color.YELLOW);
         ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
         ctx.getChannel().sendMessage("To purchase an item type buy (listing #).\n Or to sell type sell (inventory slot #).").queue();
-        System.out.println(memberTool.getInventory(ctx.getAuthor().getIdLong()));
+        //
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
-                && e.getMessage().getContentRaw().toLowerCase().contains("buy") // and if the message contains said chars
+                        && e.getMessage().getContentRaw().toLowerCase().contains("buy") // and if the message contains said chars
                         &&shop.checkIfValid(e.getMessage().getContentRaw().toLowerCase().replaceAll("buy ","")) //and if it's  a valid index
+                || isCanceled(e.getMessage().getContentRaw())
                 , e -> {
             //
-            int shopIndex = Integer.parseInt(e.getMessage().getContentRaw()
-                    .toLowerCase().replaceAll("buy ",""))-1;
-            boughtDecoration = shop.buy(shopIndex);
-            parameterOneMet = true;
-            ctx.getChannel().sendMessage("You have selected **" + boughtDecoration.getName() + "**.").queue();
-            ctx.getChannel().sendMessage("How many of **"+ boughtDecoration.getName() + "** would you like to buy?").queue();
+                    if(!isCanceled(e.getMessage().getContentRaw())){
+                        int shopIndex = Integer.parseInt(e.getMessage().getContentRaw()
+                                .toLowerCase().replaceAll("buy ",""))-1;
+                        boughtDecoration = shop.buy(shopIndex);
+                        parameterOneMet = true;
+                        ctx.getChannel().sendMessage("You have selected **" + boughtDecoration.getName() + "**.").queue();
+                        ctx.getChannel().sendMessage("How many of **"+ boughtDecoration.getName() + "** would you like to buy?").queue();
+                    }
             //
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("").queue());
+        //
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                         && parameterOneMet
-                && isInt(e.getMessage().getContentRaw())//and if it's  a valid index
+                        && isInt(e.getMessage().getContentRaw())//and if it's  a valid index
+                        || isCanceled(e.getMessage().getContentRaw())
                 , e -> {
                     //
-                    amount = Integer.parseInt(e.getMessage().getContentRaw());
-                    parameterTwoMet = true;
-                    ctx.getChannel().sendMessage("You are about to purchase **" + amount + "** **" + boughtDecoration.getName() + "s.**").queue();
-                    ctx.getChannel().sendMessage("Are you sure you would like to purchase? (Y/N,YES,NO)").queue();
+                    if(!isCanceled(e.getMessage().getContentRaw())){
+                        amount = Integer.parseInt(e.getMessage().getContentRaw());
+                        parameterTwoMet = true;
+                        ctx.getChannel().sendMessage("You are about to purchase **" + amount + "** **" + boughtDecoration.getName() + "s.**").queue();
+                        ctx.getChannel().sendMessage("Are you sure you would like to purchase? (Y/N,YES,NO)").queue();
+                    }
                     //
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("").queue());
+        //
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                         && parameterTwoMet
                         && isValidConfirmation(e.getMessage().getContentRaw().toLowerCase())//and if it's  a valid index
+                        || isCanceled(e.getMessage().getContentRaw())
                 , e -> {
                     //
-                    if(e.getMessage().getContentRaw().toLowerCase(Locale.ROOT).equals("no")
-                            || e.getMessage().getContentRaw().toLowerCase(Locale.ROOT).equals("n")){
-                        ctx.getChannel().sendMessage("The deal is off then!").queue();
+                    if(!isCanceled(e.getMessage().getContentRaw())){
+                        if(e.getMessage().getContentRaw().toLowerCase(Locale.ROOT).equals("no")
+                                || e.getMessage().getContentRaw().toLowerCase(Locale.ROOT).equals("n")){
+                            ctx.getChannel().sendMessage("The deal is off then!").queue();
+                        } else {
+                            ctx.getChannel()
+                                    .sendMessage("Alright! You have purchased **"
+                                            + amount + "** **" + boughtDecoration.getName() + "s.**" ).queue();
+                        }
                     } else {
-                        ctx.getChannel()
-                                .sendMessage("Alright! You have purchased **"
-                                        + amount + "** **" + boughtDecoration.getName() + "s.**" ).queue();
+                        Random random = new Random();
+                        ctx.getChannel().sendMessage(ifCanceled.get(random.nextInt(ifCanceled.size()))).queue();
                     }
                     //
                 }, 45L, TimeUnit.SECONDS,

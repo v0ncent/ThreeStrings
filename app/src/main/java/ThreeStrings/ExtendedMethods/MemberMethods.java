@@ -101,7 +101,6 @@ public class MemberMethods {
             return results
                     .get(0)
                     .getList("inventory",String.class);
-
         } //if none of above is applicable send this message
         return null;
     }
