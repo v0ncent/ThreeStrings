@@ -2,21 +2,30 @@
 //Decoration Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Rooms.Tiles;
+
+import java.util.List;
+
 /*This class is the decoration object
 Only needed methods should be created within this class
 * */
 public class Decoration {
     String name;
-    String[] directions;
-    String unicode;
     int cost;
     String thumbNail;
-    public Decoration(String name, String unicode,int cost,String thumbNail){
+    int sellPrice;
+    List<String> directions;
+    public Decoration(String name,
+                      int cost,
+                      String thumbNail,
+                      String north,
+                      String east,
+                      String south,
+                      String west){
         this.name = name;
-        this.unicode = unicode;
-        this.directions = new String[]{unicode + "n", unicode + "e", unicode + "s", unicode + "w"};
         this.cost = cost;
         this.thumbNail = thumbNail;
+        this.sellPrice = this.cost/2;
+        this.directions = List.of(north,east,south,west);
     }
     public String getName(){
         return name;
@@ -27,7 +36,7 @@ public class Decoration {
     public String getThumbNail(){
         return thumbNail;
     }
-    public String getDirectionsAtIndex(int index){
-        return directions[index];
+    public int getSellPrice(){
+        return sellPrice;
     }
 }

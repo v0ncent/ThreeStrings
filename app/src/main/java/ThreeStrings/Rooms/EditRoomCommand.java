@@ -2,7 +2,6 @@
 //EditRoomCommand Class
 //COPYRIGHT Vincent banks
 package ThreeStrings.Rooms;
-import ThreeStrings.Config;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.Rooms.Tiles.Decoration;
@@ -16,141 +15,128 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import java.util.Arrays;
+
+import java.awt.*;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public class EditRoomCommand implements ICommand {
     EventWaiter waiter;
     MemberMongo mongo;
+    Tiles tileTool;
     public EditRoomCommand(EventWaiter waiter){ //create constructor to get event waiter and mongo object
         this.waiter = waiter;
         this.mongo = new MemberMongo();
+        this.tileTool = new Tiles();
     }
-    //
-    public static boolean checkIfValidRoom(String userMessage){ //static method to check if user picked valid room tile
-        int userIndex = Integer.parseInt(userMessage);
-        return 0 < userIndex
-                && userIndex
-                < 26;
-    }
-
-    //TODO: this needs to be changed once inventory is actually implemented
-    public static boolean checkIfValidInventory(String userMessage){ // static method for checking if user picked a valid inventory slot
-        Tiles tiles = new Tiles();
-        Decoration[] validSlots = tiles.decorations;
-        for (Decoration validSlot : validSlots) {
-            if (validSlot.getName().equals(userMessage.toLowerCase())) {
-                return true;
-            }
+    private boolean checkIfValidRoom(String userRequest){
+        try {
+            int index = Integer.parseInt(userRequest);
+            return index > 0 && index < 26;
+        }catch (Exception e){
+            return false;
         }
-        return false;
     }
-    public static boolean checkIfValidDirection(String userMessage){ //static method for checking if user picked valid direction
-        String[] validDirections = {"n","e","s","w"};
-        for (String validDirection : validDirections) {
-            if (validDirection.equals(userMessage.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+    private boolean checkIfValidInventory(String userRequest,Tiles tileTool){
+        return tileTool.decorations.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(userRequest));
     }
-    //create needed variables for editing room
-    int tileSpot;
-    String tile;
-    String direction;
-    boolean parameterOneMet = false;
-    boolean parameterTwoMet = false;
-    Decoration decoration;
+    private boolean checkIfValidDirection(String userRequest){
+        List<String> directions = List.of("n","e","s","w");
+        return directions.stream().anyMatch((it) -> it.equalsIgnoreCase(userRequest));
+    }
+    private boolean isCanceled(String message){
+        List<String>aborts = List.of("stop","cancel","abort","nevermind","kill","nomore","s","n","no","escape","esc");
+        return aborts.stream().anyMatch((it)-> it.equalsIgnoreCase(message));
+    }
+    int index;
+    boolean isParameterOneMet;
+    boolean isParameterTwoMet;
+    Decoration newDecoration;
     @Override
     public void handle(CommandContext ctx) {
-        final long memberId = ctx.getAuthor().getIdLong(); //get user id as long value
-        final MemberMethods memberTool = new MemberMethods(); // implement our MemberMethods
-        final String[] roomArray = memberTool.getRoomAsArray(memberId); // get room as array
-        final String roomAsString = memberTool.getRoomAsString(memberId); //get room as string
-        final TextChannel channel = ctx.getChannel(); // create a text channel variable
-        final Tiles tiles = new Tiles(); // instantiate tiles object
-        //
-        if(!roomAsString
-                .equals("Looks like you haven't registered for a room in the tavern yet.\n" +
-                "To register please use !createroom !")){ //if user is registered in db
-            EmbedBuilder embed = new EmbedBuilder(); //create embed object
-            //set embed info
-            embed.setTitle("What would you like to change about your room?");
-            embed.addField("Give a tile # and a tile to swap it with!",roomAsString,true);
-            embed.addField("Your inventory", tiles.plain.getName()
-                    +"\n" + tiles.purplePillow.getName(), true);
-            embed.setFooter("For more information on usage see !helproom.");
-            ctx.getChannel().sendMessageEmbeds(embed.build()).queue();
-            ctx.getChannel().sendMessage("Please select the tile # you wish to change.").queue();
-            //get tile #
-            waiter.waitForEvent(GuildMessageReceivedEvent.class,
-                    e -> checkIfValidRoom(e.getMessage().getContentRaw())
-                            && e.getChannel().equals(ctx.getChannel())
-                            && e.getAuthor().getId().equals(ctx.getAuthor().getId()), e -> {
-                //
-                String tile = e.getMessage().getContentRaw();
-                tileSpot = Tiles.getTilePosition(tile);
-                if(tileSpot == 9999) {
-                    channel.sendMessage("@everyone I have no idea how you were able to get this message it shouldn't be possible!" +
-                            "\nBut since you got it wow good for you this is the easter egg! 1 gold star."+ Config.get("GOLD_STAR") + "\n").queue();
-                    try {
-                        memberTool.eggFound(memberId);
-                    } catch (Exception error){
-                        error.printStackTrace();
-                        channel.sendMessage("I tried to give you a star but seems there was an error! " + error).queue();
+        final MemberMethods memberTool = new MemberMethods();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        final Tiles tileTool = new Tiles();
+        final long discordID = ctx.getAuthor().getIdLong();
+        final TextChannel channel = ctx.getChannel();
+        final List<String> userRoom = memberTool.getRoom(discordID);
+        final String userRoomAsString = memberTool.getRoomAsString(discordID);
+        embedBuilder.setTitle("What would you like to do to your room?");
+        embedBuilder.setDescription("Pick a tile # (left to right 1-30), and a tile you would like to change it to," +
+                "then pick a tile direction!");
+        embedBuilder.addField("Your Room",userRoomAsString,true);
+        embedBuilder.addField("Your Inventory",tileTool.decorations.get(0).getName() + "\n" + tileTool.decorations.get(1).getName(),true);
+        embedBuilder.setColor(Color.YELLOW);
+        channel.sendMessageEmbeds(embedBuilder.build()).queue();
+        channel.sendMessage("Pick a tile # (left to right 1-25) you wish to edit").queue();
+        List<String> randomStopMessages = List.of(
+                "Alright, alright, let me know when you've made up your mind.",
+                "Put the hammers away boys, it's off.",
+                "That'll be 5 dragons for the appraisal still.",
+                "For Gonds sake, I got a whole half-ogre here to help with the lumber!",
+                "I'm never going to hear the end of this cancellation from the Carpenters', Roofers', and Plasterers' Guild...",
+                "Whatever, that chair is going up on stage for me to use now!"
+        );
+        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+                e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
+                        && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
+                && checkIfValidRoom(e.getMessage().getContentRaw()) //and that the user gave a valid room slot
+                || isCanceled(e.getMessage().getContentRaw())
+                , e -> {
+                    //
+                    if(!isCanceled(e.getMessage().getContentRaw())){
+                        index = Integer.parseInt(e.getMessage().getContentRaw());
+                        isParameterOneMet = true;
+                        channel.sendMessage("Alright you have chosen tile **" + index +"** To be edited.").queue();
+                        channel.sendMessage("Now pick a tile to replace it.").queue();
                     }
-                }else {
-                    channel.sendMessage("You have picked tile " + tile + " to be changed.").queue();
-                    parameterOneMet = true;
-                    channel.sendMessage("Now pick a tile from your inventory to replace it.").queue();
-                }
-                //
-                    }, 30L, TimeUnit.SECONDS,
-                    () -> channel.sendMessage("").queue());
-            //get tile name
-            //TODO: needs to be changes once inventory is implemented to db
-            waiter.waitForEvent(GuildMessageReceivedEvent.class,
-                    e -> checkIfValidInventory(e.getMessage().getContentRaw())
-                            && e.getChannel().equals(ctx.getChannel())
-                            && e.getAuthor().getId().equals(ctx.getAuthor().getId()) && parameterOneMet, e -> {
-                //
-                        tile = e.getMessage().getContentRaw().toLowerCase();
-                        parameterTwoMet = true;
-                        decoration = tiles.getDecoration(tile);
-                        channel.sendMessage("You have picked " + decoration.getName()
-                                + ". Now pick a direction to have it facing. (ex: n,e,s,w)").queue();
-                        //
-                    }, 30L, TimeUnit.SECONDS,
-                    () -> channel.sendMessage("").queue()); //add
-            //get tile direction and update roomArray
-            waiter.waitForEvent(GuildMessageReceivedEvent.class,
-                    e -> checkIfValidDirection(e.getMessage().getContentRaw())
-                            && e.getChannel().equals(ctx.getChannel())
-                            && e.getAuthor().getId().equals(ctx.getAuthor().getId()) && parameterOneMet && parameterTwoMet, e -> {
-                        //
-                        direction = e.getMessage().getContentRaw().toLowerCase();
-                        roomArray[tileSpot] = tiles.getDirection(decoration,direction);
-                        Document sampleDoc = new Document("id",memberId);
-                        Bson updates = Updates.combine(
-                                Updates.set("room", Arrays.toString(roomArray)
-                                        .replaceAll(",","")
-                                        .replaceAll("\\[","")
-                                        .replaceAll("]",""))
-                        );
-                        try{
+                    //
+                }, 45L, TimeUnit.SECONDS,
+                () -> ctx.getChannel().sendMessage("").queue());
+        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+                e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
+                        && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
+                        && checkIfValidInventory(e.getMessage().getContentRaw(),tileTool)//and that the user gave a valid room slot
+                        && isParameterOneMet
+                        || isCanceled(e.getMessage().getContentRaw())
+                , e -> {
+                    //
+                    if(!isCanceled(e.getMessage().getContentRaw())){
+                        newDecoration = tileTool.getDecoration(e.getMessage().getContentRaw());
+                        isParameterTwoMet = true;
+                        channel.sendMessage("You have chosen **" + newDecoration.getName() + ".**").queue();
+                        channel.sendMessage("Now pick a direction to have it facing (n,e,s,w)").queue();
+                    }
+                    //
+                }, 45L, TimeUnit.SECONDS,
+                () -> ctx.getChannel().sendMessage("").queue());
+        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+                e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
+                        && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
+                        && checkIfValidDirection(e.getMessage().getContentRaw())//and that the user gave a valid room slot
+                        && isParameterTwoMet
+                        || isCanceled(e.getMessage().getContentRaw())
+                , e -> {
+                    //
+                    if(!isCanceled(e.getMessage().getContentRaw())){
+                        userRoom.set(tileTool.getRoomIndex(index),tileTool.getEmoji(e.getMessage().getContentRaw(),newDecoration));
+                        Document sampleDoc = new Document("id",discordID);
+                        Bson updates = Updates.combine( //create bson update with field and updated stars
+                                Updates.set("room",userRoom));
+                        try {
                             mongo.updateField(sampleDoc,updates);
-                            channel.sendMessage("take a look at your new room!").queue();
-                            channel.sendMessage(memberTool.getRoomAsString(memberId)).queue();
                         }catch (Exception error){
                             error.printStackTrace();
-                            channel.sendMessage("I dont feel so good " + error).queue();
+                            channel.sendMessage("I feel sick...\n"+ error).queue();
                         }
-                        //
-                    }, 30L, TimeUnit.SECONDS,
-                    () -> channel.sendMessage("Tsk,took too long I do not have all day.").queue()); //add
-
-        }else {
-            ctx.getChannel().sendMessage(roomAsString).queue();
-        }
+                        channel.sendMessage("Take a look at your new room!\n" + memberTool.getRoomAsString(discordID)).queue();
+                    } else {
+                        Random random = new Random();
+                        channel.sendMessage(randomStopMessages.get(random.nextInt(randomStopMessages.size()))).queue();
+                    }
+                    //
+                }, 45L, TimeUnit.SECONDS,
+                () -> ctx.getChannel().sendMessage("Listen I dont have all day the carpenters are busy.").queue());
     }
     @Override
     public String getName() {

@@ -2,34 +2,32 @@
 //CreateRoomCommand Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Rooms;
+import ThreeStrings.Config;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import org.bson.Document;
-import java.util.Arrays;
 import java.util.List;
-
 public class CreateRoomCommand implements ICommand {
     MemberMongo mongo;
-    String[][]defaultRoom;
+    List<String> defaultRoom;
     public CreateRoomCommand(){
         mongo = new MemberMongo(); //when class is call we create a new instance of mongo object
-        defaultRoom = new String[][]{{"0", "0", "0", "0", "0", "n"},
-                {"0", "0", "0", "0", "0", "n"},
-                {"0", "0", "0", "0", "0", "n"},
-                {"0", "0", "0", "0", "0", "n"},
-                {"0", "0", "0", "0", "0", "n"}}; //create default room
+        defaultRoom = List.of(
+                Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"),"\n",
+                Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"),"\n",
+                Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"),"\n",
+                Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"),"\n",
+                Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"),"\n"
+        ); //create default room
     }
     @Override
     public void handle(CommandContext ctx) {
         long discordId = ctx.getAuthor().getIdLong(); //pull user's discord id as long value
         List<String> inventory = List.of("");
         Document defaultDoc = new Document("id", discordId)
-                .append("room", Arrays.deepToString(defaultRoom)
-                .replaceAll("\\[","")
-                        .replaceAll(",","")
-                        .replaceAll("]",""))
-                .append("cash", 100)
+                .append("room", defaultRoom)
+                .append("dragons", 100)
                 .append("inventory",inventory)
                 .append("goldstars",0)
                 .append("points",0); // create default document to check if user has already been registered
@@ -54,7 +52,6 @@ public class CreateRoomCommand implements ICommand {
         public String getHelp () {
             return "Creates a tavern room for you to customize";
         }
-
     @Override
     public String getType() {
         return "rooms";

@@ -11,6 +11,8 @@ import ThreeStrings.command.ICommand;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +23,7 @@ public class ShopCommand implements ICommand {
     public ShopCommand(EventWaiter waiter){
         this.waiter = waiter;
     }
-    private static boolean isInt(String userMessage){
+    private boolean isInt(String userMessage){
         try{
             Integer.parseInt(userMessage);
             return true;
@@ -29,7 +31,7 @@ public class ShopCommand implements ICommand {
             return false;
         }
     }
-    private static boolean isValidConfirmation(String userMessage){
+    private boolean isValidConfirmation(String userMessage){
         List<String> validConfirmations = List.of("yes","no","y","n");
         for (String validConfirmation : validConfirmations) {
             if (userMessage.equals(validConfirmation)) {
@@ -57,8 +59,10 @@ public class ShopCommand implements ICommand {
         embedBuilder.setTitle("The Item Shop");
         embedBuilder.addField("For Sale", shop.getShopListAsString(), true);
         embedBuilder.addField("Your inventory", "When inventory is complete it will show lol",true);
-        embedBuilder.setDescription("Welcome to the shop!\nWhat can I get for ya?");
+        embedBuilder.setDescription("Welcome to the shop!\nWhat can I get for ya?\n"+ "**Dragons: "
+                + memberTool.getDragons(ctx.getAuthor().getIdLong(),true) + "**");
         embedBuilder.setFooter(footers.get(rngFooter));
+        embedBuilder.setColor(Color.YELLOW);
         ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
         ctx.getChannel().sendMessage("To purchase an item type buy (listing #).\n Or to sell type sell (inventory slot #).").queue();
         System.out.println(memberTool.getInventory(ctx.getAuthor().getIdLong()));
@@ -124,7 +128,6 @@ public class ShopCommand implements ICommand {
     public String getType() {
         return "shop";
     }
-
     @Override
     public List<String> getAlisases() {
         return List.of("store");

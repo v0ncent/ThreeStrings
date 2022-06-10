@@ -4,6 +4,7 @@ Shop Class
 COPYRIGHT Vincent Banks
 */
 package ThreeStrings.Shop;
+import ThreeStrings.Config;
 import ThreeStrings.Rooms.Tiles.Decoration;
 import ThreeStrings.Rooms.Tiles.Tiles;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class Shop {
             index++;
             itemNames
                     .add(index + ". " + decoration.getName()
-                            + " **" + decoration.getCost() + "$**"
+                            + " **" + decoration.getCost() + Config.get("DRAGON") + "**"
                     + " " + decoration.getThumbNail());
             itemNames.add("\n");
         }

@@ -15,7 +15,7 @@ public class RoomCommand implements ICommand {
         final TextChannel channel = ctx.getChannel();
         final MemberMethods memberTool = new MemberMethods();
         final Random random = new Random();
-        final String message = memberTool.getRoomAsString(memberId);
+        final String message = memberTool.getRoom(memberId).get(0);
         //create string array of quiqs
         final String[] quips = {"I like what you've done with the place!","Its just like my room, just not in a dirty tavern!",
         "Your humble abode.","It looks nice and clean, im surprised!", "Life is better with a tavern room I say!",

@@ -3,8 +3,8 @@
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Inventory;
 public class Inventory {
-
     public Inventory(){
+
 
     }
 
