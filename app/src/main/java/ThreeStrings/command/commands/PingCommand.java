@@ -5,7 +5,7 @@ package ThreeStrings.command.commands;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.JDA;
-public class PingCommand implements ICommand {
+public final class PingCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         JDA jda = ctx.getJDA();

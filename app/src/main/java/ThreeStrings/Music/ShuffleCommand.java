@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 @SuppressWarnings("ConstantConditions")
-public class ShuffleCommand implements ICommand {
+public final class ShuffleCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel(); //implement variable to get channel

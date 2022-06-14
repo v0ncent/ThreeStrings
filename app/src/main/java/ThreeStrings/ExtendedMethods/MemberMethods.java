@@ -2,9 +2,9 @@
 //MemberMethods Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.ExtendedMethods;
-import ThreeStrings.Config;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.Rooms.RoomMethods.RoomMethods;
+import ThreeStrings.Rooms.Tiles.Decoration;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -44,7 +44,7 @@ public class MemberMethods {
         }
         return "Looks like you haven't registered for a room in the tavern yet.\nTo register please use !createroom !";
     }
-    public Serializable getDragons(long id, boolean includeSign){ //getCash method
+    public long getDragons(long id){ //getCash method
         Document sampleDoc = new Document("id",id); //create sample document to check if user is registered in db
         if(mongodb.checkIfExists(sampleDoc)){ //if user is registered
             ArrayList<Document> results = mongodb.collection.find( //push result into arraylist
@@ -52,17 +52,15 @@ public class MemberMethods {
             ).projection( //get cash field
                     new Document("dragons",1).append("_id",0)
             ).into(new ArrayList<>());
-            if(includeSign){ //if true
-                return results.get(0) //return cash with a dollar sign appended
-                        .getInteger("dragons")
-                        + Config.get("DRAGON");
-            }else{ //just return cash integer
-                return results
+            try {
+                return Long.parseLong(results
                         .get(0)
-                        .getInteger("dragons");
+                        .getInteger("dragons").toString());
+            } catch (Exception e){
+                return 0;
             }
         } //if none of above is applicable send this message
-        return "Looks like you haven't registered for a room in the tavern yet.\nTo register please use !createroom !";
+        return 0;
     }
     public Serializable getGoldStars(long id){ //getGoldStars method
         Document sampleDoc = new Document("id",id); //create sample document to check if user is registered in db
@@ -98,9 +96,15 @@ public class MemberMethods {
             ).projection( //grab gold stars field
                     new Document("inventory",1).append("_id",0)
             ).into(new ArrayList<>()); //pull user specific entry and room into array list
-            return results
+            List<String> inventory = results
                     .get(0)
                     .getList("inventory",String.class);
+            for (String s : inventory) {
+                if (s.equals("")) {
+                    return List.of("Looks like you dont have any items yet, that sucks.");
+                }
+            }
+            return inventory;
         } //if none of above is applicable send this message
         return null;
     }

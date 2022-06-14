@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import java.awt.*;
 import java.util.concurrent.TimeUnit;
 @SuppressWarnings("ConstantConditions")
-public class DmCommand implements ICommand {
+public final class DmCommand implements ICommand {
     EventWaiter waiter; //implement event waiter class into dm command under variable waiter
     public DmCommand(EventWaiter waiter){ //create waiter constructor
         this.waiter = waiter;

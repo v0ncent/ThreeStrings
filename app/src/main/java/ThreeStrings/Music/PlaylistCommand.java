@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 @SuppressWarnings({"ConstantConditions", "DuplicatedCode"})
-public class PlaylistCommand implements ICommand {
+public final class PlaylistCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel(); //implement variable to get channel

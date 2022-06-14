@@ -27,7 +27,7 @@ public class ProfileCommand implements ICommand {
                 embed.addField("**Nickname**", name.getNickname(),true);
             }
             embed.addField("**Game Ranking**", "Ranking goes here", true);
-            embed.addField("**Dragons**",member.getDragons(name.getIdLong(),true).toString(),true);
+            embed.addField("**Dragons**", member.getDragons(name.getIdLong()) + Config.get("DRAGON"),true);
             if(member.getGoldStars(name.getIdLong()).equals(0)){
                 embed.addField("**GoldStars**","Looks like you haven't found an easter egg yet. Get to huntin!" + "<:goldstar:981776534182449202>",true);
             } else {
@@ -50,7 +50,7 @@ public class ProfileCommand implements ICommand {
                 embed.addField("**Nickname**", name.getNickname(),true);
             }
             embed.addField("**Game Ranking**", "Ranking goes here", true);
-            embed.addField("**Dragons**",member.getDragons(name.getIdLong(),true).toString(),true);
+            embed.addField("**Dragons**", member.getDragons(name.getIdLong()) + Config.get("DRAGON") ,true);
             if(member.getGoldStars(name.getIdLong()).equals(0)){
                 embed.addField("**GoldStars**","Looks like you haven't found an easter egg yet. Get to huntin!" + Config.get("GOLD_STAR"),true);
             } else {

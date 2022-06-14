@@ -2,9 +2,7 @@
 //Decoration Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Rooms.Tiles;
-
 import java.util.List;
-
 /*This class is the decoration object
 Only needed methods should be created within this class
 * */

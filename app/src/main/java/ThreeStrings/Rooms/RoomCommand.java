@@ -7,7 +7,7 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.Random;
-public class RoomCommand implements ICommand {
+public final class RoomCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         //define needed variables

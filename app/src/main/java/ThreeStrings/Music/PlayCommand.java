@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-public class PlayCommand implements ICommand {
+public final class PlayCommand implements ICommand {
     @SuppressWarnings("ConstantConditions")
     @Override
     public void handle(CommandContext ctx) {

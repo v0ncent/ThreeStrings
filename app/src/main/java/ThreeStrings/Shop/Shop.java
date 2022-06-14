@@ -5,16 +5,18 @@ COPYRIGHT Vincent Banks
 */
 package ThreeStrings.Shop;
 import ThreeStrings.Config;
+import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.Rooms.Tiles.Decoration;
 import ThreeStrings.Rooms.Tiles.Tiles;
 import java.util.ArrayList;
 import java.util.List;
 public class Shop {
     private final List<Decoration> shopList = new ArrayList<>();
-    Tiles tiles = new Tiles();
+    MemberMethods memberTool;
     public Shop(){
-        addListing(tiles.plain);
-        addListing(tiles.purplePillow);
+        memberTool = new MemberMethods();
+        addListing(Tiles.PLAIN);
+        addListing(Tiles.PURPLE_PILLOW);
     }
     private void addListing(Decoration decoration){
         boolean nameFound = this.shopList.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(decoration.getName()));
@@ -49,5 +51,8 @@ public class Shop {
         } catch (Exception e){
             return false;
         }
+    }
+    public boolean cantAfford(long discordID, long amount){
+        return memberTool.getDragons(discordID) < amount;
     }
 }

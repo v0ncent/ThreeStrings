@@ -7,7 +7,7 @@ import com.mongodb.client.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
-public class MemberMongo implements Imongo{
+public final class MemberMongo implements Imongo{
     //create mongo client var to gain connection to mongo database
     private final MongoClient client = MongoClients.create(Config.get("MONGO"));
     private final MongoDatabase db = client.getDatabase("DBStrings");

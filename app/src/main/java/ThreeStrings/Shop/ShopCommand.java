@@ -5,6 +5,7 @@ COPYRIGHT Vincent Banks
 */
 package ThreeStrings.Shop;
 import ThreeStrings.ExtendedMethods.MemberMethods;
+import ThreeStrings.Inventory.Inventory;
 import ThreeStrings.Rooms.Tiles.Decoration;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-public class ShopCommand implements ICommand {
+public final class ShopCommand implements ICommand {
     EventWaiter waiter;
     public ShopCommand(EventWaiter waiter){
         this.waiter = waiter;
@@ -45,10 +46,11 @@ public class ShopCommand implements ICommand {
             "Hey it's fine to be a lackcoin, maybe next tenday?",
             "Come on, buy something! Halambar's has a new lute wax I need!"
     );
-    boolean parameterOneMet;
-    boolean parameterTwoMet;
-    Decoration boughtDecoration;
-    int amount;
+    private boolean parameterOneMet;
+    private boolean parameterTwoMet;
+    private Decoration boughtDecoration;
+    private int amount;
+    private int sellPrice;
     @Override
     public void handle(CommandContext ctx) {
         Random r = new Random();
@@ -65,7 +67,7 @@ public class ShopCommand implements ICommand {
         embedBuilder.addField("For Sale", shop.getShopListAsString(), true);
         embedBuilder.addField("Your inventory", "When inventory is complete it will show lol",true);
         embedBuilder.setDescription("Welcome to the shop!\nWhat can I get for ya?\n"+ "**Dragons: "
-                + memberTool.getDragons(ctx.getAuthor().getIdLong(),true) + "**");
+                + memberTool.getDragons(ctx.getAuthor().getIdLong()) + "**");
         embedBuilder.setFooter(footers.get(rngFooter));
         embedBuilder.setColor(Color.YELLOW);
         ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
@@ -102,7 +104,10 @@ public class ShopCommand implements ICommand {
                     if(!isCanceled(e.getMessage().getContentRaw())){
                         amount = Integer.parseInt(e.getMessage().getContentRaw());
                         parameterTwoMet = true;
-                        ctx.getChannel().sendMessage("You are about to purchase **" + amount + "** **" + boughtDecoration.getName() + "s.**").queue();
+                        sellPrice = boughtDecoration.getCost() * amount;
+                        ctx.getChannel().sendMessage("You are about to purchase **" + amount
+                                + "** **" + boughtDecoration.getName() + "s,** for **"
+                                + sellPrice + " dragons.**").queue();
                         ctx.getChannel().sendMessage("Are you sure you would like to purchase? (Y/N,YES,NO)").queue();
                     }
                     //
@@ -122,9 +127,16 @@ public class ShopCommand implements ICommand {
                                 || e.getMessage().getContentRaw().toLowerCase(Locale.ROOT).equals("n")){
                             ctx.getChannel().sendMessage("The deal is off then!").queue();
                         } else {
-                            ctx.getChannel()
-                                    .sendMessage("Alright! You have purchased **"
-                                            + amount + "** **" + boughtDecoration.getName() + "s.**" ).queue();
+                            if(!shop.cantAfford(ctx.getAuthor().getIdLong(),amount)){
+                                ctx.getChannel()
+                                        .sendMessage("Alright! You have purchased **"
+                                                + amount + "** **" + boughtDecoration.getName() + "s** for **" +
+                                                sellPrice + " dragons.**").queue();
+                                Inventory inventory = new Inventory(ctx.getAuthor().getIdLong());
+                                inventory.addToInventory(boughtDecoration.getName(),amount);
+                            } else {
+                                ctx.getChannel().sendMessage("You dont have enough dragons to buy that!").queue();
+                            }
                         }
                     } else {
                         Random random = new Random();
@@ -142,7 +154,6 @@ public class ShopCommand implements ICommand {
     public String getHelp() {
         return "Command to access the item shop!";
     }
-
     @Override
     public String getType() {
         return "shop";

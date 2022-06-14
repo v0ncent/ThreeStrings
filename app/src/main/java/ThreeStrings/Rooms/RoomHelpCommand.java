@@ -4,7 +4,7 @@
 package ThreeStrings.Rooms;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
-public class RoomHelpCommand implements ICommand {
+public final class RoomHelpCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
 

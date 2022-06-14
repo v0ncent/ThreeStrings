@@ -15,12 +15,11 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
 import java.awt.*;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-public class EditRoomCommand implements ICommand {
+public final class EditRoomCommand implements ICommand {
     EventWaiter waiter;
     MemberMongo mongo;
     Tiles tileTool;
@@ -37,8 +36,8 @@ public class EditRoomCommand implements ICommand {
             return false;
         }
     }
-    private boolean checkIfValidInventory(String userRequest,Tiles tileTool){
-        return tileTool.decorations.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(userRequest));
+    private boolean checkIfValidInventory(String userRequest){
+        return Tiles.DECORATIONS.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(userRequest));
     }
     private boolean checkIfValidDirection(String userRequest){
         List<String> directions = List.of("n","e","s","w");
@@ -65,7 +64,7 @@ public class EditRoomCommand implements ICommand {
         embedBuilder.setDescription("Pick a tile # (left to right 1-30), and a tile you would like to change it to," +
                 "then pick a tile direction!");
         embedBuilder.addField("Your Room",userRoomAsString,true);
-        embedBuilder.addField("Your Inventory",tileTool.decorations.get(0).getName() + "\n" + tileTool.decorations.get(1).getName(),true);
+        embedBuilder.addField("Your Inventory", Tiles.DECORATIONS.get(0).getName() + "\n" + Tiles.DECORATIONS.get(1).getName(),true);
         embedBuilder.setColor(Color.YELLOW);
         channel.sendMessageEmbeds(embedBuilder.build()).queue();
         channel.sendMessage("Pick a tile # (left to right 1-25) you wish to edit").queue();
@@ -96,7 +95,7 @@ public class EditRoomCommand implements ICommand {
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
-                        && checkIfValidInventory(e.getMessage().getContentRaw(),tileTool)//and that the user gave a valid room slot
+                        && checkIfValidInventory(e.getMessage().getContentRaw())//and that the user gave a valid room slot
                         && isParameterOneMet
                         || isCanceled(e.getMessage().getContentRaw())
                 , e -> {
@@ -146,7 +145,6 @@ public class EditRoomCommand implements ICommand {
     public String getHelp() {
         return "the command to edit your tavern room.\n For more info on usage please use !roomhelp !";
     }
-
     @Override
     public String getType() {
         return "rooms";

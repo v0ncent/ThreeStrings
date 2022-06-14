@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.concurrent.TimeUnit;
 @SuppressWarnings("ConstantConditions")
-public class NowPlayingCommand implements ICommand {
+public final class NowPlayingCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();

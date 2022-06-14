@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-public class HelpCommand implements ICommand {
+public final class HelpCommand implements ICommand {
    private final CommandManager manager; //import command manager class
     public HelpCommand(CommandManager manager) { //implement constructor for help command
         this.manager = manager; //set manager variable to our already made manager within constructor

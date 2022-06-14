@@ -4,8 +4,6 @@
 package ThreeStrings.Rooms.Tiles;
 import ThreeStrings.Config;
 import java.util.List;
-import java.util.stream.Collectors;
-
 /*
 THIS CLASS DEFINES ALL DECORATION VARIABLES THAT ARE CONSTANTS
 AND NECESSARY METHODS FOR EDITING TILES
@@ -13,7 +11,7 @@ AND NECESSARY METHODS FOR EDITING TILES
 public class Tiles {
     //constant decoration objects
     // decorations direction array in constructor is formatted n,e,s,w
-    public final Decoration plain = new Decoration(
+    public static final Decoration PLAIN = new Decoration(
             "oak",
             50,
             Config.get("WOOD_TILE"),
@@ -22,7 +20,7 @@ public class Tiles {
             Config.get("WOOD_TILE"),
             Config.get("WOOD_TILE")
     );
-    public final Decoration purplePillow =
+    public static final Decoration PURPLE_PILLOW =
             new Decoration(
                     "purple pillow",
                     100,
@@ -33,14 +31,14 @@ public class Tiles {
                     Config.get("WOOD_TILE_PURPLE_W")
             );
     //array of decorations
-    public final List<Decoration> decorations  = List.of(
-            plain,
-            purplePillow
+    public static final List<Decoration> DECORATIONS  = List.of(
+            PLAIN,
+            PURPLE_PILLOW
     );
     //get decoration method
     public Decoration getDecoration(String tile){
         Decoration decorationContext;
-        for (Decoration decoration : decorations) {
+        for (Decoration decoration : DECORATIONS) {
             if (tile.equals(decoration.getName())) {
                 decorationContext = decoration;
                 return decorationContext;

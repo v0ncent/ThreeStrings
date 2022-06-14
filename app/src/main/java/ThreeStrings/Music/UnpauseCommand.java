@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 @SuppressWarnings("ConstantConditions")
-public class UnpauseCommand implements ICommand {
+public final class UnpauseCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel(); //implement variable to get channel

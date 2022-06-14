@@ -11,7 +11,8 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import javax.security.auth.login.LoginException;
-public class Runner {
+public final class Runner {
+    private Runner(){} //make constructor private so no instances of runner class can be made
     public static void run() throws LoginException {
         JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status

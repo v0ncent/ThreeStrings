@@ -8,7 +8,7 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import org.bson.Document;
 import java.util.List;
-public class CreateRoomCommand implements ICommand {
+public final class CreateRoomCommand implements ICommand {
     MemberMongo mongo;
     List<String> defaultRoom;
     public CreateRoomCommand(){
@@ -35,7 +35,8 @@ public class CreateRoomCommand implements ICommand {
             try {
                 mongo.insert(defaultDoc);
                 ctx.getChannel().sendMessage("Alright I have a spot open for ya!\n" +
-                        "I have registered " + ctx.getAuthor().getName() + " into the tavern!").queue();
+                        "I have registered " + ctx.getAuthor().getName() + " into the tavern!\n" +
+                        "Here's a 100 Dragons to get you off your feet.").queue();
             } catch (Exception e) {
                 ctx.getChannel().sendMessage("I uhh dont feel to good...\n" + e).queue();
                 e.printStackTrace();
