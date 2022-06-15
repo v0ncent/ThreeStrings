@@ -20,8 +20,12 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public final class ShopCommand implements ICommand {
     EventWaiter waiter;
+    MemberMethods memberTool;
+    Shop shop;
     public ShopCommand(EventWaiter waiter){
         this.waiter = waiter;
+        this.memberTool = new MemberMethods();
+        this.shop = new Shop();
     }
     private boolean isInt(String userMessage){
         try{
@@ -54,7 +58,7 @@ public final class ShopCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         Random r = new Random();
-        MemberMethods memberTool = new MemberMethods();
+        Inventory inventory = new Inventory(ctx.getAuthor().getIdLong());
         List<String> footers = new ArrayList<>();
         footers.add("Here at the shop we only sells the least worn items we are no longer using!");
         footers.add("I give discounts to those I like!");
@@ -62,10 +66,9 @@ public final class ShopCommand implements ICommand {
         footers.add("Those who steal are thrown in the portal!");
         int rngFooter = r.nextInt(footers.size());
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        Shop shop = new Shop();
         embedBuilder.setTitle("The Item Shop");
         embedBuilder.addField("For Sale", shop.getShopListAsString(), true);
-        embedBuilder.addField("Your inventory", "When inventory is complete it will show lol",true);
+        embedBuilder.addField("Your inventory", " ",true);
         embedBuilder.setDescription("Welcome to the shop!\nWhat can I get for ya?\n"+ "**Dragons: "
                 + memberTool.getDragons(ctx.getAuthor().getIdLong()) + "**");
         embedBuilder.setFooter(footers.get(rngFooter));
@@ -132,7 +135,6 @@ public final class ShopCommand implements ICommand {
                                         .sendMessage("Alright! You have purchased **"
                                                 + amount + "** **" + boughtDecoration.getName() + "s** for **" +
                                                 sellPrice + " dragons.**").queue();
-                                Inventory inventory = new Inventory(ctx.getAuthor().getIdLong());
                                 inventory.addToInventory(boughtDecoration.getName(),amount);
                             } else {
                                 ctx.getChannel().sendMessage("You dont have enough dragons to buy that!").queue();

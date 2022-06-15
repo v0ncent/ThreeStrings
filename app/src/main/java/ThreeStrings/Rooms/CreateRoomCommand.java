@@ -24,7 +24,7 @@ public final class CreateRoomCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         long discordId = ctx.getAuthor().getIdLong(); //pull user's discord id as long value
-        List<String> inventory = List.of("");
+        List<String> inventory = List.of(" ");
         Document defaultDoc = new Document("id", discordId)
                 .append("room", defaultRoom)
                 .append("dragons", 100)

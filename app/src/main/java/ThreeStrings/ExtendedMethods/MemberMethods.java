@@ -96,15 +96,9 @@ public class MemberMethods {
             ).projection( //grab gold stars field
                     new Document("inventory",1).append("_id",0)
             ).into(new ArrayList<>()); //pull user specific entry and room into array list
-            List<String> inventory = results
+            return results
                     .get(0)
                     .getList("inventory",String.class);
-            for (String s : inventory) {
-                if (s.equals("")) {
-                    return List.of("Looks like you dont have any items yet, that sucks.");
-                }
-            }
-            return inventory;
         } //if none of above is applicable send this message
         return null;
     }
