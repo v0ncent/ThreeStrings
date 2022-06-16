@@ -4,7 +4,6 @@
 package ThreeStrings.ExtendedMethods;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.Rooms.RoomMethods.RoomMethods;
-import ThreeStrings.Rooms.Tiles.Decoration;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.conversions.Bson;

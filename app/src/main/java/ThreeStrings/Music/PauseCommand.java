@@ -17,7 +17,6 @@ public final class PauseCommand implements ICommand {
         final TextChannel channel = ctx.getChannel(); //implement variable to get channel
         final Member self = ctx.getSelfMember(); //implement variable to get bot
         final GuildVoiceState selfVoiceState = self.getVoiceState(); //gets bot voice state
-
         if (!selfVoiceState.inVoiceChannel()) { //if bot is not in vc
             channel.sendMessage("I need to be on stage so I can play.").queue();
             return;
@@ -53,7 +52,6 @@ public final class PauseCommand implements ICommand {
     public String getHelp() {
         return "Pauses the current song I am playing.";
     }
-
     @Override
     public String getType() {
         return "music";

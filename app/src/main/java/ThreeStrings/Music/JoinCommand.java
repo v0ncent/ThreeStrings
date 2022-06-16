@@ -38,7 +38,6 @@ public final class JoinCommand implements ICommand {
     public String getHelp() {
         return "Command to get me to join the chat you are currently in.";
     }
-
     @Override
     public String getType() {
         return "music";

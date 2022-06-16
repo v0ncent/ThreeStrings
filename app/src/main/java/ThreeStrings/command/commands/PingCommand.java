@@ -17,12 +17,10 @@ public final class PingCommand implements ICommand {
     public String getHelp() {
         return "Shows the current ping from the bot to the discord server.";
     }
-
     @Override
     public String getType() {
         return "utility";
     }
-
     @Override
     public String getName() {
         return "ping";

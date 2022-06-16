@@ -39,7 +39,6 @@ public final class RoomCommand implements ICommand {
     public String getHelp() {
         return "Displays your tavern room!";
     }
-
     @Override
     public String getType() {
         return "rooms";

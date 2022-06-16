@@ -85,12 +85,10 @@ public final class PlayCommand implements ICommand {
                     "Usage: !play (youtube link) or Simply type the song name.\n"+
                     "To play a playlist from youtube use !play (playlist link).";
         }
-
     @Override
     public String getType() {
         return "music";
     }
-
     private boolean isUrl(String url){
             try{
                 new URL(url); //attempts to create new URL

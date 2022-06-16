@@ -60,7 +60,6 @@ public final class NowPlayingCommand implements ICommand {
     public String getHelp() {
         return "Shows what Im currently playing.";
     }
-
     @Override
     public String getType() {
         return "music";

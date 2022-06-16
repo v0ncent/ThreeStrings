@@ -127,12 +127,10 @@ public final class HelpCommand implements ICommand {
     public String getHelp() { //when !help, help is called this is run
         return "Shows the list with what I can do\n" + "Usage: !help (command)";
     }
-
     @Override
     public String getType() {
         return "utility";
     }
-
     @Override
     public List<String> getAlisases() {  //set secondary help command called !bard
         return List.of("bard","cmds","commandlist");

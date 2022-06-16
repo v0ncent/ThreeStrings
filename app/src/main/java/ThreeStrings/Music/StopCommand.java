@@ -43,7 +43,6 @@ public final class StopCommand implements ICommand {
     public String getHelp() {
         return "Stops me from playing the current song and clears my queue.";
     }
-
     @Override
     public String getType() {
         return "music";

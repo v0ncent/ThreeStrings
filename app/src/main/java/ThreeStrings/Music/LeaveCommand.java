@@ -49,7 +49,6 @@ public final class LeaveCommand implements ICommand {
     public String getHelp() {
         return "Gets me to leave the current voice channel.";
     }
-
     @Override
     public String getType() {
         return "music";

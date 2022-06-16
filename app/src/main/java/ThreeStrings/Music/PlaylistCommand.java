@@ -78,12 +78,10 @@ public final class PlaylistCommand implements ICommand {
     public String getHelp() {
         return "Gets me to play a playlist for you based off of your search.\n" + "usage is !playlist (search term).";
     }
-
     @Override
     public String getType() {
         return "music";
     }
-
     private boolean isUrl(String url){
         try{
             new URL(url); //attempts to create new URL

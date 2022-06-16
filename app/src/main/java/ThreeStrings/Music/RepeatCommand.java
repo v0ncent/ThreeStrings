@@ -43,7 +43,6 @@ public final class RepeatCommand implements ICommand {
     public String getHelp() {
         return "Sets me to repeating mode. To stop me repeating just simply type command again.";
     }
-
     @Override
     public String getType() {
         return "music";

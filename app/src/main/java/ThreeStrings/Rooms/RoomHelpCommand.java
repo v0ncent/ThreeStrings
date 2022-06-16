@@ -7,7 +7,6 @@ import ThreeStrings.command.ICommand;
 public final class RoomHelpCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-
     }
     @Override
     public String getName() {
