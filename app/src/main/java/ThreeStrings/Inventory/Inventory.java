@@ -22,13 +22,15 @@ public class Inventory {
         this.playerInventory = memberTool.getInventory(userId);
         this.mongo = new MemberMongo();
     }
-    public void addToInventory(String decoration, long amount){
-        for (int i = 0; i < amount; i++){
-            playerInventory.add(decoration); //add into listing number of times player asks
+    public void addToInventory(String decoration){
+        playerInventory.add(decoration);
+        try{
             Document sampleDoc = new Document("id",userId);
             Bson updates = Updates.combine( //create bson update with field and updated stars
                     Updates.set("inventory",playerInventory));
             mongo.updateField(sampleDoc,updates);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     public List<Decoration> parseToDecorationList(List<String>toParse){
@@ -43,8 +45,23 @@ public class Inventory {
         }
         return decList;
     }
-//    //needs to be made
-//    public String getPlayerInventoryAsString(long id){
-//        List<String> inventory = memberTool.getInventory(id);
-//    }
+    //needs to be made
+    public String getPlayerInventoryAsString(){
+        int index = 0;
+        List<String> itemNames = new ArrayList<>();
+        for (String s : playerInventory) {
+            if (!s.equals(" ")) {
+                index++;
+                itemNames.add(
+                        "**"+
+                        index + "**. " + s + "\n"
+                );
+            }
+        }
+        return itemNames
+                .toString()
+                .replaceAll("]","")
+                .replaceAll("\\[","")
+                .replaceAll(",","");
+    }
 }

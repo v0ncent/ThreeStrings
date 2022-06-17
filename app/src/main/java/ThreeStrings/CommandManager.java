@@ -2,6 +2,7 @@
 //Command Manager Class
 //Copyright Vincent Banks
 package ThreeStrings;
+import ThreeStrings.Inventory.InventoryCommand;
 import ThreeStrings.Music.*;
 import ThreeStrings.Rooms.CreateRoomCommand;
 import ThreeStrings.Rooms.EditRoomCommand;
@@ -46,6 +47,7 @@ public class CommandManager {
         addCommand(new RoomCommand());
         addCommand(new EditRoomCommand(waiter));
         addCommand(new RoomHelpCommand());
+        addCommand(new InventoryCommand());
         //shop commands
         addCommand(new ShopCommand(waiter));
     }

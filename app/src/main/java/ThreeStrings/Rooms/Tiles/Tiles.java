@@ -14,7 +14,7 @@ public class Tiles {
     public static final Decoration PLAIN = new Decoration(
             "oak",
             50,
-            Config.get("WOOD_TILE"),
+            Config.get("WOOD_TILE"), //thumbnail
             Config.get("WOOD_TILE"),
             Config.get("WOOD_TILE"),
             Config.get("WOOD_TILE"),
@@ -23,8 +23,8 @@ public class Tiles {
     public static final Decoration PURPLE_PILLOW =
             new Decoration(
                     "purple pillow",
-                    100,
-                    Config.get("WOOD_TILE_PURPLE_N"),
+                    150,
+                    Config.get("WOOD_TILE_PURPLE_N"), //thumbnail
                     Config.get("WOOD_TILE_PURPLE_N"),
                     Config.get("WOOD_TILE_PURPLE_E"),
                     Config.get("WOOD_TILE_PURPLE_S"),

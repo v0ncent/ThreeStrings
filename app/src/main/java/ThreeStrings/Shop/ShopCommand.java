@@ -27,14 +27,6 @@ public final class ShopCommand implements ICommand {
         this.memberTool = new MemberMethods();
         this.shop = new Shop();
     }
-    private boolean isInt(String userMessage){
-        try{
-            Integer.parseInt(userMessage);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
     private boolean isValidConfirmation(String userMessage){
         List<String> validConfirmations = List.of("yes","no","y","n");
         return validConfirmations.stream().anyMatch((it) -> it.equalsIgnoreCase(userMessage));
@@ -51,10 +43,8 @@ public final class ShopCommand implements ICommand {
             "Come on, buy something! Halambar's has a new lute wax I need!"
     );
     private boolean parameterOneMet;
-    private boolean parameterTwoMet;
+    private long amount;
     private Decoration boughtDecoration;
-    private int amount;
-    private int sellPrice;
     @Override
     public void handle(CommandContext ctx) {
         Random r = new Random();
@@ -68,13 +58,12 @@ public final class ShopCommand implements ICommand {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("The Item Shop");
         embedBuilder.addField("For Sale", shop.getShopListAsString(), true);
-        embedBuilder.addField("Your inventory", " ",true);
         embedBuilder.setDescription("Welcome to the shop!\nWhat can I get for ya?\n"+ "**Dragons: "
                 + memberTool.getDragons(ctx.getAuthor().getIdLong()) + "**");
         embedBuilder.setFooter(footers.get(rngFooter));
         embedBuilder.setColor(Color.YELLOW);
         ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
-        ctx.getChannel().sendMessage("To purchase an item type buy (listing #).\n Or to sell type sell (inventory slot #).").queue();
+        ctx.getChannel().sendMessage("To purchase an item type buy (listing #).").queue();
         //
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
@@ -89,8 +78,10 @@ public final class ShopCommand implements ICommand {
                                 .toLowerCase().replaceAll("buy ",""))-1;
                         boughtDecoration = shop.buy(shopIndex);
                         parameterOneMet = true;
+                        amount = boughtDecoration.getCost();
                         ctx.getChannel().sendMessage("You have selected **" + boughtDecoration.getName() + "**.").queue();
-                        ctx.getChannel().sendMessage("How many of **"+ boughtDecoration.getName() + "** would you like to buy?").queue();
+                        ctx.getChannel().sendMessage("Are you sure you would like to purchase "+ boughtDecoration.getName()
+                                + " for " + boughtDecoration.getCost() + "? (Y/N,YES,NO)").queue();
                     }
             //
                 }, 45L, TimeUnit.SECONDS,
@@ -100,28 +91,7 @@ public final class ShopCommand implements ICommand {
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                         && parameterOneMet
-                        && isInt(e.getMessage().getContentRaw())//and if it's  a valid index
-                        || isCanceled(e.getMessage().getContentRaw())
-                , e -> {
-                    //
-                    if(!isCanceled(e.getMessage().getContentRaw())){
-                        amount = Integer.parseInt(e.getMessage().getContentRaw());
-                        parameterTwoMet = true;
-                        sellPrice = boughtDecoration.getCost() * amount;
-                        ctx.getChannel().sendMessage("You are about to purchase **" + amount
-                                + "** **" + boughtDecoration.getName() + "s,** for **"
-                                + sellPrice + " dragons.**").queue();
-                        ctx.getChannel().sendMessage("Are you sure you would like to purchase? (Y/N,YES,NO)").queue();
-                    }
-                    //
-                }, 45L, TimeUnit.SECONDS,
-                () -> ctx.getChannel().sendMessage("").queue());
-        //
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
-                e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
-                        && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
-                        && parameterTwoMet
-                        && isValidConfirmation(e.getMessage().getContentRaw().toLowerCase())//and if it's  a valid index
+                        && isValidConfirmation(e.getMessage().getContentRaw())//and if it's  a valid index
                         || isCanceled(e.getMessage().getContentRaw())
                 , e -> {
                     //
@@ -132,10 +102,16 @@ public final class ShopCommand implements ICommand {
                         } else {
                             if(!shop.cantAfford(ctx.getAuthor().getIdLong(),amount)){
                                 ctx.getChannel()
-                                        .sendMessage("Alright! You have purchased **"
-                                                + amount + "** **" + boughtDecoration.getName() + "s** for **" +
-                                                sellPrice + " dragons.**").queue();
-                                inventory.addToInventory(boughtDecoration.getName(),amount);
+                                        .sendMessage("Alright! You have purchased "
+                                                + "**" + boughtDecoration.getName() + "** for **" +
+                                                amount + " dragons.**").queue();
+                                try {
+                                    inventory.addToInventory(boughtDecoration.getName());
+                                    ctx.getChannel().sendMessage("It has been added to your inventory!").queue();
+                                    //TODO: add money subtraction
+                                }catch (Exception error){
+                                    ctx.getChannel().sendMessage("Hmm.. I tried to add this to your inventory but seems a problem has occurred" + error).queue();
+                                }
                             } else {
                                 ctx.getChannel().sendMessage("You dont have enough dragons to buy that!").queue();
                             }
@@ -146,7 +122,7 @@ public final class ShopCommand implements ICommand {
                     }
                     //
                 }, 45L, TimeUnit.SECONDS,
-                () -> ctx.getChannel().sendMessage("Listen you're holding up the line buddy.").queue());
+                () -> ctx.getChannel().sendMessage("").queue());
     }
     @Override
     public String getName() {

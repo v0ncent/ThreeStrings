@@ -22,7 +22,6 @@ public class Decoration {
         this.name = name;
         this.cost = cost;
         this.thumbNail = thumbNail;
-        this.sellPrice = this.cost/2;
         this.directions = List.of(north,east,south,west);
     }
     public String getName(){
@@ -33,8 +32,5 @@ public class Decoration {
     }
     public String getThumbNail(){
         return thumbNail;
-    }
-    public int getSellPrice(){
-        return sellPrice;
     }
 }
