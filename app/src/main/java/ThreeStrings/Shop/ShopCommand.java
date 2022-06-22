@@ -108,7 +108,7 @@ public final class ShopCommand implements ICommand {
                                 try {
                                     inventory.addToInventory(boughtDecoration.getName());
                                     ctx.getChannel().sendMessage("It has been added to your inventory!").queue();
-                                    //TODO: add money subtraction
+                                    //TODO: add money subtraction, fix bug where user can purchase an already bought item.
                                 }catch (Exception error){
                                     ctx.getChannel().sendMessage("Hmm.. I tried to add this to your inventory but seems a problem has occurred" + error).queue();
                                 }

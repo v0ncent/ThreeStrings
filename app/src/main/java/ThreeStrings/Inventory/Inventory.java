@@ -45,7 +45,6 @@ public class Inventory {
         }
         return decList;
     }
-    //needs to be made
     public String getPlayerInventoryAsString(){
         int index = 0;
         List<String> itemNames = new ArrayList<>();
