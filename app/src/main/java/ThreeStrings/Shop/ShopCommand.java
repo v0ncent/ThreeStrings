@@ -101,16 +101,20 @@ public final class ShopCommand implements ICommand {
                             ctx.getChannel().sendMessage("The deal is off then!").queue();
                         } else {
                             if(!shop.cantAfford(ctx.getAuthor().getIdLong(),amount)){
-                                ctx.getChannel()
-                                        .sendMessage("Alright! You have purchased "
-                                                + "**" + boughtDecoration.getName() + "** for **" +
-                                                amount + " dragons.**").queue();
-                                try {
-                                    inventory.addToInventory(boughtDecoration.getName());
-                                    ctx.getChannel().sendMessage("It has been added to your inventory!").queue();
-                                    //TODO: add money subtraction, fix bug where user can purchase an already bought item.
-                                }catch (Exception error){
-                                    ctx.getChannel().sendMessage("Hmm.. I tried to add this to your inventory but seems a problem has occurred" + error).queue();
+                                if(!inventory.has(boughtDecoration.getName())){
+                                    ctx.getChannel()
+                                            .sendMessage("Alright! You have purchased "
+                                                    + "**" + boughtDecoration.getName() + "** for **" +
+                                                    amount + " dragons.**").queue();
+                                    try {
+                                        inventory.addToInventory(boughtDecoration.getName());
+                                        ctx.getChannel().sendMessage("It has been added to your inventory!").queue();
+                                        //TODO: add money subtraction, fix bug where user can purchase an already bought item.
+                                    }catch (Exception error){
+                                        ctx.getChannel().sendMessage("Hmm.. I tried to add this to your inventory but seems a problem has occurred" + error).queue();
+                                    }
+                                } else {
+
                                 }
                             } else {
                                 ctx.getChannel().sendMessage("You dont have enough dragons to buy that!").queue();

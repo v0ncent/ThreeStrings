@@ -63,4 +63,7 @@ public class Inventory {
                 .replaceAll("\\[","")
                 .replaceAll(",","");
     }
+    public boolean has(String decoration){
+        return playerInventory.stream().anyMatch((it) -> it.equals(decoration));
+    }
 }
