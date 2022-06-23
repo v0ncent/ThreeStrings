@@ -2,6 +2,7 @@
 //Command Manager Class
 //Copyright Vincent Banks
 package ThreeStrings;
+import ThreeStrings.Inventory.DragonsCommand;
 import ThreeStrings.Inventory.InventoryCommand;
 import ThreeStrings.Music.*;
 import ThreeStrings.Rooms.CreateRoomCommand;
@@ -50,6 +51,7 @@ public class CommandManager {
         addCommand(new InventoryCommand());
         //shop commands
         addCommand(new ShopCommand(waiter));
+        addCommand(new DragonsCommand());
     }
     private void addCommand(ICommand cmd){    //create a addCommand method
         boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName())); //create boolean method if a command is already found

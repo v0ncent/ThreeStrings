@@ -54,9 +54,9 @@ public class MemberMethods {
             try {
                 return Long.parseLong(results
                         .get(0)
-                        .getInteger("dragons").toString());
+                        .getLong("dragons").toString());
             } catch (Exception e){
-                return 0;
+                e.printStackTrace();
             }
         } //if none of above is applicable send this message
         return 0;
@@ -100,6 +100,19 @@ public class MemberMethods {
                     .getList("inventory",String.class);
         } //if none of above is applicable send this message
         return null;
+    }
+    public void subtractDragons(long id,long dragons,long cost){
+        try{
+            Document sampleDoc = new Document("id",id);
+            Bson updates = Updates.combine(
+                    Updates.set("dragons",dragons - cost)
+            );
+            mongodb.updateField(sampleDoc, updates);
+        } catch (Exception e){
+            System.out.println("Something happened while trying to subtract money!\n" + e);
+            e.printStackTrace();
+        }
+
     }
     //
 }

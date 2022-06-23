@@ -4,6 +4,7 @@ ShopCommand Class
 COPYRIGHT Vincent Banks
 */
 package ThreeStrings.Shop;
+import ThreeStrings.Config;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.Inventory.Inventory;
 import ThreeStrings.Rooms.Tiles.Decoration;
@@ -105,16 +106,22 @@ public final class ShopCommand implements ICommand {
                                     ctx.getChannel()
                                             .sendMessage("Alright! You have purchased "
                                                     + "**" + boughtDecoration.getName() + "** for **" +
-                                                    amount + " dragons.**").queue();
+                                                    amount +Config.get("DRAGONS") + " dragons.**").queue();
                                     try {
-                                        inventory.addToInventory(boughtDecoration.getName());
+                                        inventory.addToInventory(boughtDecoration.getName(),boughtDecoration);
+                                        memberTool.subtractDragons(
+                                                ctx.getAuthor().getIdLong(),
+                                                memberTool.getDragons(ctx.getAuthor().getIdLong()),
+                                                boughtDecoration.getCost()
+                                        );
                                         ctx.getChannel().sendMessage("It has been added to your inventory!").queue();
-                                        //TODO: add money subtraction, fix bug where user can purchase an already bought item.
+                                        ctx.getChannel().sendMessage("Your new balance is: **"
+                                                + memberTool.getDragons(ctx.getAuthor().getIdLong()) + Config.get("DRAGONS") + "**").queue();
                                     }catch (Exception error){
                                         ctx.getChannel().sendMessage("Hmm.. I tried to add this to your inventory but seems a problem has occurred" + error).queue();
                                     }
                                 } else {
-
+                                    ctx.getChannel().sendMessage("You already own that!").queue();
                                 }
                             } else {
                                 ctx.getChannel().sendMessage("You dont have enough dragons to buy that!").queue();

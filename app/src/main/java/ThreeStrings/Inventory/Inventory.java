@@ -22,7 +22,7 @@ public class Inventory {
         this.playerInventory = memberTool.getInventory(userId);
         this.mongo = new MemberMongo();
     }
-    public void addToInventory(String decoration){
+    public void addToInventory(String decoration,Decoration dec){
         playerInventory.add(decoration);
         try{
             Document sampleDoc = new Document("id",userId);
