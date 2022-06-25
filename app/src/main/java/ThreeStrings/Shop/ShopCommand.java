@@ -108,7 +108,7 @@ public final class ShopCommand implements ICommand {
                                                     + "**" + boughtDecoration.getName() + "** for **" +
                                                     amount +Config.get("DRAGONS") + " dragons.**").queue();
                                     try {
-                                        inventory.addToInventory(boughtDecoration.getName(),boughtDecoration);
+                                        inventory.addToInventory(boughtDecoration.getName());
                                         memberTool.subtractDragons(
                                                 ctx.getAuthor().getIdLong(),
                                                 memberTool.getDragons(ctx.getAuthor().getIdLong()),

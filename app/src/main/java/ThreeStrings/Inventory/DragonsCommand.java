@@ -12,10 +12,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
 import java.util.List;
 public final class DragonsCommand implements ICommand {
+    MemberMethods memberTool;
+    public DragonsCommand(){
+        memberTool = new MemberMethods();
+    }
     // A simple display command
     @Override
     public void handle(CommandContext ctx) {
-        MemberMethods memberTool = new MemberMethods();
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle(ctx.getAuthor().getName() + "'s Coin Pouch");
         embedBuilder.setColor(Color.yellow);

@@ -5,6 +5,7 @@ package ThreeStrings.Rooms;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 public final class RoomHelpCommand implements ICommand {
+    //TODO: needs to be made
     @Override
     public void handle(CommandContext ctx) {
     }

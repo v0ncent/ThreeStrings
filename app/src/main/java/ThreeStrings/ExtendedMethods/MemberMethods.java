@@ -112,7 +112,6 @@ public class MemberMethods {
             System.out.println("Something happened while trying to subtract money!\n" + e);
             e.printStackTrace();
         }
-
     }
     //
 }

@@ -4,8 +4,6 @@
 package ThreeStrings.Inventory;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
-import ThreeStrings.Rooms.Tiles.Decoration;
-import ThreeStrings.Rooms.Tiles.Tiles;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -22,7 +20,7 @@ public class Inventory {
         this.playerInventory = memberTool.getInventory(userId);
         this.mongo = new MemberMongo();
     }
-    public void addToInventory(String decoration,Decoration dec){
+    public void addToInventory(String decoration){
         playerInventory.add(decoration);
         try{
             Document sampleDoc = new Document("id",userId);
@@ -32,18 +30,6 @@ public class Inventory {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-    public List<Decoration> parseToDecorationList(List<String>toParse){
-        List<Decoration> decList = new ArrayList<>();
-        for(int i =0; i<toParse.size(); i++){
-            for(int j =0; j<Tiles.DECORATIONS.size(); j++){
-                int finalJ = j;
-                if(toParse.stream().anyMatch((it)-> it.equals(Tiles.DECORATIONS.get(finalJ).getName()))){
-                    decList.add(Tiles.DECORATIONS.get(j));
-                }
-            }
-        }
-        return decList;
     }
     public String getPlayerInventoryAsString(){
         int index = 0;

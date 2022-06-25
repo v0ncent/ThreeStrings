@@ -6,6 +6,7 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import java.awt.*;
+//TODO: make it so that users can look at other members inventories
 public final class InventoryCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
@@ -28,6 +29,6 @@ public final class InventoryCommand implements ICommand {
     }
     @Override
     public String getType() {
-        return "Rooms";
+        return "member";
     }
 }

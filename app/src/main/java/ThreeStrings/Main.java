@@ -10,8 +10,7 @@ public final class Main {
     all JDABuilder manipulation must be done in Runner class
     ----------------------------------------
      */
-    private Main(){}
-    //
+    private Main(){} //create private constructor so no new instances can be made
     public static void main(String[] args) throws LoginException {
         Runner.run(); //use Runner's run() method to run bot
     }
