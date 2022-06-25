@@ -18,6 +18,9 @@ public class Inventory {
         this.memberTool = new MemberMethods();
         this.userId = userId;
         this.playerInventory = memberTool.getInventory(userId);
+        if(this.playerInventory == null){
+            this.playerInventory = List.of("You do not have any items yet!");
+        }
         this.mongo = new MemberMongo();
     }
     public void addToInventory(String decoration){
