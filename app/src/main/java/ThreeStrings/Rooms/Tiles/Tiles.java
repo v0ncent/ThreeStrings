@@ -61,7 +61,7 @@ public class Tiles {
         }
         return null;
     }
-    /////
+    //im quite happy with this algorithm :)
     public int getRoomIndex(int index){
         if (index <= 5) {
             return index-1;
@@ -76,5 +76,4 @@ public class Tiles {
             return index + 3;
         }
     }
-    /////
 }

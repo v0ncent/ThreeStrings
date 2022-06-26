@@ -4,6 +4,7 @@
 package ThreeStrings.Rooms;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
+import ThreeStrings.Inventory.Inventory;
 import ThreeStrings.Rooms.Tiles.Decoration;
 import ThreeStrings.Rooms.Tiles.Tiles;
 import ThreeStrings.command.CommandContext;
@@ -17,6 +18,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.awt.*;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public final class EditRoomCommand implements ICommand {
@@ -35,9 +37,6 @@ public final class EditRoomCommand implements ICommand {
         }catch (Exception e){
             return false;
         }
-    }
-    private boolean checkIfValidInventory(String userRequest){
-        return Tiles.DECORATIONS.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(userRequest));
     }
     private boolean checkIfValidDirection(String userRequest){
         List<String> directions = List.of("n","e","s","w");
@@ -60,11 +59,12 @@ public final class EditRoomCommand implements ICommand {
         final TextChannel channel = ctx.getChannel();
         final List<String> userRoom = memberTool.getRoom(discordID);
         final String userRoomAsString = memberTool.getRoomAsString(discordID);
+        final Inventory userInventory = new Inventory(ctx.getAuthor().getIdLong());
         embedBuilder.setTitle("What would you like to do to your room?");
         embedBuilder.setDescription("Pick a tile # (left to right 1-30), and a tile you would like to change it to," +
                 "then pick a tile direction!");
         embedBuilder.addField("Your Room",userRoomAsString,true);
-        embedBuilder.addField("Your Inventory", Tiles.DECORATIONS.get(0).getName() + "\n" + Tiles.DECORATIONS.get(1).getName(),true);
+        embedBuilder.addField("Your Inventory", userInventory.getPlayerInventoryAsString(),true);
         embedBuilder.setColor(Color.YELLOW);
         channel.sendMessageEmbeds(embedBuilder.build()).queue();
         channel.sendMessage("Pick a tile # (left to right 1-25) you wish to edit").queue();
@@ -95,7 +95,7 @@ public final class EditRoomCommand implements ICommand {
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
-                        && checkIfValidInventory(e.getMessage().getContentRaw())//and that the user gave a valid room slot
+                        && userInventory.has(e.getMessage().getContentRaw())//and that the user gave a valid room slot
                         && isParameterOneMet
                         || isCanceled(e.getMessage().getContentRaw())
                 , e -> {

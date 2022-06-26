@@ -5,6 +5,7 @@ package ThreeStrings.Rooms;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.Random;
 public final class RoomCommand implements ICommand {
@@ -27,8 +28,19 @@ public final class RoomCommand implements ICommand {
                 "To register please use !createroom !")){ //if user is not registered in db
             channel.sendMessage(message).queue();
         }else {
-            channel.sendMessage(quips[randomQuiq]).queue();
-            channel.sendMessage(memberTool.getRoomAsString(memberId)).queue();
+            try{
+                Member mentionedMember = ctx.getMessage().getMentionedMembers().get(0);
+                if(memberTool.getRoomAsString(mentionedMember.getIdLong()).equals("Looks like you haven't registered for a room in the tavern yet.\n" +
+                        "To register please use !createroom !")){
+                    channel.sendMessage("Looks like that user doesnt have a room yet!").queue();
+                }else {
+                    channel.sendMessage("**" + mentionedMember.getEffectiveName() + "'s Room**").queue();
+                    channel.sendMessage(memberTool.getRoomAsString(mentionedMember.getIdLong())).queue();
+                }
+            } catch (IndexOutOfBoundsException e){
+                channel.sendMessage(quips[randomQuiq]).queue();
+                channel.sendMessage(memberTool.getRoomAsString(memberId)).queue();
+            }
         }
     }
     @Override
