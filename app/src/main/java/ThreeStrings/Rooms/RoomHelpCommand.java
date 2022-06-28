@@ -28,8 +28,6 @@ public final class RoomHelpCommand implements ICommand {
                 "https://media.discordapp.net/attachments/895782679532945409/990749468422975498/roomHelp.PNG"
         );
         ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
-
-
     }
     @Override
     public String getName() {
