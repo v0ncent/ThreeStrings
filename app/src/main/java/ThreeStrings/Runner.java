@@ -11,8 +11,18 @@ import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import javax.security.auth.login.LoginException;
+//----Runner Class----
+/*
+This class instantiates all basic needs for ThreeStrings
+Such as JDABuilder Manipulation (status,prefix, gateway intents,etc..)
+And sets event listener
+And then tells bot to log in
+ */
+//---------------------
 public final class Runner {
-    private Runner(){} //make constructor private so no instances of runner class can be made
+    private Runner(){
+        //make constructor private so no instances of runner class can be made
+    }
     public static void run() throws LoginException {
         JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
