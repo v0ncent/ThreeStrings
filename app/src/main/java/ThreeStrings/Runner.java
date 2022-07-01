@@ -23,14 +23,14 @@ public final class Runner {
     private Runner(){
         //make constructor private so no instances of runner class can be made
     }
-    public static void run() throws LoginException {
+    public static void run() throws LoginException { //class throws LoginException if error happens while attempting to login
         JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
         ThreeStrings.setStatus(OnlineStatus.ONLINE); //set online status to online
         EventWaiter waiter = new EventWaiter(); //add event waiter class
         ThreeStrings.addEventListeners(new Listener(waiter), waiter); //allows for the commands class to function and lets bot listen for commands
         ThreeStrings.setChunkingFilter(ChunkingFilter.ALL); //allows for ThreeStrings to see all members of a discord
-        ThreeStrings.setMemberCachePolicy(MemberCachePolicy.ALL);
+        ThreeStrings.setMemberCachePolicy(MemberCachePolicy.ALL); //literally no idea
         ThreeStrings.enableIntents(GatewayIntent.GUILD_VOICE_STATES); //giving bot permission to view voice states
         ThreeStrings.enableCache(CacheFlag.VOICE_STATE); //enable voice state cache
         ThreeStrings.enableIntents(GatewayIntent.GUILD_MEMBERS); //giving self permission to view members

@@ -11,11 +11,27 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * This class is an implementation of Icommand Interface
+ * @see ICommand for in depth description of methods within this class
+ * */
 public final class HelpCommand implements ICommand {
    private final CommandManager manager; //import command manager class
+    /**
+     * Constructor for HelpCommand requires
+     * @param manager an instance of the CommandManager class, CommandManager is responsible for handling all commands when called and is needed for
+     *                getting all ICommand objects.
+     * @see CommandManager
+     *
+     */
     public HelpCommand(CommandManager manager) { //implement constructor for help command
         this.manager = manager; //set manager variable to our already made manager within constructor
     }
+    /*
+     * Handle in this instance creates multiple variables, args is equal to ctx.getArgs() which is all information typed after a command is issued,
+     * see CommandContext for more info on getArgs().
+     * Then creates multiple lists of strings which are ArrayLists() and are named to be specific to their content of their command type names.
+     */
     @Override
     public void handle(CommandContext ctx) {
         List<String> args = ctx.getArgs();    //create a list of strings called args, then gets arguments
@@ -30,6 +46,7 @@ public final class HelpCommand implements ICommand {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         if(args.isEmpty()){  //if there is no command with !help if statement runs
             for (ICommand iCommand : commandList) {
+                //TODO: Redo whatever the hell this is
                 if (iCommand.getType().equalsIgnoreCase("misc")) {
                     miscComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
