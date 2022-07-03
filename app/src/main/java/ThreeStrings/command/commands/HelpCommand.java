@@ -18,11 +18,10 @@ import java.util.List;
 public final class HelpCommand implements ICommand {
    private final CommandManager manager; //import command manager class
     /**
-     * Constructor for HelpCommand requires
+     * Constructor for HelpCommand creates an instance of CommandManager
      * @param manager an instance of the CommandManager class, CommandManager is responsible for handling all commands when called and is needed for
      *                getting all ICommand objects.
      * @see CommandManager
-     *
      */
     public HelpCommand(CommandManager manager) { //implement constructor for help command
         this.manager = manager; //set manager variable to our already made manager within constructor
@@ -30,7 +29,28 @@ public final class HelpCommand implements ICommand {
     /*
      * Handle in this instance creates multiple variables, args is equal to ctx.getArgs() which is all information typed after a command is issued,
      * see CommandContext for more info on getArgs().
-     * Then creates multiple lists of strings which are ArrayLists() and are named to be specific to their content of their command type names.
+     * -
+     * Then is creates the commandList which uses .getCommandList() in CommandManager class.
+     * See CommandManager for more info on getCommandList()
+     * -
+     * Then it creates multiple lists of strings which are ArrayLists() and are named to be specific to their content of their command type names.
+     * -
+     * Once lists were made, it creates a variable called channel which is equal to ctx.getChannel(), this returns the channel
+     * that the command was issued in.
+     * -
+     * Another variable called embedBuilder is created which is an instantiation of the EmbedBuilder class for it is an object used to crete discord embeds.
+     * -
+     * Then it checks if args is empty using isEmpty(), if there is no arguments given (meaning no command name after !help is issued)
+     * it begins looping through the commandList and streaming it to anyMatch, if ICommand.getType() equals a string which is defined by the
+     * different types of commands it adds them to their designated list of the same name and add the bots prefix to the front and a new line to the back.
+     * Then it uses the embedBuilder to begin creation of the embed(title,side color, description,thumbnail) to be sent if no specified command is in args.
+     * Once basics of embed are made it uses the method .addField() in the EmbedBuilder class, we create multiple fields all equal to a toString() version
+     * of each type list with their designated commands in each. 
+     * See EmbedBuilder for more info on .addField()
+     * Then it sets the footer of embed and sends the embed to the designated channel, then returns; to conclude usage of class.
+     * -
+     * if there are arguments when command is issued, we set them to a string called search and take the first argument in the args list.
+     * -
      */
     @Override
     public void handle(CommandContext ctx) {
@@ -46,23 +66,22 @@ public final class HelpCommand implements ICommand {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         if(args.isEmpty()){  //if there is no command with !help if statement runs
             for (ICommand iCommand : commandList) {
-                //TODO: Redo whatever the hell this is
-                if (iCommand.getType().equalsIgnoreCase("misc")) {
+                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("misc"))) {
                     miscComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (iCommand.getType().equalsIgnoreCase("utility")) {
+                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("utility"))) {
                     utilityComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (iCommand.getType().equalsIgnoreCase("member")) {
+                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("member"))) {
                     memberComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (iCommand.getType().equalsIgnoreCase("music")) {
+                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("music"))) {
                     musicComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (iCommand.getType().equalsIgnoreCase("rooms")) {
+                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("rooms"))) {
                     roomsComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (iCommand.getType().equalsIgnoreCase("shop")) {
+                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("shop"))) {
                     shopComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
             }

@@ -6,11 +6,11 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 /**
- * This class is an implementation of Icommand Interface
+ * This class is an implementation of ICommand Interface
  * @see ICommand
  * */
 public final class CapybaraCommand implements ICommand {
-    /**
+    /*
      * Handle in this instance creates a variable called channel which is the channel is equal to the
      * channel in which the command was issued in, it then uses channel.sendMessage() which requires a message
      * String to send to the specified channel, here it simply sends a {@link} of information about the Capybara
