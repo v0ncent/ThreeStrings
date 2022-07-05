@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * This class is an implementation of Icommand Interface
- * @see ICommand for in depth description of methods within this class
+ * @see ICommand
  * */
 public final class HelpCommand implements ICommand {
    private final CommandManager manager; //import command manager class
@@ -50,7 +50,12 @@ public final class HelpCommand implements ICommand {
      * Then it sets the footer of embed and sends the embed to the designated channel, then returns; to conclude usage of class.
      * -
      * if there are arguments when command is issued, we set them to a string called search and take the first argument in the args list.
+     * Then it creates a variable called command which is an ICommand command object, it then uses CommandManager method getCommand() with search as its query
+     * @see CommandManager for more info getCommand()
      * -
+     * If command is null (meaning the command does not exist) we send a message to the user channel stating the command doest exist and return to finish class usage,
+     * else it sends the command query to the channel command is issued in with ICommands getHelp() method
+     * @see ICommand for more info on getHelp()
      */
     @Override
     public void handle(CommandContext ctx) {
@@ -66,22 +71,22 @@ public final class HelpCommand implements ICommand {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         if(args.isEmpty()){  //if there is no command with !help if statement runs
             for (ICommand iCommand : commandList) {
-                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("misc"))) {
+                if (iCommand.getType().equalsIgnoreCase("misc")) {
                     miscComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("utility"))) {
+                if (iCommand.getType().equalsIgnoreCase("utility")) {
                     utilityComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("member"))) {
+                if (iCommand.getType().equalsIgnoreCase("member")) {
                     memberComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("music"))) {
+                if (iCommand.getType().equalsIgnoreCase("music")) {
                     musicComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("rooms"))) {
+                if (iCommand.getType().equalsIgnoreCase("rooms")) {
                     roomsComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
-                if (commandList.stream().anyMatch((it)-> it.getType().equalsIgnoreCase("shop"))) {
+                if (iCommand.getType().equalsIgnoreCase("shop")) {
                     shopComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
             }
@@ -155,18 +160,34 @@ public final class HelpCommand implements ICommand {
         }
         channel.sendMessage(command.getHelp()).queue(); //!help command is sent out
     }
+    /*
+     * getName() in this specific instance ->
+     * @return "help" returns string "help" for command name
+     */
     @Override
     public String getName() {
         return "help"; //set command to help within discord
     }
+    /*
+    * getHelp() in this specific instance ->
+    * @return "Shows the list with what I can do\n" + "Usage: !help (command)" returns string value of @return for its help description
+    */
     @Override
     public String getHelp() { //when !help, help is called this is run
         return "Shows the list with what I can do\n" + "Usage: !help (command)";
     }
+    /*
+    * getType() in this specific instance ->
+    * @return "utility" returns string value of @return and sets its command type
+    */
     @Override
     public String getType() {
         return "utility";
     }
+    /*
+    * getAlisases() in this specific instance ->
+    * @return List<String> of different ways to invoke command
+    */
     @Override
     public List<String> getAlisases() {  //set secondary help command called !bard
         return List.of("bard","cmds","commandlist");

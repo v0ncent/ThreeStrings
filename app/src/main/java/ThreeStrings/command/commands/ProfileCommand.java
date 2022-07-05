@@ -9,7 +9,14 @@ import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+/**
+ * This class is an implementation of Icommand Interface
+ * @see ICommand
+ * */
 public final class ProfileCommand implements ICommand {
+    /*
+    * Handle in this instance
+    */
     @Override
     public void handle(CommandContext ctx) {
         TextChannel channel = ctx.getChannel();
