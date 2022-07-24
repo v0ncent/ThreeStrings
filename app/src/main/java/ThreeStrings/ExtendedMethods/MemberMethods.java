@@ -10,13 +10,27 @@ import org.bson.conversions.Bson;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+//---- MemberMethods -----
+//This class is a custom Member Object for ThreeStrings functionality
 public class MemberMethods {
     final MemberMongo mongodb = new MemberMongo(); //create new instance of mongo object
+    /**
+     * Method begins by pushing id param into a Document object called sampleDoc that is used to
+     * 1. check if user is registered into mongoDB
+     * 2. get user specific listing in mongoDB
+     * The results are then pushed into a Document ArrayList using mongodb.collection.find and passing in the sampleDoc,
+     * We then use the .projection() method to find the "room" subfield of every user entry.
+     * The 0th index of the results ArrayList is then taken and typed into a List of strings
+     * @param id A Discord ID as long value, used to find user specific field in mongoDB
+     * @return Returns the 0th index of a String ArrayList that consists of user specific room field in mongoDB
+     * @see com.mongodb.client.FindIterable
+     * @see Document
+     */
     public List<String> getRoom(Long id){
         Document sampleDoc = new Document("id",id);
         if(mongodb.checkIfExists(sampleDoc)){ //if user is registered
             ArrayList<Document> results = mongodb.collection.find( //push result into arraylist
-                    new Document("id",id)
+                    sampleDoc
             ).projection( //get cash field
                     new Document("room",1).append("_id",0)
             ).into(new ArrayList<>());

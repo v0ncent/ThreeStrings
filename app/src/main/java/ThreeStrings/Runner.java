@@ -23,6 +23,11 @@ public final class Runner {
     private Runner(){
         //make constructor private so no instances of runner class can be made
     }
+    /**
+     * Run builds all necessary objects for ThreeStrings to Run,
+     * I.E, Sets listeners for discord, enables gateway intents, and logins to bot with token
+     * @Throws LoginException
+     * */
     public static void run() throws LoginException { //class throws LoginException if error happens while attempting to login
         JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
