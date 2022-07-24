@@ -13,7 +13,11 @@ import java.util.List;
 //---- MemberMethods -----
 //This class is a custom Member Object for ThreeStrings functionality
 public class MemberMethods {
-    final MemberMongo mongodb = new MemberMongo(); //create new instance of mongo object
+    // whenever memberMethods is instantiated  is creates a new instance of the MemberMongo Object
+    final MemberMongo mongodb;
+    public MemberMethods(){
+        this.mongodb = new MemberMongo();
+    }
     /**
      * Method begins by pushing id param into a Document object called sampleDoc that is used to
      * 1. check if user is registered into mongoDB
@@ -22,7 +26,7 @@ public class MemberMethods {
      * We then use the .projection() method to find the "room" subfield of every user entry.
      * The 0th index of the results ArrayList is then taken and typed into a List of strings
      * @param id A Discord ID as long value, used to find user specific field in mongoDB
-     * @return Returns the 0th index of a String ArrayList that consists of user specific room field in mongoDB
+     * @return Returns the 0th index of a String ArrayList that consists of user specific room field in mongoDB, else If user is not registered in mongoDB returns a single String list of warning message
      * @see com.mongodb.client.FindIterable
      * @see Document
      */

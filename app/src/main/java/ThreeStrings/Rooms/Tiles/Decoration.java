@@ -10,7 +10,6 @@ public class Decoration {
     String name;
     int cost;
     String thumbNail;
-    int sellPrice;
     List<String> directions;
     public Decoration(String name,
                       int cost,
