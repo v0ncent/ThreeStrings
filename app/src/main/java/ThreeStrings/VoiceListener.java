@@ -24,11 +24,6 @@ public class VoiceListener extends ListenerAdapter {
         VoiceChannel channel = event.getChannelLeft();
         List<Member> membersInVc = channel.getMembers();
         if(membersInVc.size() == 1 && membersInVc.get(0).getUser().isBot()){
-            try {
-                Thread.sleep(30000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             event.getGuild().getAudioManager().closeAudioConnection();
         }
     }
@@ -38,11 +33,6 @@ public class VoiceListener extends ListenerAdapter {
         VoiceChannel channel = event.getChannelLeft();
         List<Member> membersInVc = channel.getMembers();
         if(membersInVc.size() == 1 && membersInVc.get(0).getUser().isBot()){
-            try {
-                Thread.sleep(30000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             event.getGuild().getAudioManager().closeAudioConnection();
         }
     }

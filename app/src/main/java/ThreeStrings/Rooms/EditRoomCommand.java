@@ -18,7 +18,6 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.awt.*;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 public final class EditRoomCommand implements ICommand {
@@ -54,7 +53,6 @@ public final class EditRoomCommand implements ICommand {
     public void handle(CommandContext ctx) {
         final MemberMethods memberTool = new MemberMethods();
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        final Tiles tileTool = new Tiles();
         final long discordID = ctx.getAuthor().getIdLong();
         final TextChannel channel = ctx.getChannel();
         final List<String> userRoom = memberTool.getRoom(discordID);
