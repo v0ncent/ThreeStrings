@@ -31,6 +31,7 @@ public class CommandManager {
         addCommand(new PlayCommand());
         addCommand(new PlaylistCommand());
         addCommand(new ShuffleCommand());
+        addCommand(new ClearCommand());
         addCommand(new StopCommand());
         addCommand(new SkipCommand());
         addCommand(new NowPlayingCommand());

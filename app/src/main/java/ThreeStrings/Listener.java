@@ -38,7 +38,7 @@ public class Listener  extends ListenerAdapter {
         if (user.isBot() || event.isWebhookMessage() ){ //if user is a bot or webhook message we simply just return
             return;
         }
-        String prefix = Config.get("PREFIX"); //setting prefix to what it is in the database
+        String prefix = Config.get("PREFIX"); //setting prefix to what it is in the env
         String raw = event.getMessage().getContentRaw();
         if (raw.equalsIgnoreCase(prefix + "shutdown") && user.getId().equals(Config.get("OWNER_ID"))){ //using boolean we can create a !shutdown command that only the owner can use with owner id in config
             LOGGER.info("Heading in for the night! Thanks for listening!"); //sends message to user that bot is shutting down
