@@ -1,4 +1,5 @@
 package ThreeStrings.CommandLine.Commands;
+import ThreeStrings.CommandLine.CommandLineManager;
 import ThreeStrings.Listener;
 import ThreeStrings.lavaplayer.PlayerManager;
 import com.mongodb.lang.NonNull;
@@ -8,22 +9,33 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.CancellationException;
+
 public final class CMDPlay {
    private static final List<Guild> guilds = Listener.GUILDS;
    //
     private static Guild getGuildChoice(int choice){
+        if(choice == CommandLineManager.EXIT_CODE){
+            throw new CancellationException();
+        }
         if(choice < 0 || choice > guilds.size()){
             throw new IndexOutOfBoundsException();
         }
         return guilds.get(choice);
     }
     private static VoiceChannel getChannelChoice(int choice,Guild server){
+        if(choice == CommandLineManager.EXIT_CODE){
+            throw new CancellationException();
+        }
         if(choice < 0 || choice > server.getVoiceChannels().size()){
             throw new IndexOutOfBoundsException();
         }
         return server.getVoiceChannels().get(choice);
     }
     private static TextChannel getTextChannelChoice(int choice,Guild server){
+        if(choice == CommandLineManager.EXIT_CODE){
+            throw new CancellationException();
+        }
         if(choice < 0 || choice > server.getTextChannels().size()){
             throw new IndexOutOfBoundsException();
         }

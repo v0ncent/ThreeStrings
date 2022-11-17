@@ -9,7 +9,10 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.CancellationException;
 public final class CommandLineManager extends Thread{
+    //define codes
+    public static final int EXIT_CODE = -999;
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandLineManager.class);
     @Override
     public void run(){
@@ -39,6 +42,8 @@ public final class CommandLineManager extends Thread{
              LOGGER.error("You have either have provided no link or picked a invalid menu choice!");
             }catch (MalformedURLException e){
                 LOGGER.error("You have provided a invalid youtube link!");
+            } catch (CancellationException e){
+                LOGGER.error("Exit code " + EXIT_CODE + " has been called!");
             }
         }
     }
