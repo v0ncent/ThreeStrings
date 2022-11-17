@@ -13,6 +13,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ public class PlayerManager {
     private static PlayerManager INSTANCE;
     public final Map<Long, GuildMusicManager> musicManagers;
     public final AudioPlayerManager audioPlayerManager;
+    private final Logger LOGGER = LoggerFactory.getLogger(PlayerManager.class);
     public PlayerManager() {
         this.musicManagers = new HashMap<>(); //creates hashmap for musicManagers
         this.audioPlayerManager = new DefaultAudioPlayerManager(); //sets audioPlayerManager to default
@@ -73,9 +76,11 @@ public class PlayerManager {
             }
             @Override
             public void noMatches() {
+                LOGGER.error("No matches for link");
             }
             @Override
             public void loadFailed(FriendlyException exception) {
+                LOGGER.error("Failed to load song!\n" + exception);
             }
         });
     }
@@ -123,10 +128,11 @@ public class PlayerManager {
             }
             @Override
             public void noMatches() {
+                LOGGER.error("No matches for link");
             }
             @Override
             public void loadFailed(FriendlyException exception) {
-
+                LOGGER.error("Failed to load song!\n" + exception);
             }
         });
     }

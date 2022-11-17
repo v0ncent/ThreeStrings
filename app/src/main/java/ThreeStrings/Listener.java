@@ -4,6 +4,7 @@
 package ThreeStrings;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.BotCommons;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -11,7 +12,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.List;
 public class Listener  extends ListenerAdapter {
+    public static List<Guild> GUILDS; //all guilds threestrings is connected
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class); //implement the Logger class to get rid of error messages
     private final CommandManager manager; //implement our command manager class
     public Listener(EventWaiter waiter){
@@ -31,6 +34,8 @@ public class Listener  extends ListenerAdapter {
                 "                   /:/  /       |:|  |        \\:\\__\\        \\:\\__\\        \\::/  /                     |:|  |       \\/__/         /:/  /       \\::/  /       \\::/  /   \n" +
                 "                   \\/__/         \\|__|         \\/__/         \\/__/         \\/__/                       \\|__|                     \\/__/         \\/__/         \\/__/"); //tells user that bot is ready to play
         LOGGER.info("ThreeStrings Ready to play!");
+        //populate guilds list
+        GUILDS = event.getJDA().getGuilds();
     }
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) { //implementing discord message received constructor

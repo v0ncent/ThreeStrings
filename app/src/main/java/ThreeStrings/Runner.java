@@ -2,6 +2,7 @@
 //Runner Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings;
+import ThreeStrings.CommandLine.CommandLineManager;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -41,5 +42,8 @@ public final class Runner {
         ThreeStrings.enableCache(CacheFlag.VOICE_STATE); //enable voice state cache
         ThreeStrings.enableIntents(GatewayIntent.GUILD_MEMBERS); //giving self permission to view members
         ThreeStrings.build(); //tells bot to log in
+        //create and run command line app
+        CommandLineManager cmManager = new CommandLineManager();
+        cmManager.start();
     }
 }
