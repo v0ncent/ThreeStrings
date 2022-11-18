@@ -1,5 +1,10 @@
+//Vincent Banks
+//CMDPlay class
+//COPYRIGHT Vincent Banks
 package ThreeStrings.CommandLine.Commands;
+import ThreeStrings.CommandLine.Codes;
 import ThreeStrings.CommandLine.CommandLineManager;
+import ThreeStrings.CommandLine.Exceptions;
 import ThreeStrings.Listener;
 import ThreeStrings.lavaplayer.PlayerManager;
 import com.mongodb.lang.NonNull;
@@ -9,66 +14,52 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CancellationException;
-
 public final class CMDPlay {
    private static final List<Guild> guilds = Listener.GUILDS;
    //
-    private static Guild getGuildChoice(int choice){
-        if(choice == CommandLineManager.EXIT_CODE){
-            throw new CancellationException();
+    private static Guild getGuildChoice(int choice) throws Exceptions.InvalidMenuChoice, Exceptions.ExitCodeCalled {
+        if(choice == Codes.EXIT_CODE){
+            throw new Exceptions.ExitCodeCalled(CMDPlay.class);
         }
         if(choice < 0 || choice > guilds.size()){
-            throw new IndexOutOfBoundsException();
+            throw new Exceptions.InvalidMenuChoice(CMDPlay.class);
         }
         return guilds.get(choice);
     }
-    private static VoiceChannel getChannelChoice(int choice,Guild server){
-        if(choice == CommandLineManager.EXIT_CODE){
-            throw new CancellationException();
+    private static VoiceChannel getChannelChoice(int choice,Guild server) throws Exceptions.ExitCodeCalled, Exceptions.InvalidMenuChoice {
+        if(choice == Codes.EXIT_CODE){
+            throw new Exceptions.ExitCodeCalled(CMDPlay.class);
         }
         if(choice < 0 || choice > server.getVoiceChannels().size()){
-            throw new IndexOutOfBoundsException();
+            throw new Exceptions.InvalidMenuChoice(CMDPlay.class);
         }
         return server.getVoiceChannels().get(choice);
     }
-    private static TextChannel getTextChannelChoice(int choice,Guild server){
-        if(choice == CommandLineManager.EXIT_CODE){
-            throw new CancellationException();
+    private static TextChannel getTextChannelChoice(int choice,Guild server) throws Exceptions.ExitCodeCalled, Exceptions.InvalidMenuChoice {
+        if(choice == Codes.EXIT_CODE){
+            throw new Exceptions.ExitCodeCalled(CMDPlay.class);
         }
         if(choice < 0 || choice > server.getTextChannels().size()){
-            throw new IndexOutOfBoundsException();
+            throw new Exceptions.InvalidMenuChoice(CMDPlay.class);
         }
         return server.getTextChannels().get(choice);
     }
     //
-    public static void play(@NonNull String link){
+    public static void play(@NonNull String link) throws Exceptions.InvalidMenuChoice, Exceptions.ExitCodeCalled {
         Scanner scnr = new Scanner(System.in);
         //
         //determine server endpoint
-        System.out.println("------------");
-        for(int i =0; i<guilds.size(); i++){
-            System.out.println(i + " " + guilds.get(i).toString());
-        }
-        System.out.println("------------");
+        CommandLineManager.printMenu(guilds);
         System.out.println("What Guild would you like to play to?");
         int choice = scnr.nextInt();
         Guild server = getGuildChoice(choice);
         //determine channel endpoint
-        System.out.println("------------");
-        for(int i = 0; i< server.getVoiceChannels().size(); i++){
-            System.out.println(i + " " + server.getVoiceChannels().get(i).toString());
-        }
-        System.out.println("------------");
+        CommandLineManager.printMenu(server.getVoiceChannels());
         System.out.println("What channel would you like to play to?");
         choice = scnr.nextInt();
         VoiceChannel channel = getChannelChoice(choice,server);
         //determine text channel endpoint
-        System.out.println("------------");
-        for(int i = 0; i< server.getTextChannels().size(); i++){
-            System.out.println(i + " " + server.getTextChannels().get(i).toString());
-        }
-        System.out.println("------------");
+        CommandLineManager.printMenu(server.getTextChannels());
         System.out.println("What text channel would you like to send play message to?");
         choice = scnr.nextInt();
         TextChannel textChannel = getTextChannelChoice(choice,server);
@@ -78,5 +69,4 @@ public final class CMDPlay {
         PlayerManager.getInstance().LoadAndPlayOnce(textChannel, link);
         System.out.printf("Playing %s to %s",link,server);
     }
-    //
 }
