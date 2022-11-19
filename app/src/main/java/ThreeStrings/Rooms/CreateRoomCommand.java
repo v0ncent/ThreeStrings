@@ -9,10 +9,8 @@ import ThreeStrings.command.ICommand;
 import org.bson.Document;
 import java.util.List;
 public final class CreateRoomCommand implements ICommand {
-    MemberMongo mongo;
     List<String> defaultRoom;
     public CreateRoomCommand(){
-        mongo = new MemberMongo(); //when class is call we create a new instance of mongo object
         defaultRoom = List.of(
                 Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"),"\n",
                 Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"), Config.get("WOOD_TILE"),"\n",
@@ -23,15 +21,17 @@ public final class CreateRoomCommand implements ICommand {
     }
     @Override
     public void handle(CommandContext ctx) {
+        final MemberMongo mongo = new MemberMongo();
         long discordId = ctx.getAuthor().getIdLong(); //pull user's discord id as long value
+        Document check = new Document("id",discordId); //create default doc to check if user exists in db
         List<String> inventory = List.of(" ");
         Document defaultDoc = new Document("id", discordId)
                 .append("room", defaultRoom)
                 .append("dragons", 100L)
                 .append("inventory",inventory)
                 .append("goldstars",0)
-                .append("points",0); // create default document to check if user has already been registered
-        if (!mongo.checkIfExists(defaultDoc)) { // if document doest exist in database
+                .append("points",0);
+        if (!mongo.checkIfExists(check)) { // if document doest exist in database
             try {
                 mongo.insert(defaultDoc);
                 ctx.getChannel().sendMessage("Alright I have a spot open for ya!\n" +
