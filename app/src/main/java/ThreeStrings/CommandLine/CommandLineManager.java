@@ -4,6 +4,7 @@
 package ThreeStrings.CommandLine;
 import ThreeStrings.CommandLine.Commands.CMDLeave;
 import ThreeStrings.CommandLine.Commands.CMDPlay;
+import ThreeStrings.CommandLine.Commands.CMDServerlist;
 import com.mongodb.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +54,13 @@ public final class CommandLineManager extends Thread{
             case "leave":
                 try{
                     CMDLeave.leave();
+                }catch (Exception e){
+                    CMLineExceptionHandler.handle(self,e);
+                }
+                break;
+            case "serverlist":
+                try{
+                    CMDServerlist.sendList();
                 }catch (Exception e){
                     CMLineExceptionHandler.handle(self,e);
                 }
