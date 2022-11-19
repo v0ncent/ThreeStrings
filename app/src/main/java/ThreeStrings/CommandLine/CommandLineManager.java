@@ -42,7 +42,6 @@ public final class CommandLineManager extends Thread{
                     String link = args[1];
                     String ytPattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
                     if(!link.isEmpty() && link.matches(ytPattern)){
-                        System.out.println(link);
                         CMDPlay.play(link);
                     }else{
                         throw new Exceptions.InvalidYoutubeURL(self);

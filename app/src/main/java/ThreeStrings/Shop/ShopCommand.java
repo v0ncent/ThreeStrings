@@ -116,7 +116,7 @@ public final class ShopCommand implements ICommand {
                                         );
                                         ctx.getChannel().sendMessage("It has been added to your inventory!").queue();
                                         ctx.getChannel().sendMessage("Your new balance is: **"
-                                                + memberTool.getDragons(ctx.getAuthor().getIdLong()) + Config.get("DRAGONS") + "**").queue();
+                                                + memberTool.getDragons(ctx.getAuthor().getIdLong()) + Config.get("DRAGON") + "**").queue();
                                     }catch (Exception error){
                                         ctx.getChannel().sendMessage("Hmm.. I tried to add this to your inventory but seems a problem has occurred" + error).queue();
                                     }

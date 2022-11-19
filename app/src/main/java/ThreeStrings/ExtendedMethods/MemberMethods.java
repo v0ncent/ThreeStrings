@@ -61,7 +61,7 @@ public class MemberMethods {
         }
         return "Looks like you haven't registered for a room in the tavern yet.\nTo register please use !createroom !";
     }
-    public long getDragons(long id){ //getCash method
+    public Long getDragons(long id){ //getCash method
         Document sampleDoc = new Document("id",id); //create sample document to check if user is registered in db
         if(mongodb.checkIfExists(sampleDoc)){ //if user is registered
             ArrayList<Document> results = mongodb.collection.find( //push result into arraylist
@@ -70,14 +70,14 @@ public class MemberMethods {
                     new Document("dragons",1).append("_id",0)
             ).into(new ArrayList<>());
             try {
-                return Long.parseLong(results
+                return results
                         .get(0)
-                        .getLong("dragons").toString());
+                        .getLong("dragons");
             } catch (Exception e){
                 e.printStackTrace();
             }
         } //if none of above is applicable send this message
-        return 0;
+        return 0L;
     }
     public Serializable getGoldStars(long id){ //getGoldStars method
         Document sampleDoc = new Document("id",id); //create sample document to check if user is registered in db
@@ -95,7 +95,7 @@ public class MemberMethods {
     }
     public void eggFound(long id){ //eggFound Method
         Document sampleDoc = new Document("id",id); //sample document for finding user.
-        int userStars = (Integer) getGoldStars(id); //getGoldStars method and cast it to an integer
+        int userStars = (int) getGoldStars(id); //getGoldStars method and cast it to an integer
         userStars++; //+1 to stars GOOD JOB
         try {
             Bson updates = Updates.combine( //create bson update with field and updated stars

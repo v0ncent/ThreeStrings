@@ -42,7 +42,7 @@ public final class EditRoomCommand implements ICommand {
         return directions.stream().anyMatch((it) -> it.equalsIgnoreCase(userRequest));
     }
     private boolean isCanceled(String message){
-        List<String>aborts = List.of("stop","cancel","abort","nevermind","kill","nomore","s","n","no","escape","esc");
+        List<String>aborts = List.of("stop","cancel","abort","nevermind","kill","nomore","no","escape","esc");
         return aborts.stream().anyMatch((it)-> it.equalsIgnoreCase(message));
     }
     int index;
@@ -59,7 +59,7 @@ public final class EditRoomCommand implements ICommand {
         final String userRoomAsString = memberTool.getRoomAsString(discordID);
         final Inventory userInventory = new Inventory(ctx.getAuthor().getIdLong());
         embedBuilder.setTitle("What would you like to do to your room?");
-        embedBuilder.setDescription("Pick a tile # (left to right 1-30), and a tile you would like to change it to," +
+        embedBuilder.setDescription("Pick a tile # (left to right 1-25), and a tile you would like to change it to," +
                 "then pick a tile direction!");
         embedBuilder.addField("Your Room",userRoomAsString,true);
         embedBuilder.addField("Your Inventory", userInventory.getPlayerInventoryAsString(),true);

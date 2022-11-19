@@ -44,7 +44,8 @@ public final class PlayCommand implements ICommand {
         }
         Random r = new Random();
         int rngEgg = r.nextInt(251-1) + 1;
-        if(rngEgg == 57){
+        //int rngEgg = 1;
+        if(rngEgg == 1){
             String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in

@@ -27,7 +27,7 @@ public final class CreateRoomCommand implements ICommand {
         List<String> inventory = List.of(" ");
         Document defaultDoc = new Document("id", discordId)
                 .append("room", defaultRoom)
-                .append("dragons", 100)
+                .append("dragons", 100L)
                 .append("inventory",inventory)
                 .append("goldstars",0)
                 .append("points",0); // create default document to check if user has already been registered
