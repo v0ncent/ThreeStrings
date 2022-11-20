@@ -10,23 +10,22 @@ import java.awt.*;
 public final class InventoryCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        try{
+        if(ctx.getArgs().isEmpty()){
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            Inventory inventory = new Inventory(ctx.getAuthor().getIdLong());
+            ctx.getChannel().sendMessage("Quite the collection I see.").queue();
+            embedBuilder.setTitle(ctx.getAuthor().getName() + "'s Inventory");
+            embedBuilder.setColor(Color.YELLOW);
+            embedBuilder.setDescription("Quite the collection I see.");
+            embedBuilder.addField("",inventory.getPlayerInventoryAsString(),true);
+            ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+        } else {
             Member mentionedUser = ctx.getMessage().getMentionedMembers().get(0);
             EmbedBuilder embedBuilder = new EmbedBuilder();
             Inventory inventory = new Inventory(mentionedUser.getIdLong());
             ctx.getChannel().sendMessage("Quite the collection I see.").queue();
             embedBuilder.setTitle(mentionedUser.getEffectiveName() + "'s Inventory");
             embedBuilder.setThumbnail(mentionedUser.getUser().getAvatarUrl());
-            embedBuilder.setColor(Color.YELLOW);
-            embedBuilder.setDescription("Quite the collection I see.");
-            embedBuilder.addField("",inventory.getPlayerInventoryAsString(),true);
-            ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
-        } catch (IndexOutOfBoundsException e){ //if no member mentioned it throws an index out of bounds error,
-            //here we can just catch it and just send the author's inventory instead
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            Inventory inventory = new Inventory(ctx.getAuthor().getIdLong());
-            ctx.getChannel().sendMessage("Quite the collection I see.").queue();
-            embedBuilder.setTitle(ctx.getAuthor().getName() + "'s Inventory");
             embedBuilder.setColor(Color.YELLOW);
             embedBuilder.setDescription("Quite the collection I see.");
             embedBuilder.addField("",inventory.getPlayerInventoryAsString(),true);
