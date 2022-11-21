@@ -36,6 +36,7 @@ public class PlayerManager {
             return guildMusicManager;
         });
     }
+    // keep this here in case of bug with new improved load and play
     //Below method LoadAndPlayOnce is used by the play command
     // for playing only one track when searching with plain text code is all the same until final playing moment
 //    public void LoadAndPlayOnce(TextChannel channel, String trackUrl){ //create a load and play method with lava player methods
@@ -87,7 +88,8 @@ public class PlayerManager {
 //            }
 //        });
 //    }
-    //Below method LoadAndPlay is used by the playlist command
+    //Below method plays track, play command uses true for is once, while playlist uses false
+    //if isOnce is true then it only plays one song, else it makes and plays a playlist
     public void LoadAndPlay(TextChannel channel, String trackUrl, boolean isOnce){ //create a load and play method with lava player methods
         final GuildMusicManager musicManager = this.getMusicManager(channel.getGuild()); //get discord channel
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
