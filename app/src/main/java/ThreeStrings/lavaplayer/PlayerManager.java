@@ -67,7 +67,7 @@ public class PlayerManager {
                         .queue();
                 final AudioTrackInfo info = track.getInfo(); //create variable for getting track info
                 if (musicManagerSingle.scheduler.queue.isEmpty()){ //if there is nothing in queue this if statement will run
-                    channel.sendMessageFormat("Now playing:`%s` by `%s`" + " - Duration: " + formatTime(track.getDuration()) +
+                    channel.sendMessageFormat("Now playing: `%s` by `%s`" + " - Duration: " + formatTime(track.getDuration()) +
                             " (Link: <%s>)", info.title, info.author, info.uri).queue();
                 }
             }
@@ -114,7 +114,7 @@ public class PlayerManager {
                     musicManager.scheduler.queue(track);
                     final AudioTrackInfo info = track.getInfo(); //create variable for getting track info
                     if (musicManager.scheduler.queue.isEmpty()){ //if there is nothing in queue this if statement will run
-                        channel.sendMessageFormat("Now playing:`%s` by `%s`" + " - Duration: " + formatTime(track.getDuration()) +
+                        channel.sendMessageFormat("Now playing: `%s` by `%s`" + " - Duration: " + formatTime(track.getDuration()) +
                                 " Link: <%s>)", info.title, info.author, info.uri).queue();
                     }
                 }
