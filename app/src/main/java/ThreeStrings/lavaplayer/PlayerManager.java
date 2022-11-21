@@ -105,9 +105,7 @@ public class PlayerManager {
                         .append("`")
                         .queue();
                 final AudioTrack track = tracks.get(0); //takes the first result
-
                 musicManagerSingle.scheduler.queue(track); //queues track
-
                 channel.sendMessage("Adding to queue: `") //sends message to chat and appends info about track
                         .append(track.getInfo().title)
                         .append("` by `")
@@ -137,6 +135,7 @@ public class PlayerManager {
             }
         });
     }
+    //
     public static PlayerManager getInstance(){ //if there is no instance this if statement will run
         if(INSTANCE == null){
             INSTANCE = new PlayerManager();

@@ -68,6 +68,11 @@ public final class PlaylistCommand implements ICommand {
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
             PlayerManager.getInstance().LoadAndPlay(channel, link); //sends bot to channel and plays song on instance
+        } else {
+            final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
+            final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
+            audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
+            PlayerManager.getInstance().LoadAndPlay(channel, link); //sends bot to channel and plays the playlist
         }
     }
     @Override
@@ -76,7 +81,8 @@ public final class PlaylistCommand implements ICommand {
     }
     @Override
     public String getHelp() {
-        return "Gets me to play a playlist for you based off of your search.\n" + "usage is !playlist (search term).";
+        return "Gets me to make and play a playlist for you based off of your search.\n" + "Usage: !playlist (search term)." +
+                "\nTo play a playlist from youtube use !playlist (playlist link).\n";
     }
     @Override
     public String getType() {
