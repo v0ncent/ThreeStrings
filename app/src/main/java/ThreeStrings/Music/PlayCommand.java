@@ -50,7 +50,7 @@ public final class PlayCommand implements ICommand {
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
-            PlayerManager.getInstance().LoadAndPlayOnce(channel, link); //sends bot to channel and plays song on instance
+            PlayerManager.getInstance().LoadAndPlay(channel, link,true); //sends bot to channel and plays song on instance
             channel.sendMessage("That's gotta suck!\n" +
                     ctx.getMessage().getAuthor().getAsMention() + " just got rick rolled!\n" +
                     "At least its not all bad you got a gold star!" + Config.get("GOLD_STAR") +"\n").queue();
@@ -68,12 +68,12 @@ public final class PlayCommand implements ICommand {
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
-            PlayerManager.getInstance().LoadAndPlayOnce(channel, link); //sends bot to channel and plays song on instance
+            PlayerManager.getInstance().LoadAndPlay(channel, link,true); //sends bot to channel and plays song on instance
         }else { //else is a playlist
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
             final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
-            PlayerManager.getInstance().LoadAndPlay(channel, link); //sends bot to channel and plays the playlist
+            PlayerManager.getInstance().LoadAndPlay(channel, link,false); //sends bot to channel and plays the playlist
         }
     }
         @Override

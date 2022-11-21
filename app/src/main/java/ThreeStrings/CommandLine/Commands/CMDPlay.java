@@ -66,7 +66,7 @@ public final class CMDPlay {
         //connect to endpoints and play link
         final AudioManager audioManager = server.getAudioManager();
         audioManager.openAudioConnection(channel);
-        PlayerManager.getInstance().LoadAndPlayOnce(textChannel, link);
+        PlayerManager.getInstance().LoadAndPlay(textChannel, link,true);
         System.out.printf("Playing %s to %s",link,server);
     }
 }

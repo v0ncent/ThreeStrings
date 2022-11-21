@@ -60,7 +60,7 @@ public final class DmCommand implements ICommand {
                     e -> e.getMessage().getContentRaw().equals("1") && e.getChannel().equals(ctx.getChannel()), e -> {
                         musicManager.scheduler.player.stopTrack();
                         musicManager.scheduler.queue.clear();
-                        PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/playlist?list=PLv53iNBCrauSo9HXtJwot_4BeRK7eId5U"); //sends bot to channel and plays song on instance
+                        PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/playlist?list=PLv53iNBCrauSo9HXtJwot_4BeRK7eId5U",true); //sends bot to channel and plays song on instance
                     }, 1L, TimeUnit.MINUTES,
                     () -> channel.sendMessage("").queue()); //add timeout);
 
@@ -68,7 +68,7 @@ public final class DmCommand implements ICommand {
                 e -> e.getMessage().getContentRaw().equals("2") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
-                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=YnopHCL1Jk8"); //sends bot to channel and plays song on instance
+                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=YnopHCL1Jk8",true); //sends bot to channel and plays song on instance
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
@@ -76,7 +76,7 @@ public final class DmCommand implements ICommand {
                 e -> e.getMessage().getContentRaw().equals("3") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
-                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=nC7ii3Ir-no"); //sends bot to channel and plays song on instance
+                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=nC7ii3Ir-no",true); //sends bot to channel and plays song on instance
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
@@ -84,7 +84,7 @@ public final class DmCommand implements ICommand {
                 e -> e.getMessage().getContentRaw().equals("4") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
-                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=pKQp61e94VE"); //sends bot to channel and plays song on instance
+                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=pKQp61e94VE",true); //sends bot to channel and plays song on instance
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
@@ -92,7 +92,7 @@ public final class DmCommand implements ICommand {
                 e -> e.getMessage().getContentRaw().equals("5") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
-                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=S7XfKAx9jGQ&list=PLCLeSTzz6trYB89ZYFswkVKoQWPZ6e7_1"); //sends bot to channel and plays song on instance
+                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=S7XfKAx9jGQ&list=PLCLeSTzz6trYB89ZYFswkVKoQWPZ6e7_1",true); //sends bot to channel and plays song on instance
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
@@ -100,7 +100,7 @@ public final class DmCommand implements ICommand {
                 e -> e.getMessage().getContentRaw().equals("6") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
-                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=hTl0F2cKzLk"); //sends bot to channel and plays song on instance
+                    PlayerManager.getInstance().LoadAndPlay(channel, "https://www.youtube.com/watch?v=hTl0F2cKzLk",true); //sends bot to channel and plays song on instance
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
     }
