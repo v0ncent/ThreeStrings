@@ -3,6 +3,7 @@
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Inventory;
 import ThreeStrings.Database.MemberMongo;
+import ThreeStrings.ExtendedMethods.ArrayMethods;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import com.mongodb.client.model.Updates;
 import org.bson.Document;
@@ -46,11 +47,7 @@ public class Inventory {
                 );
             }
         }
-        return itemNames
-                .toString()
-                .replaceAll("]","")
-                .replaceAll("\\[","")
-                .replaceAll(",","");
+        return ArrayMethods.arrayAsString(itemNames);
     }
     public boolean has(String decoration){
         return playerInventory.stream().anyMatch((it) -> it.equals(decoration));

@@ -21,7 +21,7 @@ public final class ProfileCommand implements ICommand {
     public void handle(CommandContext ctx) {
         TextChannel channel = ctx.getChannel();
         EmbedBuilder embed = new EmbedBuilder(); //implement EmbedBuilder
-        MemberMethods member = new MemberMethods();
+        final MemberMethods member = new MemberMethods();
         Member name;
         if(ctx.getArgs().isEmpty()){
             name = ctx.getMember();

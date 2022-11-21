@@ -4,6 +4,7 @@
 package ThreeStrings.command.commands;
 import ThreeStrings.CommandManager;
 import ThreeStrings.Config;
+import ThreeStrings.ExtendedMethods.ArrayMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -98,51 +99,27 @@ public final class HelpCommand implements ICommand {
                     .getSelfUser()
                     .getAvatarUrl());
             embedBuilder.addField("Misc","```"
-                    +miscComs.toString()
-                    .replaceAll("]","")
-                    .replaceAll("\\[","")
-                    .replaceAll(",","")
-                            .replaceAll(" ","")
+                    + ArrayMethods.arrayAsString(miscComs)
                             + "```"
                     ,true);
             embedBuilder.addField("Utility","```"
-                    +utilityComs.toString()
-                    .replaceAll("]","")
-                    .replaceAll("\\[","")
-                    .replaceAll(",","")
-                            .replaceAll(" ","")
+                    +ArrayMethods.arrayAsString(utilityComs)
                             + "```"
                     ,true);
             embedBuilder.addField("Member","```"
-                    +memberComs.toString()
-                    .replaceAll("]","")
-                    .replaceAll("\\[","")
-                    .replaceAll(",","")
-                            .replaceAll(" ","")
+                    +ArrayMethods.arrayAsString(memberComs)
                             + "```"
                     ,true);
             embedBuilder.addField("Music","```"
-                    +musicComs.toString()
-                    .replaceAll("]","")
-                    .replaceAll("\\[","")
-                    .replaceAll(",","")
-                            .replaceAll(" ","")
+                    +ArrayMethods.arrayAsString(musicComs)
                             + "```"
                     ,false);
             embedBuilder.addField("Rooms","```"
-                    +roomsComs.toString()
-                    .replaceAll("]","")
-                    .replaceAll("\\[","")
-                    .replaceAll(",","")
-                            .replaceAll(" ","")
+                    +ArrayMethods.arrayAsString(roomsComs)
                             + "```"
                     ,true);
             embedBuilder.addField("Shop","```"
-                    +shopComs.toString()
-                    .replaceAll("]","")
-                    .replaceAll("\\[","")
-                    .replaceAll(",","")
-                            .replaceAll(" ","")
+                    +ArrayMethods.arrayAsString(shopComs)
                             + "```"
                     ,true);
             embedBuilder.setFooter("Hi I'm Mattrim \"Threestrings\" Mereg, " +

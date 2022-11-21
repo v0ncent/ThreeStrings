@@ -75,4 +75,8 @@ public class Tiles {
             return index + 3;
         }
     }
+    public static boolean checkIfValidDirection(String userRequest){
+        List<String> directions = List.of("n","e","s","w");
+        return directions.stream().anyMatch((it) -> it.equalsIgnoreCase(userRequest));
+    }
 }

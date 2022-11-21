@@ -28,11 +28,11 @@ public final class ShopCommand implements ICommand {
         this.memberTool = new MemberMethods();
         this.shop = new Shop();
     }
-    private boolean isValidConfirmation(String userMessage){
+    private static boolean isValidConfirmation(String userMessage){
         List<String> validConfirmations = List.of("yes","no","y","n");
         return validConfirmations.stream().anyMatch((it) -> it.equalsIgnoreCase(userMessage));
     }
-    private boolean isCanceled(String message){
+    private static boolean isCanceled(String message){
         List<String>aborts = List.of("stop","cancel","abort","nevermind","kill","nomore","s","n","no","escape","esc");
         return aborts.stream().anyMatch((it)-> it.equalsIgnoreCase(message));
     }

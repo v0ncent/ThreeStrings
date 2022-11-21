@@ -5,6 +5,7 @@ package ThreeStrings.Rooms;
 import ThreeStrings.Database.MemberMongo;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.Inventory.Inventory;
+import ThreeStrings.Rooms.RoomMethods.RoomMethods;
 import ThreeStrings.Rooms.Tiles.Decoration;
 import ThreeStrings.Rooms.Tiles.Tiles;
 import ThreeStrings.command.CommandContext;
@@ -26,18 +27,6 @@ public final class EditRoomCommand implements ICommand {
     public EditRoomCommand(EventWaiter waiter){ //create constructor to get event waiter and mongo object
         this.waiter = waiter;
         this.mongo = new MemberMongo();
-    }
-    private boolean checkIfValidRoom(String userRequest){
-        try {
-            int index = Integer.parseInt(userRequest);
-            return index > 0 && index < 26;
-        }catch (Exception e){
-            return false;
-        }
-    }
-    private static boolean checkIfValidDirection(String userRequest){
-        List<String> directions = List.of("n","e","s","w");
-        return directions.stream().anyMatch((it) -> it.equalsIgnoreCase(userRequest));
     }
     private static boolean isCanceled(String message){
         List<String>aborts = List.of("stop","cancel","abort","nevermind","kill","nomore","no","escape","esc");
@@ -76,7 +65,7 @@ public final class EditRoomCommand implements ICommand {
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
-                && checkIfValidRoom(e.getMessage().getContentRaw()) //and that the user gave a valid room slot
+                && RoomMethods.checkIfValidRoom(e.getMessage().getContentRaw()) //and that the user gave a valid room slot
                 || isCanceled(e.getMessage().getContentRaw())
                 , e -> {
                     //
@@ -93,7 +82,7 @@ public final class EditRoomCommand implements ICommand {
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
-                        && userInventory.has(e.getMessage().getContentRaw())//and that the user gave a valid room slot
+                        && userInventory.has(e.getMessage().getContentRaw())//and that the user gave a valid inventory slot
                         && isParameterOneMet
                         || isCanceled(e.getMessage().getContentRaw())
                 , e -> {
@@ -101,6 +90,7 @@ public final class EditRoomCommand implements ICommand {
                     if(!isCanceled(e.getMessage().getContentRaw())){
                         newDecoration = Tiles.getDecoration(e.getMessage().getContentRaw());
                         isParameterTwoMet = true;
+                        assert newDecoration != null;
                         channel.sendMessage("You have chosen **" + newDecoration.getName() + ".**").queue();
                         channel.sendMessage("Now pick a direction to have it facing (n,e,s,w)").queue();
                     }
@@ -111,7 +101,7 @@ public final class EditRoomCommand implements ICommand {
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
-                        && checkIfValidDirection(e.getMessage().getContentRaw())//and that the user gave a valid room slot
+                        && Tiles.checkIfValidDirection(e.getMessage().getContentRaw())//and that the user gave a valid direction
                         && isParameterTwoMet
                         || isCanceled(e.getMessage().getContentRaw())
                 , e -> {

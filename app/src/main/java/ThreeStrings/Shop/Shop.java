@@ -5,6 +5,7 @@ COPYRIGHT Vincent Banks
 */
 package ThreeStrings.Shop;
 import ThreeStrings.Config;
+import ThreeStrings.ExtendedMethods.ArrayMethods;
 import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.Rooms.Tiles.Decoration;
 import ThreeStrings.Rooms.Tiles.Tiles;
@@ -21,7 +22,7 @@ public class Shop {
     private void addListing(Decoration decoration){
         boolean nameFound = this.shopList.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(decoration.getName()));
         if(nameFound){
-            throw new IllegalArgumentException("Listing already present!");
+            throw new IllegalArgumentException("Listing already present in shop!");
         }
         shopList.add(decoration);
     }
@@ -36,11 +37,7 @@ public class Shop {
                     + " " + decoration.getThumbNail());
             itemNames.add("\n");
         }
-        return itemNames
-                .toString()
-                .replaceAll("]","")
-                .replaceAll("\\[","")
-                .replaceAll(",","");
+        return ArrayMethods.arrayAsString(itemNames);
     }
     public Decoration buy(int index){
         return shopList.get(index);
