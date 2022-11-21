@@ -100,20 +100,21 @@ public class PlayerManager {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 final List<AudioTrack> tracks = playlist.getTracks();
-                channel.sendMessage("playing ") //sends message to chat and appends info about track
-                        .append(" tracks from ")
+                channel.sendMessage("Playing tracks from `") //sends message to chat and appends info about track
                         .append(playlist.getName())
+                        .append("`")
                         .queue();
                 final AudioTrack track = tracks.get(0); //takes the first result
                 musicManagerSingle.scheduler.queue(track); //queues track
                 channel.sendMessage("Adding to queue: `") //sends message to chat and appends info about track
                         .append(track.getInfo().title)
-                        .append("` by ")
+                        .append("` by `")
                         .append(track.getInfo().author)
+                        .append("`")
                         .queue();
                 final AudioTrackInfo info = track.getInfo(); //create variable for getting track info
                 if (musicManagerSingle.scheduler.queue.isEmpty()){ //if there is nothing in queue this if statement will run
-                    channel.sendMessageFormat("Now playing:`%s` by `%s`" + " Duration: " + formatTime(track.getDuration()) +
+                    channel.sendMessageFormat("Now playing:`%s` by `%s`" + " - Duration: " + formatTime(track.getDuration()) +
                             " (Link: <%s>)", info.title, info.author, info.uri).queue();
                 }
             }
