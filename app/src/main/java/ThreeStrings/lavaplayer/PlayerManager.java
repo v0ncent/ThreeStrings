@@ -1,4 +1,3 @@
-
 //Vincent Banks
 //PlayerManager Class
 //COPYRIGHT Vincent Banks
@@ -37,7 +36,7 @@ public class PlayerManager {
             return guildMusicManager;
         });
     }
-    //Below Method LoadAndPlayOnce is used with the play command
+    //Below method LoadAndPlayOnce is used by the play command
     // for playing only one track when searching with plain text code is all the same until final playing moment
     public void LoadAndPlayOnce(TextChannel channel, String trackUrl){ //create a load and play method with lava player methods
         final GuildMusicManager musicManagerSingle = this.getMusicManager(channel.getGuild()); //get discord channel
@@ -89,7 +88,7 @@ public class PlayerManager {
             }
         });
     }
-    //Below method LoadAndPlay is used with the playlist command
+    //Below method LoadAndPlay is used by the playlist command
     public void LoadAndPlay(TextChannel channel, String trackUrl){ //create a load and play method with lava player methods
         final GuildMusicManager musicManager = this.getMusicManager(channel.getGuild()); //get discord channel
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
@@ -115,7 +114,7 @@ public class PlayerManager {
                     musicManager.scheduler.queue(track);
                     final AudioTrackInfo info = track.getInfo(); //create variable for getting track info
                     if (musicManager.scheduler.queue.isEmpty()){ //if there is nothing in queue this if statement will run
-                        channel.sendMessageFormat("Now playing:`%s` by `%s`" + " Duration: " + formatTime(track.getDuration()) +
+                        channel.sendMessageFormat("Now playing:`%s` by `%s`" + " - Duration: " + formatTime(track.getDuration()) +
                                 " Link: <%s>)", info.title, info.author, info.uri).queue();
                     }
                 }
