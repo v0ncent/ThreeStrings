@@ -23,11 +23,9 @@ import java.util.concurrent.TimeUnit;
 public final class EditRoomCommand implements ICommand {
     EventWaiter waiter;
     MemberMongo mongo;
-    Tiles tileTool;
     public EditRoomCommand(EventWaiter waiter){ //create constructor to get event waiter and mongo object
         this.waiter = waiter;
         this.mongo = new MemberMongo();
-        this.tileTool = new Tiles();
     }
     private boolean checkIfValidRoom(String userRequest){
         try {
@@ -37,11 +35,11 @@ public final class EditRoomCommand implements ICommand {
             return false;
         }
     }
-    private boolean checkIfValidDirection(String userRequest){
+    private static boolean checkIfValidDirection(String userRequest){
         List<String> directions = List.of("n","e","s","w");
         return directions.stream().anyMatch((it) -> it.equalsIgnoreCase(userRequest));
     }
-    private boolean isCanceled(String message){
+    private static boolean isCanceled(String message){
         List<String>aborts = List.of("stop","cancel","abort","nevermind","kill","nomore","no","escape","esc");
         return aborts.stream().anyMatch((it)-> it.equalsIgnoreCase(message));
     }
@@ -74,6 +72,7 @@ public final class EditRoomCommand implements ICommand {
                 "I'm never going to hear the end of this cancellation from the Carpenters', Roofers', and Plasterers' Guild...",
                 "Whatever, that chair is going up on stage for me to use now!"
         );
+        //
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
@@ -90,6 +89,7 @@ public final class EditRoomCommand implements ICommand {
                     //
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("").queue());
+        //
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
@@ -99,7 +99,7 @@ public final class EditRoomCommand implements ICommand {
                 , e -> {
                     //
                     if(!isCanceled(e.getMessage().getContentRaw())){
-                        newDecoration = tileTool.getDecoration(e.getMessage().getContentRaw());
+                        newDecoration = Tiles.getDecoration(e.getMessage().getContentRaw());
                         isParameterTwoMet = true;
                         channel.sendMessage("You have chosen **" + newDecoration.getName() + ".**").queue();
                         channel.sendMessage("Now pick a direction to have it facing (n,e,s,w)").queue();
@@ -107,6 +107,7 @@ public final class EditRoomCommand implements ICommand {
                     //
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("").queue());
+        //
         waiter.waitForEvent(GuildMessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
@@ -116,10 +117,9 @@ public final class EditRoomCommand implements ICommand {
                 , e -> {
                     //
                     if(!isCanceled(e.getMessage().getContentRaw())){
-                        userRoom.set(tileTool.getRoomIndex(index),tileTool.getEmoji(e.getMessage().getContentRaw(),newDecoration));
+                        userRoom.set(Tiles.getRoomIndex(index),Tiles.getEmoji(e.getMessage().getContentRaw(),newDecoration));
                         Document sampleDoc = new Document("id",discordID);
-                        Bson updates = Updates.combine( //create bson update with field and updated stars
-                                Updates.set("room",userRoom));
+                        Bson updates = Updates.combine(Updates.set("room",userRoom));
                         try {
                             mongo.updateField(sampleDoc,updates);
                         }catch (Exception error){
@@ -134,6 +134,7 @@ public final class EditRoomCommand implements ICommand {
                     //
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("Listen I dont have all day the carpenters are busy.").queue());
+        //
     }
     @Override
     public String getName() {

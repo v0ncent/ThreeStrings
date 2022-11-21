@@ -35,7 +35,6 @@ public final class Runner {
         ThreeStrings.setStatus(OnlineStatus.ONLINE); //set online status to online
         EventWaiter waiter = new EventWaiter(); //add event waiter class
         ThreeStrings.addEventListeners(new Listener(waiter), waiter); //allows for the commands class to function and lets bot listen for commands
-        ThreeStrings.addEventListeners(new VoiceListener());
         ThreeStrings.setChunkingFilter(ChunkingFilter.ALL); //allows for ThreeStrings to see all members of a discord
         ThreeStrings.setMemberCachePolicy(MemberCachePolicy.ALL); //literally no idea
         ThreeStrings.enableIntents(GatewayIntent.GUILD_VOICE_STATES); //giving bot permission to view voice states

@@ -20,15 +20,14 @@ public class Tiles {
             Config.get("WOOD_TILE"),
             Config.get("WOOD_TILE")
     );
-    public static final Decoration PURPLE_PILLOW =
-            new Decoration(
-                    "purple pillow",
-                    150,
-                    Config.get("WOOD_TILE_PURPLE_N"), //thumbnail
-                    Config.get("WOOD_TILE_PURPLE_N"),
-                    Config.get("WOOD_TILE_PURPLE_E"),
-                    Config.get("WOOD_TILE_PURPLE_S"),
-                    Config.get("WOOD_TILE_PURPLE_W")
+    public static final Decoration PURPLE_PILLOW = new Decoration(
+            "purple pillow",
+            150,
+            Config.get("WOOD_TILE_PURPLE_N"), //thumbnail
+            Config.get("WOOD_TILE_PURPLE_N"),
+            Config.get("WOOD_TILE_PURPLE_E"),
+            Config.get("WOOD_TILE_PURPLE_S"),
+            Config.get("WOOD_TILE_PURPLE_W")
             );
     //array of decorations
     public static final List<Decoration> DECORATIONS  = List.of(
@@ -36,7 +35,7 @@ public class Tiles {
             PURPLE_PILLOW
     );
     //get decoration method
-    public Decoration getDecoration(String tile){
+    public static Decoration getDecoration(String tile){
         Decoration decorationContext;
         for (Decoration decoration : DECORATIONS) {
             if (tile.equals(decoration.getName())) {
@@ -46,7 +45,7 @@ public class Tiles {
         }
         return null;
     }
-    public String getEmoji(String userRequest,Decoration decoration){
+    public static String getEmoji(String userRequest,Decoration decoration){
         switch (userRequest.toLowerCase()) {
             case "n":
                 return decoration.directions.get(0);
@@ -62,7 +61,7 @@ public class Tiles {
         return null;
     }
     //im quite happy with this algorithm :)
-    public int getRoomIndex(int index){
+    public static int getRoomIndex(int index){
         if (index <= 5) {
             return index-1;
         }

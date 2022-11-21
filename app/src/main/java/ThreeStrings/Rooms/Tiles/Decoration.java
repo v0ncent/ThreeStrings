@@ -11,13 +11,9 @@ public class Decoration {
     int cost;
     String thumbNail;
     List<String> directions;
-    public Decoration(String name,
-                      int cost,
-                      String thumbNail,
-                      String north,
-                      String east,
-                      String south,
-                      String west){
+    public Decoration(String name, int cost,
+                      String thumbNail, String north,
+                      String east, String south, String west){
         this.name = name;
         this.cost = cost;
         this.thumbNail = thumbNail;

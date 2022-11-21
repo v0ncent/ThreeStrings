@@ -5,8 +5,12 @@ package ThreeStrings;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -53,6 +57,24 @@ public class Listener  extends ListenerAdapter {
         }
         if (raw.startsWith(prefix)){  //when a command is executed this if statements tells the command manager class to handle it
             manager.handle(event);
+        }
+    }
+    //Disconnect bot if no users is in vc from disconnecting from server
+    @Override
+    public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event){
+        VoiceChannel channel = event.getChannelLeft();
+        List<Member> membersInVc = channel.getMembers();
+        if(membersInVc.size() == 1 && membersInVc.get(0).getUser().isBot()){
+            event.getGuild().getAudioManager().closeAudioConnection();
+        }
+    }
+    //Disconnect bot if no users is in vc from moving to another channel
+    @Override
+    public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event){
+        VoiceChannel channel = event.getChannelLeft();
+        List<Member> membersInVc = channel.getMembers();
+        if(membersInVc.size() == 1 && membersInVc.get(0).getUser().isBot()){
+            event.getGuild().getAudioManager().closeAudioConnection();
         }
     }
     }
