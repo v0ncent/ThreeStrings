@@ -83,7 +83,7 @@ public final class PlayCommand implements ICommand {
         @Override
         public String getHelp () {
             return "Gets me to play a song for you!\n" +
-                    "Usage: !play (youtube link) or Simply type the song name.\n"+
+                    "Usage: !play (youtube link) *or* Simply type the song name.\n"+
                     "To play a playlist from youtube use !play (playlist link).";
         }
     @Override

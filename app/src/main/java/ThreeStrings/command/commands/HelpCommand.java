@@ -90,9 +90,8 @@ public final class HelpCommand implements ICommand {
                     shopComs.add(Config.get("PREFIX") + iCommand.getName()+"\n");
                 }
             }
-            embedBuilder.setTitle("List`O Commands");
-            embedBuilder.setDescription("Hi, I'm Mattrim \"Threestrings\" Mereg. Here's a list of things I can do!\n" +
-                    "For more info on a command use !help (command name)");
+            embedBuilder.setTitle("List 'o Commands");
+            embedBuilder.setDescription("Hi, I'm Mattrim \"Threestrings\" Mereg.\n Here's a list of things I can do!\n **For more info on a command use !help (command name)**");
             embedBuilder.setColor(Color.orange);
             embedBuilder.setThumbnail(ctx
                     .getJDA()
