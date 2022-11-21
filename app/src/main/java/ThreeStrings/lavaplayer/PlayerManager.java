@@ -1,4 +1,4 @@
-//Vincent Banks
+//Vincent Banks, Remy Amel
 //PlayerManager Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.lavaplayer;
