@@ -88,6 +88,7 @@ public class PlayerManager {
 //            }
 //        });
 //    }
+    //
     //Below method plays track, play command uses true for is once, while playlist uses false
     //if isOnce is true then it only plays one song, else it makes and plays a playlist
     public void LoadAndPlay(TextChannel channel, String trackUrl, boolean isOnce){ //create a load and play method with lava player methods
