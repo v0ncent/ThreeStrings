@@ -53,9 +53,8 @@ public class PlayerManager {
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 final List<AudioTrack> tracks = playlist.getTracks();
-                channel.sendMessage("Playing tracks from `") //sends message to chat and appends info about track
+                channel.sendMessage("Playing tracks from ") //sends message to chat and appends info about track
                         .append(playlist.getName())
-                        .append("`")
                         .queue();
                 final AudioTrack track = tracks.get(0); //takes the first result
                 musicManagerSingle.scheduler.queue(track); //queues track
