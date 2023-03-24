@@ -12,7 +12,8 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public final class ShopCommand implements ICommand {
         ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
         ctx.getChannel().sendMessage("To purchase an item type buy (listing #).").queue();
         //
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                         && e.getMessage().getContentRaw().toLowerCase().contains("buy") // and if the message contains said chars
@@ -88,7 +89,7 @@ public final class ShopCommand implements ICommand {
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("").queue());
         //
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                         && parameterOneMet

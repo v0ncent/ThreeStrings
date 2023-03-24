@@ -11,7 +11,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.HashMap;
@@ -98,10 +98,9 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack track) {
                 musicManager.scheduler.queue(track); //load track into queue or play it if none is currently playing
                 //sends message to chat and appends info about track
-                channel.sendMessage("Adding to queue: `") //sends message to chat and appends info about track
-                        .append(track.getInfo().title)
-                        .append("` by `")
-                        .append(track.getInfo().author)
+                channel.sendMessage("Adding to queue: `" + track.getInfo().title +
+                                 "` by `" +
+                                track.getInfo().author) //sends message to chat and appends info about track
                         .queue();
             }
             @Override
@@ -110,11 +109,10 @@ public class PlayerManager {
                 if (isOnce){ //true if only playing one song, else make playlist from search
                     final AudioTrack track = tracks.get(0); //takes the first result
                     musicManager.scheduler.queue(track);
-                    channel.sendMessage("Adding to queue: `") //sends message to chat and appends info about track
-                            .append(track.getInfo().title)
-                            .append("` by `")
-                            .append(track.getInfo().author)
-                            .append("`")
+                    channel.sendMessage("Adding to queue: `" + track.getInfo().title +
+                                    "` by `" +
+                                    track.getInfo().author +
+                                    "`")//sends message to chat and appends info about track
                             .queue();
                     final AudioTrackInfo info = track.getInfo(); //create variable for getting track info
                     if (musicManager.scheduler.queue.isEmpty()){ //if there is nothing in queue this if statement will run
@@ -122,10 +120,9 @@ public class PlayerManager {
                                 " (Link: <%s>)", info.title, info.author, info.uri).queue();
                     }
                 } else {
-                    channel.sendMessage("Adding to queue: `") //sends message to chat and appends info about track
-                            .append(String.valueOf(tracks.size()))
-                            .append("` tracks from playlist `")
-                            .append(playlist.getName())
+                    channel.sendMessage("Adding to queue: `" + tracks.size() +
+                                    "` tracks from playlist `" +
+                                    playlist.getName()) //sends message to chat and appends info about track
                             .queue();
                     for (final AudioTrack track : tracks){
                         musicManager.scheduler.queue(track);

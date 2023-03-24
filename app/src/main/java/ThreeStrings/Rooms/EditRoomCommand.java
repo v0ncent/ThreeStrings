@@ -13,8 +13,8 @@ import ThreeStrings.command.ICommand;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import com.mongodb.client.model.Updates;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.awt.*;
@@ -62,7 +62,7 @@ public final class EditRoomCommand implements ICommand {
                 "Whatever, that chair is going up on stage for me to use now!"
         );
         //
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                 && RoomMethods.checkIfValidRoom(e.getMessage().getContentRaw()) //and that the user gave a valid room slot
@@ -79,7 +79,7 @@ public final class EditRoomCommand implements ICommand {
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("").queue());
         //
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                         && userInventory.has(e.getMessage().getContentRaw())//and that the user gave a valid inventory slot
@@ -98,7 +98,7 @@ public final class EditRoomCommand implements ICommand {
                 }, 45L, TimeUnit.SECONDS,
                 () -> ctx.getChannel().sendMessage("").queue());
         //
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getChannel().equals(ctx.getChannel()) // if the channel is the same
                         && e.getAuthor().getId().equals(ctx.getAuthor().getId()) //and the user is the same
                         && Tiles.checkIfValidDirection(e.getMessage().getContentRaw())//and that the user gave a valid direction

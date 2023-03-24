@@ -10,8 +10,8 @@ import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.awt.*;
 import java.util.concurrent.TimeUnit;
 @SuppressWarnings("ConstantConditions")
@@ -26,13 +26,13 @@ public final class DmCommand implements ICommand {
         final GuildVoiceState selfVoiceState = self.getVoiceState(); //gets bot voice state
         final TextChannel channel = ctx.getChannel(); //implement variable to get channel
         final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        if (!selfVoiceState.inVoiceChannel()) { //if bot is not in vc
+        if (!selfVoiceState.inAudioChannel()) { //if bot is not in vc
             channel.sendMessage("I need to be on stage so I can play.").queue();
             return;
         }
         final Member member = ctx.getMember(); //create variable for getting user
         final GuildVoiceState memberVoiceState = member.getVoiceState(); //create variable for getting user voice state
-        if (!memberVoiceState.inVoiceChannel()) { //if member is not in vc
+        if (!memberVoiceState.inAudioChannel()) { //if member is not in vc
             channel.sendMessage("What do you mean? You're not even in the tavern!").queue();
             return;
         }
@@ -56,7 +56,7 @@ public final class DmCommand implements ICommand {
         ctx.getChannel().sendMessageEmbeds(dmEmbed.build()).queue(); //sends embed to chat
         ctx.getChannel().sendMessage("Excuse me, are you a god or something? Cause I usually only answer to Melil.").queue();
         //add event waiters when option is picked designated playlist is played, when another option is picked it clears queue and stops any current tracks
-            waiter.waitForEvent(GuildMessageReceivedEvent.class,
+            waiter.waitForEvent(MessageReceivedEvent.class,
                     e -> e.getMessage().getContentRaw().equals("1") && e.getChannel().equals(ctx.getChannel()), e -> {
                         musicManager.scheduler.player.stopTrack();
                         musicManager.scheduler.queue.clear();
@@ -64,7 +64,7 @@ public final class DmCommand implements ICommand {
                     }, 1L, TimeUnit.MINUTES,
                     () -> channel.sendMessage("").queue()); //add timeout);
 
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getMessage().getContentRaw().equals("2") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
@@ -72,7 +72,7 @@ public final class DmCommand implements ICommand {
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getMessage().getContentRaw().equals("3") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
@@ -80,7 +80,7 @@ public final class DmCommand implements ICommand {
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getMessage().getContentRaw().equals("4") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
@@ -88,7 +88,7 @@ public final class DmCommand implements ICommand {
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getMessage().getContentRaw().equals("5") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();
@@ -96,7 +96,7 @@ public final class DmCommand implements ICommand {
                 }, 1L, TimeUnit.MINUTES,
                 () -> channel.sendMessage("").queue()); //add timeout);
 
-        waiter.waitForEvent(GuildMessageReceivedEvent.class,
+        waiter.waitForEvent(MessageReceivedEvent.class,
                 e -> e.getMessage().getContentRaw().equals("6") && e.getChannel().equals(ctx.getChannel()), e -> {
                     musicManager.scheduler.player.stopTrack();
                     musicManager.scheduler.queue.clear();

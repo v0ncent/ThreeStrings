@@ -4,7 +4,8 @@
 package ThreeStrings.command.commands;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+
 /**
  * This class is an implementation of ICommand Interface
  * @see ICommand

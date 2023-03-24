@@ -9,8 +9,8 @@ import ThreeStrings.Listener;
 import ThreeStrings.lavaplayer.PlayerManager;
 import com.mongodb.lang.NonNull;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +26,7 @@ public final class CMDPlay {
         }
         return guilds.get(choice);
     }
-    private static VoiceChannel getChannelChoice(int choice,Guild server) throws Exceptions.ExitCodeCalled, Exceptions.InvalidMenuChoice {
+    private static VoiceChannel getChannelChoice(int choice, Guild server) throws Exceptions.ExitCodeCalled, Exceptions.InvalidMenuChoice {
         if(choice == Codes.EXIT_CODE){
             throw new Exceptions.ExitCodeCalled(CMDPlay.class);
         }
@@ -35,7 +35,7 @@ public final class CMDPlay {
         }
         return server.getVoiceChannels().get(choice);
     }
-    private static TextChannel getTextChannelChoice(int choice,Guild server) throws Exceptions.ExitCodeCalled, Exceptions.InvalidMenuChoice {
+    private static TextChannel getTextChannelChoice(int choice, Guild server) throws Exceptions.ExitCodeCalled, Exceptions.InvalidMenuChoice {
         if(choice == Codes.EXIT_CODE){
             throw new Exceptions.ExitCodeCalled(CMDPlay.class);
         }

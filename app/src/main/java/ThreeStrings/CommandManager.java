@@ -14,7 +14,7 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import ThreeStrings.command.commands.*;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,7 +74,7 @@ public class CommandManager {
         }
         return null;
     }
-    void handle(GuildMessageReceivedEvent event){
+    void handle(MessageReceivedEvent event){
         String[] split = event.getMessage().getContentRaw() //creates string array called split and gets raw content of message
                 .replaceFirst("(?i)" + Pattern.quote(Config.get("PREFIX")),"") //takes off prefix
                 .split("\\s+"); //splits it on white space
