@@ -3,11 +3,7 @@
 //Copyright Vincent Banks
 package ThreeStrings.command;
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
@@ -36,7 +32,7 @@ public class CommandContext {
     }
 
     public TextChannel getChannel() {
-        return this.getEvent().getChannel().asTextChannel();
+        return this.getEvent().getTextChannel();
     }
 
     public Message getMessage() {

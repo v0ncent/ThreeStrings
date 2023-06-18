@@ -20,7 +20,7 @@ public final class InventoryCommand implements ICommand {
             embedBuilder.addField("",inventory.getPlayerInventoryAsString(),true);
             ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
         } else {
-            Member mentionedUser = ctx.getMessage().getMentions().getMembers().get(0);
+            Member mentionedUser = ctx.getMessage().getMentionedMembers().get(0);
             EmbedBuilder embedBuilder = new EmbedBuilder();
             Inventory inventory = new Inventory(mentionedUser.getIdLong());
             ctx.getChannel().sendMessage("Quite the collection I see.").queue();

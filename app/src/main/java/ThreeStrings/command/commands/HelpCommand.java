@@ -8,7 +8,7 @@ import ThreeStrings.ExtendedMethods.ArrayMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;

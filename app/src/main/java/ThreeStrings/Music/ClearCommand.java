@@ -5,23 +5,21 @@ import ThreeStrings.lavaplayer.GuildMusicManager;
 import ThreeStrings.lavaplayer.PlayerManager;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-
+import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.Objects;
-
 public final class ClearCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();
         final Member self = ctx.getSelfMember();
         final GuildVoiceState selfVoiceState = self.getVoiceState();
-        if (!selfVoiceState.inAudioChannel()) {
+        if (!selfVoiceState.inVoiceChannel()) {
             channel.sendMessage("I need to be on stage so I can play.").queue();
             return;
         }
         final Member member = ctx.getMember();
         final GuildVoiceState memberVoiceState = member.getVoiceState();
-        if (!memberVoiceState.inAudioChannel()) {
+        if (!memberVoiceState.inVoiceChannel()) {
             channel.sendMessage("What do you mean? You're not even in the tavern!").queue();
             return;
         }

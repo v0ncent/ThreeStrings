@@ -10,8 +10,8 @@ import ThreeStrings.lavaplayer.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,13 +28,13 @@ public final class PlayCommand implements ICommand {
         }
         final Member self = ctx.getSelfMember(); //implement variable to get bot
         final GuildVoiceState selfVoiceState = self.getVoiceState(); //gets bot voice state
-        if (!selfVoiceState.inAudioChannel()) { //if bot is not in vc
+        if (!selfVoiceState.inVoiceChannel()) { //if bot is not in vc
            channel.sendMessage("I need to be on stage so I can play.").queue();
             return;
         }
         final Member member = ctx.getMember(); //create variable for getting user
         final GuildVoiceState memberVoiceState = member.getVoiceState(); //create variable for getting user voice state
-        if (!memberVoiceState.inAudioChannel()) { //if member is not in vc
+        if (!memberVoiceState.inVoiceChannel()) { //if member is not in vc
             channel.sendMessage("What do you mean? You're not even in the tavern!").queue();
             return;
         }
@@ -48,7 +48,7 @@ public final class PlayCommand implements ICommand {
         if(rngEgg == 1){
             String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
-            final VoiceChannel userChannel = memberVoiceState.getChannel().asVoiceChannel();//checks what voice chat the member is in
+            final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
             PlayerManager.getInstance().LoadAndPlay(channel, link,true); //sends bot to channel and plays song on instance
             channel.sendMessage("That's gotta suck!\n" +
@@ -66,12 +66,12 @@ public final class PlayCommand implements ICommand {
         if (!isUrl(link)){ //if there is no link lavaplayer will search YouTube for link and play only the top result
             link = "ytsearch:" + link;
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
-            final VoiceChannel userChannel = memberVoiceState.getChannel().asVoiceChannel();//checks what voice chat the member is in
+            final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
             PlayerManager.getInstance().LoadAndPlay(channel, link,true); //sends bot to channel and plays song on instance
         }else { //else is a playlist
             final AudioManager audioManager = ctx.getGuild().getAudioManager();//implements audiomanager
-            final VoiceChannel userChannel = memberVoiceState.getChannel().asVoiceChannel();//checks what voice chat the member is in
+            final VoiceChannel userChannel = memberVoiceState.getChannel();//checks what voice chat the member is in
             audioManager.openAudioConnection(userChannel); //bot connects to designated user channel
             PlayerManager.getInstance().LoadAndPlay(channel, link,false); //sends bot to channel and plays the playlist
         }

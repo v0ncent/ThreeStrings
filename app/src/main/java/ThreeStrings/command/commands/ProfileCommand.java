@@ -8,7 +8,7 @@ import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 /**
  * This class is an implementation of Icommand Interface
  * @see ICommand
@@ -42,7 +42,7 @@ public final class ProfileCommand implements ICommand {
                 embed.addField("**GoldStars**",member.getGoldStars(name.getIdLong()).toString() + Config.get("GOLD_STAR"),true);
             }
         } else {
-            name = ctx.getMessage().getMentions().getMembers().get(0);
+            name = ctx.getMessage().getMentionedMembers().get(0);
             //create embed
             embed.setThumbnail(name.getUser().getAvatarUrl());
             embed.setTitle("Profile for " + name.getUser().getName());

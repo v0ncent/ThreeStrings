@@ -11,6 +11,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+
+import javax.security.auth.login.LoginException;
+
 //----Runner Class----
 /*
 This class instantiates all basic needs for ThreeStrings
@@ -33,19 +36,15 @@ public final class Runner {
         ThreeStrings.enableIntents(GatewayIntent.GUILD_VOICE_STATES);
         ThreeStrings.enableIntents(GatewayIntent.DIRECT_MESSAGE_REACTIONS);
         ThreeStrings.enableIntents(GatewayIntent.DIRECT_MESSAGES);
-        ThreeStrings.enableIntents(GatewayIntent.GUILD_EMOJIS_AND_STICKERS);
         ThreeStrings.enableIntents(GatewayIntent.GUILD_MESSAGE_TYPING);
         ThreeStrings.enableIntents(GatewayIntent.GUILD_PRESENCES);
         ThreeStrings.enableIntents(GatewayIntent.GUILD_INVITES);
-        ThreeStrings.enableIntents(GatewayIntent.MESSAGE_CONTENT);
-        ThreeStrings.enableIntents(GatewayIntent.GUILD_MODERATION);
-        ThreeStrings.enableIntents(GatewayIntent.SCHEDULED_EVENTS);
     }
     /**
      * Run builds all necessary objects for ThreeStrings to Run,
      * I.E, Sets listeners for discord, enables gateway intents, and logins to bot with token
      * */
-    public static void run() { //class throws LoginException if error happens while attempting to login
+    public static void run() throws LoginException { //class throws LoginException if error happens while attempting to login
         ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
         ThreeStrings.setStatus(OnlineStatus.ONLINE); //set online status to online
         EventWaiter waiter = new EventWaiter(); //add event waiter class

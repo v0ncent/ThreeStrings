@@ -6,7 +6,8 @@ import ThreeStrings.ExtendedMethods.MemberMethods;
 import ThreeStrings.command.CommandContext;
 import ThreeStrings.command.ICommand;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+
 import java.util.Random;
 public final class RoomCommand implements ICommand {
     @Override
@@ -32,7 +33,7 @@ public final class RoomCommand implements ICommand {
                 channel.sendMessage(quips[randomQuiq]).queue();
                 channel.sendMessage(memberTool.getRoomAsString(memberId)).queue();
             } else {
-                Member mentionedMember = ctx.getMessage().getMentions().getMembers().get(0);
+                Member mentionedMember = ctx.getMessage().getMentionedMembers().get(0);
                 if(memberTool.getRoomAsString(mentionedMember.getIdLong()).equals("Looks like you haven't registered for a room in the tavern yet.\n" +
                         "To register please use !createroom !")){
                     channel.sendMessage("Looks like that user doesnt have a room yet!").queue();
