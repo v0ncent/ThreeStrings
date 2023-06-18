@@ -4,7 +4,6 @@
 package ThreeStrings;
 import ThreeStrings.CommandLine.CommandLineManager;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
-import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -12,9 +11,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-
 import javax.security.auth.login.LoginException;
-
 //----Runner Class----
 /*
 This class instantiates all basic needs for ThreeStrings
