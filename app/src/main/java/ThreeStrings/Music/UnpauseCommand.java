@@ -9,7 +9,8 @@ import ThreeStrings.lavaplayer.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+
 @SuppressWarnings("ConstantConditions")
 public final class UnpauseCommand implements ICommand {
     @Override
@@ -17,13 +18,13 @@ public final class UnpauseCommand implements ICommand {
         final TextChannel channel = ctx.getChannel(); //implement variable to get channel
         final Member self = ctx.getSelfMember(); //implement variable to get bot
         final GuildVoiceState selfVoiceState = self.getVoiceState(); //gets bot voice state
-        if (!selfVoiceState.inVoiceChannel()) { //if bot is not in vc
+        if (!selfVoiceState.inAudioChannel()) { //if bot is not in vc
             channel.sendMessage("I need to be on stage so I can play.").queue();
             return;
         }
         final Member member = ctx.getMember(); //create variable for getting user
         final GuildVoiceState memberVoiceState = member.getVoiceState(); //create variable for getting user voice state
-        if (!memberVoiceState.inVoiceChannel()) { //if member is not in vc
+        if (!memberVoiceState.inAudioChannel()) { //if member is not in vc
             channel.sendMessage("What do you mean? You're not even in the tavern!").queue();
             return;
         }

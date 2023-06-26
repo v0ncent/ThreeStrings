@@ -4,6 +4,7 @@
 package ThreeStrings.command;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
@@ -32,7 +33,7 @@ public class CommandContext {
     }
 
     public TextChannel getChannel() {
-        return this.getEvent().getTextChannel();
+        return this.getEvent().getChannel().asTextChannel();
     }
 
     public Message getMessage() {

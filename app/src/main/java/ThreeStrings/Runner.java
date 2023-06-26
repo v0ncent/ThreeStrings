@@ -34,9 +34,13 @@ public final class Runner {
         ThreeStrings.enableIntents(GatewayIntent.GUILD_VOICE_STATES);
         ThreeStrings.enableIntents(GatewayIntent.DIRECT_MESSAGE_REACTIONS);
         ThreeStrings.enableIntents(GatewayIntent.DIRECT_MESSAGES);
+        ThreeStrings.enableIntents(GatewayIntent.GUILD_EMOJIS_AND_STICKERS);
         ThreeStrings.enableIntents(GatewayIntent.GUILD_MESSAGE_TYPING);
         ThreeStrings.enableIntents(GatewayIntent.GUILD_PRESENCES);
         ThreeStrings.enableIntents(GatewayIntent.GUILD_INVITES);
+        ThreeStrings.enableIntents(GatewayIntent.MESSAGE_CONTENT);
+        ThreeStrings.enableIntents(GatewayIntent.GUILD_MODERATION);
+        ThreeStrings.enableIntents(GatewayIntent.SCHEDULED_EVENTS);
     }
     /**
      * Run builds all necessary objects for ThreeStrings to Run,

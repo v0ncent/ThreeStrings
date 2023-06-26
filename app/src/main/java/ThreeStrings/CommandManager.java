@@ -15,7 +15,6 @@ import ThreeStrings.command.ICommand;
 import ThreeStrings.command.commands.*;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +63,7 @@ public class CommandManager {
     public List<ICommand> getCommands(){
         return commands;
     }
-    @Nullable
+
     public ICommand getCommand(String search){    //create command search method
         String searchLower = search.toLowerCase(); //create a string called searchLower that uses search
         for (ICommand cmd: this.commands){
