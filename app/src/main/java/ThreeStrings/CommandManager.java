@@ -39,7 +39,6 @@ public class CommandManager {
         addCommand(new LeaveCommand());
         addCommand(new PauseCommand());
         addCommand(new UnpauseCommand());
-        addCommand(new DmCommand(waiter));
         //Commands
         addCommand(new CapybaraCommand());
         addCommand(new ProfileCommand());
