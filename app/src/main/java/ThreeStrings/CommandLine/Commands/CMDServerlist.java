@@ -4,7 +4,7 @@
 package ThreeStrings.CommandLine.Commands;
 import ThreeStrings.CommandLine.CommandLineManager;
 import ThreeStrings.CommandLine.Exceptions;
-import ThreeStrings.Listener;
+import ThreeStrings.Bot.Listener;
 import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 import java.util.Scanner;

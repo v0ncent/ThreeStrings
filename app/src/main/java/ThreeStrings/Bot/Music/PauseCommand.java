@@ -1,0 +1,60 @@
+//Vincent Banks
+//PauseCommand Class
+//Copyright Vincent Banks
+package ThreeStrings.Bot.Music;
+import ThreeStrings.Bot.command.CommandContext;
+import ThreeStrings.Bot.command.ICommand;
+import ThreeStrings.Bot.lavaplayer.GuildMusicManager;
+import ThreeStrings.Bot.lavaplayer.PlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+
+@SuppressWarnings("ConstantConditions")
+public final class PauseCommand implements ICommand {
+    @Override
+    public void handle(CommandContext ctx) {
+        final TextChannel channel = ctx.getChannel(); //implement variable to get channel
+        final Member self = ctx.getSelfMember(); //implement variable to get bot
+        final GuildVoiceState selfVoiceState = self.getVoiceState(); //gets bot voice state
+        if (!selfVoiceState.inAudioChannel()) { //if bot is not in vc
+            channel.sendMessage("I need to be on stage so I can play.").queue();
+            return;
+        }
+        final Member member = ctx.getMember(); //create variable for getting user
+        final GuildVoiceState memberVoiceState = member.getVoiceState(); //create variable for getting user voice state
+        if (!memberVoiceState.inAudioChannel()) { //if member is not in vc
+            channel.sendMessage("What do you mean? You're not even in the tavern!").queue();
+            return;
+        }
+        if (!memberVoiceState.getChannel().equals(selfVoiceState.getChannel())){ //if member is not in same voice channel as bot
+            channel.sendMessage("You've got to be by the stage so you can hear me play!").queue();
+            return;
+        }
+        final GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
+        final AudioPlayer audioPlayer = musicManager.audioPlayer; //create new variable with audioPlayer class
+        if (audioPlayer.getPlayingTrack() == null){  //if no track is playing this statement runs
+            channel.sendMessage("Uhhh, Im not even playing anything.").queue();
+            return;
+        }
+        if(audioPlayer.isPaused()){ //if bot is already paused
+            channel.sendMessage("I've already stopped.").queue();
+        }else{ //else if it is not paused it pauses
+            audioPlayer.setPaused(true); //pause track
+            channel.sendMessage("Alright I'll take a break.").queue();
+        }
+    }
+    @Override
+    public String getName() {
+        return "pause";
+    }
+    @Override
+    public String getHelp() {
+        return "Pauses the current song I am playing.";
+    }
+    @Override
+    public String getType() {
+        return "music";
+    }
+}
