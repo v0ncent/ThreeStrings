@@ -2,8 +2,10 @@
 //Tile Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Bot.Rooms.Tiles;
+
 import ThreeStrings.Bot.Config;
 import java.util.List;
+
 /*
 THIS CLASS DEFINES ALL DECORATION VARIABLES THAT ARE CONSTANTS
 AND NECESSARY METHODS FOR EDITING TILES
@@ -20,6 +22,7 @@ public class Tiles {
             Config.get("WOOD_TILE"),
             Config.get("WOOD_TILE")
     );
+
     public static final Decoration PURPLE_PILLOW = new Decoration(
             "purple pillow",
             150,
@@ -29,22 +32,28 @@ public class Tiles {
             Config.get("WOOD_TILE_PURPLE_S"),
             Config.get("WOOD_TILE_PURPLE_W")
             );
+
     //array of decorations
     public static final List<Decoration> DECORATIONS  = List.of(
             PLAIN,
             PURPLE_PILLOW
     );
-    //get decoration method
+
     public static Decoration getDecoration(String tile){
         Decoration decorationContext;
+
         for (Decoration decoration : DECORATIONS) {
             if (tile.equals(decoration.getName())) {
                 decorationContext = decoration;
+
                 return decorationContext;
             }
+
         }
+
         return null;
     }
+
     public static String getEmoji(String userRequest,Decoration decoration){
         switch (userRequest.toLowerCase()) {
             case "n":
@@ -58,13 +67,16 @@ public class Tiles {
             case "w":
                 return decoration.directions.get(3);
         }
+
         return null;
     }
+
     //im quite happy with this algorithm :)
     public static int getRoomIndex(int index){
         if (index <= 5) {
             return index-1;
         }
+
         else if(index <= 10){
             return index;
         } else if(index <= 15){
@@ -74,7 +86,9 @@ public class Tiles {
         } else {
             return index + 3;
         }
+
     }
+
     public static boolean checkIfValidDirection(String userRequest){
         List<String> directions = List.of("n","e","s","w");
         return directions.stream().anyMatch((it) -> it.equalsIgnoreCase(userRequest));
