@@ -2,6 +2,7 @@
 //Listener class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Bot;
+
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
@@ -12,15 +13,18 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+
 public class Listener  extends ListenerAdapter {
     public static List<Guild> GUILDS; //all guilds threestrings is connected
-    private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class); //implement the Logger class to get rid of error messages
-    private final CommandManager manager; //implement our command manager class
+    private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
+    private final CommandManager manager;
+
     public Listener(EventWaiter waiter){
         manager = new CommandManager(waiter);
     }
+
     @Override
-    public void onReady(@NotNull ReadyEvent event) {   //implement the onReady JDA constructor
+    public void onReady(@NotNull ReadyEvent event) {
         LOGGER.info("      ___           ___           ___           ___           ___           ___           ___           ___                       ___           ___           ___     \n" +
                 "     /\\  \\         /\\__\\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\          ___        /\\__\\         /\\  \\         /\\  \\    \n" +
                 "     \\:\\  \\       /:/  /        /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\        \\:\\  \\       /::\\  \\        /\\  \\      /::|  |       /::\\  \\       /::\\  \\   \n" +
@@ -32,21 +36,27 @@ public class Listener  extends ListenerAdapter {
                 "   \\/__/            /:/  /      |:|\\/__/     \\:\\ \\/__/     \\:\\ \\/__/     \\:\\/:/  /     \\/__/          |:|\\/__/    \\:\\__\\         |::/  /     \\:\\/:/  /     \\:\\/:/  /  \n" +
                 "                   /:/  /       |:|  |        \\:\\__\\        \\:\\__\\        \\::/  /                     |:|  |       \\/__/         /:/  /       \\::/  /       \\::/  /   \n" +
                 "                   \\/__/         \\|__|         \\/__/         \\/__/         \\/__/                       \\|__|                     \\/__/         \\/__/         \\/__/"); //tells user that bot is ready to play
+
         LOGGER.info("ThreeStrings Ready to play!");
         //populate guilds list
         GUILDS = event.getJDA().getGuilds();
     }
+
     @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) { //implementing discord message received constructor
-        User user = event.getAuthor(); //defines user variable
-        if (user.isBot() || event.isWebhookMessage() ){ //if user is a bot or webhook message we simply just return
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        User user = event.getAuthor();
+
+        if (user.isBot() || event.isWebhookMessage() ){
             return;
         }
-        String prefix = Config.get("PREFIX"); //setting prefix to what it is in the env
+
+        String prefix = Config.get("PREFIX");
         String raw = event.getMessage().getContentRaw();
-        if (raw.startsWith(prefix)){  //when a command is executed this if statements tells the command manager class to handle it
+
+        if (raw.startsWith(prefix)){
             manager.handle(event);
         }
+
     }
 
     // TODO: THIS NEEDS TO BE UPDATED TO MODERN JDA

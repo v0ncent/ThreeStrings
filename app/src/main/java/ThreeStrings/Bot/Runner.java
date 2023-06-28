@@ -2,6 +2,7 @@
 //Runner Class
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Bot;
+
 import ThreeStrings.CommandLine.CommandLineManager;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.JDABuilder;
@@ -11,7 +12,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
-import javax.security.auth.login.LoginException;
+
 //----Runner Class----
 /*
 This class instantiates all basic needs for ThreeStrings
@@ -21,10 +22,13 @@ And then tells bot to log in
  */
 //---------------------
 public final class Runner {
+
     private Runner(){
         //make constructor private so no instances of runner class can be made
     }
-    private static final JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN")); //create new bot with token in config file
+
+    private static final JDABuilder ThreeStrings = JDABuilder.createDefault(Config.get("TOKEN"));
+
     private static void enableAllIntents() {
         ThreeStrings.setChunkingFilter(ChunkingFilter.ALL);
         ThreeStrings.setMemberCachePolicy(MemberCachePolicy.ALL);
@@ -42,18 +46,18 @@ public final class Runner {
         ThreeStrings.enableIntents(GatewayIntent.GUILD_MODERATION);
         ThreeStrings.enableIntents(GatewayIntent.SCHEDULED_EVENTS);
     }
-    /**
-     * Run builds all necessary objects for ThreeStrings to Run,
-     * I.E, Sets listeners for discord, enables gateway intents, and logins to bot with token
-     * */
-    public static void run() throws LoginException { //class throws LoginException if error happens while attempting to login
-        ThreeStrings.setActivity(Activity.playing("the Lute!")); //set activity status
-        ThreeStrings.setStatus(OnlineStatus.ONLINE); //set online status to online
-        EventWaiter waiter = new EventWaiter(); //add event waiter class
-        ThreeStrings.addEventListeners(new Listener(waiter), waiter); //allows for the commands class to function and lets bot listen for commands
+
+    public static void run() {
+        ThreeStrings.setActivity(Activity.playing("the Lute!"));
+        ThreeStrings.setStatus(OnlineStatus.ONLINE);
+
+        EventWaiter waiter = new EventWaiter();
+        ThreeStrings.addEventListeners(new Listener(waiter), waiter);
+
         enableAllIntents();
-        ThreeStrings.build(); //tells bot to log in
-        //create and run command line app
+
+        ThreeStrings.build();
+
         CommandLineManager cmManager = new CommandLineManager();
         cmManager.start();
     }
