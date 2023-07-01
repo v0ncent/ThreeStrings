@@ -3,8 +3,6 @@
 //COPYRIGHT Vincent Banks
 package ThreeStrings.Bot;
 
-import javax.security.auth.login.LoginException;
-
 public final class Main {
     /*
     -------THREESTRINGS MAIN METHOD--------
@@ -14,7 +12,7 @@ public final class Main {
      */
     private Main(){} //create private constructor so no new instances can be made
 
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) {
         Runner.run(); //use Runner's run() method to run bot
     }
 }
