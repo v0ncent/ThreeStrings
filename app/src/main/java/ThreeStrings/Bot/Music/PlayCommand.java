@@ -9,6 +9,7 @@ import ThreeStrings.Bot.command.CommandContext;
 import ThreeStrings.Bot.command.ICommand;
 import ThreeStrings.Bot.lavaplayer.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -54,8 +55,9 @@ public final class PlayCommand implements ICommand {
         Random r = new Random();
         int rngEgg = r.nextInt(251-1) + 1;
         //int rngEgg = 1;
+        final Guild server = ctx.getGuild();
 
-        if(rngEgg == 1){
+        if(rngEgg == 1 && server.getId().equals(Config.get("DND_SERVER"))){
             String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
             final AudioManager audioManager = ctx.getGuild().getAudioManager();
