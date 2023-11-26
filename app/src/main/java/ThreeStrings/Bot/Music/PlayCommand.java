@@ -57,7 +57,7 @@ public final class PlayCommand implements ICommand {
         //int rngEgg = 1;
         final Guild server = ctx.getGuild();
 
-        if(rngEgg == 1 && server.getId().equals(Config.get("DND_SERVER"))){
+        if(rngEgg == 1 && !server.getId().equals(Config.get("DND_SERVER"))){
             String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
             final AudioManager audioManager = ctx.getGuild().getAudioManager();
